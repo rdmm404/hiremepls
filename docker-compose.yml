@@ -1,0 +1,18 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    develop:
+      watch:
+        - path: ./backend/src
+          action: sync
+          target: /app/src
+        - path: ./backend/uv.lock
+          action: rebuild
+    ports:
+      - 8765:8000
+    tty: true
+  # database:
+  #   image: postgres:17
+  #   volumes:
+  #     - db_data:/var/lib/postgresql/data
