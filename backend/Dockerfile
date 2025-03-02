@@ -13,12 +13,15 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 
 COPY ./src ./src
-COPY ./alembic ./alembic
-COPY pyproject.toml uv.lock alembic.ini ./
+COPY pyproject.toml uv.lock ./
 
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev
 
-ENTRYPOINT []
+COPY ./alembic ./alembic
+COPY alembic.ini entrypoint.sh ./
+RUN chmod +x entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]
 
 CMD ["fastapi", "run", "src/main.py", "--reload", "--host", "0.0.0.0"]
