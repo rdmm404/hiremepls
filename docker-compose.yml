@@ -7,17 +7,17 @@ services:
         - path: ./backend/src
           action: sync
           target: /app/src
+        - path: ./backend/alembic
+          action: sync
+          target: /app/alembic
         - path: ./backend/uv.lock
           action: rebuild
     ports:
       - 8765:8000
     tty: true
+    env_file: backend/.env
     environment:
-      - DATABASE_USER=admin
-      - DATABASE_PASSWORD=admin
       - DATABASE_HOST=postgres
-      - DATABASE_PORT=5432
-      - DATABASE_DB=hiremepls
   postgres:
     image: postgres:17
     ports:

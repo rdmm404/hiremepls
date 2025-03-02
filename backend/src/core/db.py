@@ -1,21 +1,20 @@
 from sqlmodel import Session, create_engine, SQLModel
 from typing import Generator
 
-from src.core.config import settings
+from src.core.config import settings, Settings
 
 
-def get_connection_string(host: str, port: int, user: str, password: str, db: str) -> str:
-    return f"postgresql+psycopg://{user}:{password}@{host}:{port}/{db}"
+def get_connection_string(settings: Settings) -> str:
+    return (
+        f"postgresql+psycopg://"
+        f"{settings.DATABASE_USER}:{settings.DATABASE_PASSWORD}@"
+        f"{settings.DATABASE_HOST}:{settings.DATABASE_PORT}"
+        f"/{settings.DATABASE_DB}"
+    )
 
 
 engine = create_engine(
-    get_connection_string(
-        settings.DATABASE_HOST,
-        settings.DATABASE_PORT,
-        settings.DATABASE_USER,
-        settings.DATABASE_PASSWORD,
-        settings.DATABASE_DB,
-    ),
+    get_connection_string(settings),
     echo=settings.ENVIRONMENT == "dev",
 )
 
