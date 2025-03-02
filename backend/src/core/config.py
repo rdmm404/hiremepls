@@ -1,6 +1,7 @@
 from pydantic_settings import BaseSettings
 from typing import Literal
 
+
 class Settings(BaseSettings):
     DATABASE_USER: str
     DATABASE_PASSWORD: str
@@ -9,4 +10,5 @@ class Settings(BaseSettings):
     DATABASE_DB: str = ""
     ENVIRONMENT: Literal["dev", "prd"] = "dev"
 
-settings = Settings() # type: ignore
+
+settings = Settings()  # type: ignore

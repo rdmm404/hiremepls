@@ -16,10 +16,11 @@ engine = create_engine(
         settings.DATABASE_PASSWORD,
         settings.DATABASE_DB,
     ),
-    echo=settings.ENVIRONMENT == "dev"
+    echo=settings.ENVIRONMENT == "dev",
 )
 
-def get_session()  -> Generator[Session, None, None]:
+
+def get_session() -> Generator[Session, None, None]:
     with Session(engine) as session:
         yield session
 

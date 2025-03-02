@@ -17,5 +17,13 @@ dependencies = [
 [dependency-groups]
 dev = [
     "mypy>=1.15.0",
+    "pre-commit>=4.1.0",
     "ruff>=0.9.9",
 ]
+
+
+[tool.ruff]
+line-length = 100
+
+[tool.mypy]
+strict = true
