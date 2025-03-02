@@ -2,8 +2,9 @@ from sqlmodel import SQLModel, Field
 
 
 class BaseUser(SQLModel):
-    name: str = Field(index=True)
-    age: int | None = Field(default=None, index=True)
+    name: str
+    last_name: str
+    email: str = Field(index=True, unique=True)
 
 
 class UserCreate(BaseUser): ...
