@@ -23,6 +23,7 @@ dev = [
 
 [tool.ruff]
 line-length = 100
+exclude = ["alembic/"]
 
 [tool.mypy]
 strict = true
