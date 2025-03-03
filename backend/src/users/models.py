@@ -12,11 +12,6 @@ class UserCreate(UserBase):
     password: str
 
 
-class UserPublic(UserBase):
-    id: int
-
-
 class User(UserBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
     password: str
-    is_superuser: bool = False
