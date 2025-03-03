@@ -1,10 +1,11 @@
-from sqlmodel import SQLModel, Field
+from pydantic import EmailStr
+from sqlmodel import SQLModel, Field, String
 
 
 class UserBase(SQLModel):
     name: str
     last_name: str
-    email: str = Field(index=True, unique=True)
+    email: EmailStr = Field(index=True, unique=True, sa_type=String())  # type: ignore
     is_superuser: bool = False
 
 
