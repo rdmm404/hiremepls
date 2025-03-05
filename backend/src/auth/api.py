@@ -12,6 +12,7 @@ from src.auth.deps import CurrentUser
 
 router = APIRouter(prefix="/auth", tags=["login"])
 
+
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
