@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     DATABASE_DB: str = ""
     ENVIRONMENT: Literal["dev", "prd"] = "dev"
     SECRET_KEY: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
 
 
 settings = Settings()  # type: ignore

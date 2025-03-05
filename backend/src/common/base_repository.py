@@ -1,4 +1,4 @@
-from typing import Self
+from typing import Self, Any
 from sqlmodel import Session
 
 from src.core.db import engine
@@ -11,5 +11,5 @@ class BaseRepository:
     def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, *_) -> None:
+    def __exit__(self, *_: Any) -> None:
         self.session.close()
