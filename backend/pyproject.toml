@@ -9,9 +9,11 @@ dependencies = [
     "email-validator>=2.2.0",
     "fastapi[standard]>=0.115.10",
     "loguru>=0.7.3",
+    "passlib[bcrypt]>=1.7.4",
     "psycopg[binary]>=3.2.5",
     "pydantic>=2.10.6",
     "pydantic-settings>=2.8.1",
+    "pyjwt>=2.10.1",
     "sqlmodel>=0.0.23",
 ]
 
@@ -28,3 +30,7 @@ exclude = ["alembic/"]
 
 [tool.mypy]
 strict = true
+
+[[tool.mypy.overrides]]
+module = "passlib.*"
+ignore_missing_imports = true
