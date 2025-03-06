@@ -41,3 +41,5 @@ async def create_user(user: UserCreate, user_repo: UserRepositoryDep) -> User:
         raise user_already_exists
 
     return User(**user_db.model_dump())
+
+# TODO: add /me endpoint
