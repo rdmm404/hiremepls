@@ -1,5 +1,6 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
+from typing import cast
 
 from src.jobs.llm_schema import JobDescription
 
@@ -22,7 +23,7 @@ class JobsLLMFlow:
     requirements. This is very important as it will serve as a reference for the future.
     """.strip()
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.5)
 
         prompt = ChatPromptTemplate.from_messages(
@@ -35,5 +36,5 @@ class JobsLLMFlow:
         self.chain = prompt | self.llm.with_structured_output(JobDescription)
 
     async def get_job_from_raw_content(self, content: str) -> JobDescription:
-        result = await self.chain.ainvoke({"application": content})
+        result = cast(JobDescription, await self.chain.ainvoke({"application": content}))
         return result

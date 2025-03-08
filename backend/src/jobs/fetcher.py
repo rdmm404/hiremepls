@@ -8,7 +8,7 @@ from loguru import logger
 class JobsFetcher:
     MAX_ATTEMPTS = 10
 
-    def _get_session(self):
+    def _get_session(self) -> requests.AsyncSession:
         return requests.AsyncSession(impersonate="chrome")
 
     async def get_page_contents(self, url: str) -> str:
@@ -34,15 +34,15 @@ class JobsFetcher:
 
         attempts = 0
         while attempts < self.MAX_ATTEMPTS:
-            html = await page.get_content()
+            html = await page.get_content()  # type: ignore
             content = self._get_text_from_html(html)
             if content != og_content:
                 break
             await page.sleep(1)
             attempts += 1
 
-        await page.close()
-        await browser.stop()
+        await page.close()  # type: ignore
+        await browser.stop()  # type: ignore
         return content
 
     def _get_text_from_html(self, html: str) -> str:

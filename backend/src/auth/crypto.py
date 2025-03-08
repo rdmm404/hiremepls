@@ -1,7 +1,7 @@
 import jwt
 from jwt.exceptions import InvalidTokenError
 from datetime import datetime, timedelta, timezone
-from typing import Any
+from typing import Any, cast
 from passlib.context import CryptContext
 from passlib.exc import UnknownHashError
 from pydantic import BaseModel, ValidationError
@@ -48,4 +48,4 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 
 def get_password_hash(password: str) -> str:
-    return pwd_context.hash(password)
+    return cast(str, pwd_context.hash(password))

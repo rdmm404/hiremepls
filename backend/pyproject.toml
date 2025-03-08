@@ -37,6 +37,7 @@ exclude = ["alembic/"]
 
 [tool.mypy]
 strict = true
+exclude = ["alembic/"]
 
 [[tool.mypy.overrides]]
 module = "passlib.*"

@@ -8,7 +8,6 @@ from pydantic import BaseModel
 from src.auth import crypto
 from src.core.config import settings
 from src.users.deps import UserRepositoryDep
-from src.auth.deps import CurrentUserDep
 
 router = APIRouter(prefix="/auth", tags=["login"])
 
@@ -38,8 +37,3 @@ def login_access_token(
     return Token(
         access_token=crypto.create_access_token(user.id, expires_delta=access_token_expires)
     )
-
-
-@router.get("/test-token")
-def test_token(user: CurrentUserDep):
-    return {"user": user}
