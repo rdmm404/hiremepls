@@ -24,8 +24,8 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev
 
 COPY ./alembic ./alembic
-COPY alembic.ini entrypoint.sh ./
-RUN chmod +x entrypoint.sh
+COPY alembic.ini entrypoint.sh manage.py ./
+RUN chmod +x entrypoint.sh && chmod +x manage.py
 
 ENTRYPOINT ["./entrypoint.sh"]
 

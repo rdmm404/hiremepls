@@ -18,7 +18,8 @@ services:
     env_file: backend/.env
     environment:
       - DATABASE_HOST=postgres
-      - DOCKER_RUN_MIGRATIONS=true
+      - RUN_MIGRATIONS=true
+      - CREATE_ADMIN_USER=true
     depends_on:
       - postgres
   postgres:
