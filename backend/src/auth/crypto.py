@@ -3,7 +3,9 @@ from jwt.exceptions import InvalidTokenError
 from datetime import datetime, timedelta, timezone
 from typing import Any
 from passlib.context import CryptContext
+from passlib.exc import UnknownHashError
 from pydantic import BaseModel, ValidationError
+from loguru import logger
 
 from src.core.config import settings
 
@@ -36,7 +38,13 @@ def get_subject_from_token(token: str) -> str | None:
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return bool(pwd_context.verify(plain_password, hashed_password))
+    try:
+        result: bool = pwd_context.verify(plain_password, hashed_password)
+    except UnknownHashError:
+        result = False
+        logger.warning(f"Unknown hash found {hashed_password}")
+
+    return result
 
 
 def get_password_hash(password: str) -> str:

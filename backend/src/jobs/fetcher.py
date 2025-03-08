@@ -8,22 +8,25 @@ from loguru import logger
 class JobsFetcher:
     MAX_ATTEMPTS = 10
 
+    def _get_session(self):
+        return requests.AsyncSession(impersonate="chrome")
+
     async def get_page_contents(self, url: str) -> str:
-        html = await self.get_html_with_cffi(url)
+        html, success = await self.get_html_with_cffi(url)
 
         content = self._get_text_from_html(html)
 
-        if self._requires_javascript(html):
+        if self._requires_javascript(html) or not success:
             logger.info(f"JS is required for {url}, using zendriver")
             content = await self.get_html_with_zendriver(url, content)
 
         return content
 
-    async def get_html_with_cffi(self, url: str) -> str:
-        async with requests.AsyncSession() as s:
+    async def get_html_with_cffi(self, url: str) -> tuple[str, bool]:
+        async with self._get_session() as s:
             resp = await s.get(url)
 
-        return resp.text
+        return resp.text, resp.ok
 
     async def get_html_with_zendriver(self, url: str, og_content: str) -> str:
         browser = await zd.start(headless=True)
