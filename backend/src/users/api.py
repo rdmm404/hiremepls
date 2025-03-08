@@ -4,17 +4,23 @@ from sqlalchemy.exc import IntegrityError
 from src.users.models import UserCreate
 from src.users.schema import User
 from src.users.deps import UserRepositoryDep
+from src.auth.deps import DependsCurrentSuperUser, CurrentUserDep
 
 router = APIRouter(prefix="/users", tags=["users"])
 
 
-@router.get("/")
+@router.get("/me")
+async def get_my_user(user: CurrentUserDep) -> User:
+    return User(**user.model_dump())
+
+
+@router.get("/", dependencies=[DependsCurrentSuperUser])
 async def list_users(user_repo: UserRepositoryDep, limit: int = 10, offset: int = 0) -> list[User]:
     users_db = user_repo.get_all_users(limit, offset)
     return [User(**u.model_dump()) for u in users_db]
 
 
-@router.get("/{user_id}")
+@router.get("/{user_id}", dependencies=[DependsCurrentSuperUser])
 async def get_user(user_id: int, user_repo: UserRepositoryDep) -> User:
     user = user_repo.get_user_by_id(user_id)
 
@@ -41,6 +47,3 @@ async def create_user(user: UserCreate, user_repo: UserRepositoryDep) -> User:
         raise user_already_exists
 
     return User(**user_db.model_dump())
-
-
-# TODO: add /me endpoint

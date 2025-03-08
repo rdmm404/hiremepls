@@ -32,7 +32,8 @@ def get_current_user(session: SessionDep, token: TokenDep) -> User:
     return user
 
 
-CurrentUserDep = Annotated[User, Depends(get_current_user)]
+DependsCurrentUser = Depends(get_current_user)
+CurrentUserDep = Annotated[User, DependsCurrentUser]
 
 
 def get_current_active_superuser(current_user: CurrentUserDep) -> User:
@@ -41,4 +42,5 @@ def get_current_active_superuser(current_user: CurrentUserDep) -> User:
     return current_user
 
 
-CurrentSuperUserDep = Annotated[User, Depends(get_current_active_superuser)]
+DependsCurrentSuperUser = Depends(get_current_active_superuser)
+CurrentSuperUserDep = Annotated[User, DependsCurrentSuperUser]
