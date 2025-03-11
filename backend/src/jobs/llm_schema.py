@@ -40,7 +40,7 @@ class Compensation(BaseModel):
 Modality = Literal["remote", "in_office", "hybrid"]
 
 
-class JobDescription(BaseModel):
+class Job(BaseModel):
     compensation: Annotated[
         Compensation,
         Field(
@@ -48,7 +48,7 @@ class JobDescription(BaseModel):
             "description provides salary range and compensation details. Make sure to fill it out EVERY TIME YOU CAN PLEASE"
         ),
     ]
-    company_name: Company
+    company: Company
     job_title: Annotated[str, Field(description="The job title of this job posting.")]
     job_type: Annotated[
         Literal["full_time", "part_time", "contract"],
@@ -89,9 +89,9 @@ class JobDescription(BaseModel):
 
 
 class LLMResult(BaseModel):
-    job_description: Annotated[JobDescription, "Structured data with job description details."]
+    job_description: Annotated[Job, "Structured data with job description details."]
     parsed: Annotated[bool, "If the input was correctly parsed into a structured schema."]
 
 
 if __name__ == "__main__":
-    print(json.dumps(JobDescription.model_json_schema(by_alias=False), indent=2))
+    print(json.dumps(Job.model_json_schema(by_alias=False), indent=2))
