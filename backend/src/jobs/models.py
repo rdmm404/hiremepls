@@ -17,3 +17,7 @@ not anything else
 
 the llm thing is just a starting point but i should be able to edit whatever i fkn want on my applications
 """
+
+
+class Job:
+    pass

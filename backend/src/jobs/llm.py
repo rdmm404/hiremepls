@@ -2,7 +2,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 from typing import cast
 
-from src.jobs.llm_schema import JobDescription
+from src.jobs.llm_schema import LLMResult
 
 
 class JobsLLMFlow:
@@ -33,8 +33,8 @@ class JobsLLMFlow:
             ],
         )
 
-        self.chain = prompt | self.llm.with_structured_output(JobDescription)
+        self.chain = prompt | self.llm.with_structured_output(LLMResult)
 
-    async def get_job_from_raw_content(self, content: str) -> JobDescription:
-        result = cast(JobDescription, await self.chain.ainvoke({"application": content}))
+    async def get_job_from_raw_content(self, content: str) -> LLMResult:
+        result = cast(LLMResult, await self.chain.ainvoke({"application": content}))
         return result

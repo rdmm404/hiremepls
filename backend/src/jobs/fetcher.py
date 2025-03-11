@@ -32,18 +32,34 @@ class JobsFetcher:
         browser = await zd.start(headless=True)
         page = await browser.get(url)
 
+        await page.evaluate(
+            expression="""
+                new Promise((resolve) => {
+                    if (document.readyState === 'complete') {
+                        resolve();
+                    } else {
+                        document.addEventListener('readystatechange', () => {
+                            if (document.readyState === 'complete') {
+                                resolve();
+                            }
+                        });
+                    }
+                });
+            """,
+            await_promise=True,
+        )
         attempts = 0
         while attempts < self.MAX_ATTEMPTS:
             html = await page.get_content()  # type: ignore
             content = self._get_text_from_html(html)
             if content != og_content:
                 break
-            await page.sleep(1)
+            await page.sleep(0.5)
             attempts += 1
 
         await page.close()  # type: ignore
         await browser.stop()  # type: ignore
-        return content
+        return str(html)
 
     def _get_text_from_html(self, html: str) -> str:
         soup = BeautifulSoup(html, features="lxml")

@@ -7,7 +7,11 @@ from pydantic import BaseModel, Field
 
 
 class Company(BaseModel):
-    pass
+    name: Annotated[str, Field(description="Name of the company.")]
+    url: Annotated[str | None, Field(description="Url of the homepage of the company, if present.")]
+    logo_url: Annotated[
+        str | None, Field(description="Url of the logo of the company, if present.")
+    ]
 
 
 class Compensation(BaseModel):
@@ -44,7 +48,7 @@ class JobDescription(BaseModel):
             "description provides salary range and compensation details. Make sure to fill it out EVERY TIME YOU CAN PLEASE"
         ),
     ]
-    company_name: Annotated[str, Field(description="Name of the company offering the job.")]
+    company_name: Company
     job_title: Annotated[str, Field(description="The job title of this job posting.")]
     job_type: Annotated[
         Literal["full_time", "part_time", "contract"],
@@ -82,6 +86,10 @@ class JobDescription(BaseModel):
             "a complete sentence, then do not include it, set it as null."
         ),
     ]
+
+
+class LLMResult(BaseModel):
+    job_description: Annotated[JobDescription, "Structured data with job description details."]
     parsed: Annotated[bool, "If the input was correctly parsed into a structured schema."]
 
 

@@ -3,7 +3,7 @@ from fastapi import APIRouter
 from src.auth.deps import CurrentUserDep
 from src.jobs.schema import CreateJobByUrl
 from src.jobs.llm_schema import JobDescription
-from src.jobs.deps import JobsLLMFlowDep, JobsFetcherDep
+from src.jobs.deps import JobsLLMFlowDep, JobsFetcherDep, HTMLParserDep
 
 router = APIRouter(prefix="/jobs", tags=["jobs"])
 
@@ -14,8 +14,11 @@ async def create_from_url(
     body: CreateJobByUrl,
     jobs_llm_flow: JobsLLMFlowDep,
     jobs_fetcher: JobsFetcherDep,
+    html_parser: HTMLParserDep,
 ) -> JobDescription:  # TODO: create a proper type for this return
-    job_contents = await jobs_fetcher.get_page_contents(str(body.url))
-    job_description = await jobs_llm_flow.get_job_from_raw_content(job_contents)
+    job_html = await jobs_fetcher.get_page_contents(str(body.url))
+    parsed_html = html_parser.parse(job_html)
+    result = await jobs_llm_flow.get_job_from_raw_content(parsed_html)
+
     # TODO: actually create the job
-    return job_description
+    return result.job_description
