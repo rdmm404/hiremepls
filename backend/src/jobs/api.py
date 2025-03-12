@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from src.auth.deps import CurrentUserDep
-from src.jobs.schema import CreateJobByUrl
+from src.jobs.api_schema import CreateJobByUrl
 from src.jobs.llm_schema import Job
 from src.jobs.deps import JobsLLMFlowDep, JobsFetcherDep, HTMLParserDep
 
