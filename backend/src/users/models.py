@@ -1,8 +1,14 @@
 from pydantic import EmailStr
 from sqlmodel import SQLModel, Field, String
 
+SCHEMA_NAME = "users"
 
-class UserBase(SQLModel):
+
+class UsersModel(SQLModel):
+    __table_args__ = {"schema": SCHEMA_NAME}
+
+
+class UserBase(UsersModel):
     name: str
     last_name: str
     email: EmailStr = Field(index=True, unique=True, sa_type=String())  # type: ignore
