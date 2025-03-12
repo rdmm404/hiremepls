@@ -4,8 +4,14 @@ from pydantic import HttpUrl
 
 Modality = Literal["remote", "in_office", "hybrid"]
 
+SCHEMA_NAME = "jobs"
 
-class Company(SQLModel, table=True):
+
+class JobsModel(SQLModel):
+    __table_args__ = {"schema": SCHEMA_NAME}
+
+
+class Company(JobsModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     name: str
     url: str | None = None
@@ -13,7 +19,7 @@ class Company(SQLModel, table=True):
     jobs: list["Job"] = Relationship(back_populates="company")
 
 
-class Compensation(SQLModel, table=True):
+class Compensation(JobsModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     currency: str | None = None
     hiring_bonus: float | None = None
@@ -25,14 +31,19 @@ class Compensation(SQLModel, table=True):
     job: "Job" = Relationship(back_populates="compensation")
 
 
-class Job(SQLModel, table=True):
+class Job(JobsModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     job_title: str
     job_url: HttpUrl = Field(sa_type=String)
-    company_id: int = Field(foreign_key="company.id", ondelete="SET NULL", nullable=True)
+    company_id: int = Field(
+        foreign_key=f"{SCHEMA_NAME}.company.id", ondelete="SET NULL", nullable=True
+    )
     company: Company = Relationship(back_populates="jobs")
     compensation_id: int = Field(
-        foreign_key="compensation.id", ondelete="SET NULL", unique=True, nullable=True
+        foreign_key=f"{SCHEMA_NAME}.compensation.id",
+        ondelete="SET NULL",
+        unique=True,
+        nullable=True,
     )
     compensation: Compensation | None = Relationship(back_populates="job")
     job_type: Literal["full_time", "part_time", "contract"] = Field(sa_type=String)
