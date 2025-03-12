@@ -1,13 +1,15 @@
 from typing import Literal
-from sqlmodel import SQLModel, Field, Relationship, ARRAY, Column, String
+from sqlmodel import Field, Relationship, ARRAY, Column, String
 from pydantic import HttpUrl
+
+from src.common.base_model import BaseModel
 
 Modality = Literal["remote", "in_office", "hybrid"]
 
 SCHEMA_NAME = "jobs"
 
 
-class JobsModel(SQLModel):
+class JobsModel(BaseModel):
     __table_args__ = {"schema": SCHEMA_NAME}
 
 

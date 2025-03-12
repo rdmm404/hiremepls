@@ -53,7 +53,6 @@ class HTMLParser:
         return BeautifulSoup(html, "lxml")
 
     def parse(self, html: str) -> str:
-        print(html)
         soup = self._get_soup(html)
         body = soup.body
 

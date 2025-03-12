@@ -1,10 +1,12 @@
 from pydantic import EmailStr
-from sqlmodel import SQLModel, Field, String
+from sqlmodel import Field, String
+
+from src.common.base_model import BaseModel
 
 SCHEMA_NAME = "users"
 
 
-class UsersModel(SQLModel):
+class UsersModel(BaseModel):
     __table_args__ = {"schema": SCHEMA_NAME}
 
 
@@ -20,5 +22,4 @@ class UserCreate(UserBase):
 
 
 class User(UserBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
     password: str
