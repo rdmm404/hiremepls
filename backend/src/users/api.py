@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from sqlalchemy.exc import IntegrityError
+from typing import cast
 
 from src.users.models import UserCreate
 from src.users.api_schema import User
@@ -20,17 +21,17 @@ async def list_users(user_repo: UserRepositoryDep, limit: int = 10, offset: int 
     return [User(**u.model_dump()) for u in users_db]
 
 
-@router.get("/{user_id}", dependencies=[DependsCurrentSuperUser])
+@router.get("/{user_id}", dependencies=[DependsCurrentSuperUser], response_model=User)
 async def get_user(user_id: int, user_repo: UserRepositoryDep) -> User:
     user = user_repo.get_user_by_id(user_id)
 
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    return User(**user.model_dump())
+    return cast(User, user)
 
 
-@router.post("/")
+@router.post("/", response_model=User)
 async def create_user(user: UserCreate, user_repo: UserRepositoryDep) -> User:
     user_already_exists = HTTPException(
         status_code=400,
@@ -46,4 +47,4 @@ async def create_user(user: UserCreate, user_repo: UserRepositoryDep) -> User:
     except IntegrityError:
         raise user_already_exists
 
-    return User(**user_db.model_dump())
+    return cast(User, user_db)

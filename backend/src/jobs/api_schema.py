@@ -1,6 +1,8 @@
 from typing import Annotated
 from pydantic import BaseModel, HttpUrl, AfterValidator, UrlConstraints
 
+from src.jobs.models import JobBase, CompanyBase, CompensationBase
+
 
 def is_https(value: HttpUrl) -> HttpUrl:
     if value.scheme != "https":
@@ -20,5 +22,12 @@ class CreateJobByUrl(BaseModel):
     url: Annotated[HttpUrl, UrlConstraints(allowed_schemes=["https"]), AfterValidator(clean_url)]
 
 
-class Job(BaseModel):
-    pass
+class Company(CompanyBase): ...
+
+
+class Compensation(CompensationBase): ...
+
+
+class Job(JobBase):
+    compensation: Compensation
+    company: Company

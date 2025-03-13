@@ -92,7 +92,11 @@ class Job(BaseModel):
 
 class LLMResult(BaseModel):
     job_description: Annotated[Job, "Structured data with job description details."]
-    parsed: Annotated[bool, "If the input was correctly parsed into a structured schema."]
+    parsed: Annotated[
+        bool,
+        "If the input was correctly parsed into a structured schema. "
+        "Please set this to false if you do not consider this is a valid job description.",
+    ]
 
 
 if __name__ == "__main__":
