@@ -16,6 +16,7 @@ class JobsModel(SQLModel):
 
 class CompanyBase(JobsModel):
     name: str
+    slug: str = Field(unique=True, index=True)
     url: HttpUrl | None = Field(default=None, sa_type=HttpUrlType, unique=True, index=True)
     logo_url: str | None = None
 

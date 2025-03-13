@@ -19,6 +19,7 @@ dependencies = [
     "pydantic>=2.10.6",
     "pydantic-settings>=2.8.1",
     "pyjwt>=2.10.1",
+    "python-slugify>=8.0.4",
     "sqlmodel>=0.0.23",
     "zendriver>=0.5.1",
 ]

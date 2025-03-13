@@ -1,7 +1,7 @@
 from sqlmodel import select
 
 from src.common.base_repository import BaseRepository
-from src.jobs.models import Job
+from src.jobs.models import Job, Company
 
 
 class JobsRepository(BaseRepository):
@@ -14,3 +14,7 @@ class JobsRepository(BaseRepository):
         self.session.commit()
         self.session.refresh(job)
         return job
+
+    def get_company_by_slug(self, slug: str) -> Company | None:
+        query = select(Company).where(Company.slug == slug)
+        return self.session.exec(query).first()

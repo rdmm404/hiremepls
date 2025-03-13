@@ -1,6 +1,7 @@
 from typing import Any
 from pydantic import HttpUrl
 from sqlalchemy.types import String, TypeDecorator
+from slugify import slugify
 
 
 class HttpUrlType(TypeDecorator[HttpUrl]):
@@ -16,3 +17,7 @@ class HttpUrlType(TypeDecorator[HttpUrl]):
 
     def process_literal_param(self, value: HttpUrl | None, dialect: Any) -> str:
         return str(value) if value else ""
+
+
+def generate_slug(text: str) -> str:
+    return slugify(text)

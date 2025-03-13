@@ -5,6 +5,7 @@ from src.jobs.fetcher import JobsFetcher
 from src.jobs.parser import HTMLParser
 from src.jobs.jobs_repository import JobsRepository
 from src.jobs.models import Job, Company, Compensation
+from src.common.utils import generate_slug
 
 
 class JobsService:
@@ -26,14 +27,23 @@ class JobsService:
         parsed_html = self.parser.parse(job_html)
 
         logger.info("HTML parsed, sending to LLM")
+        # TODO: pass existing companies to LLM for better context
         result = await self.llm.get_job_from_raw_content(parsed_html)
 
         logger.debug(f"LLM schema {result}")
 
         assert result.parsed, "Job couldn't be parsed"
 
-        company = Company.model_validate(result.job_description.company)
+        company_slug = generate_slug(result.job_description.company.name)
+        company = self.jobs_repo.get_company_by_slug(company_slug)
+
+        if not company:
+            company = Company.model_validate(
+                result.job_description.company,
+                update={"slug": company_slug},
+            )
         logger.debug(f"validated company {company}")
+
         compensation = Compensation.model_validate(result.job_description.compensation)
         job = Job.model_validate(
             result.job_description,

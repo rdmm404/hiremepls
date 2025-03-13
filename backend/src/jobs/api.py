@@ -16,7 +16,7 @@ async def create_from_url(
 ) -> Job:
     try:
         job = await jobs_service.create_job_from_url(str(body.url))
-    except Exception as e:
+    except Exception as e:  # TODO: Improve exception handling
         logger.error(f"Exception while creating job from url {e}")
         raise HTTPException(status_code=400, detail="Job couldn't be parsed")
 
