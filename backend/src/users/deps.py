@@ -1,7 +1,7 @@
 from fastapi import Depends
 from typing import Annotated, Generator
 
-from src.users.user_repository import UserRepository
+from src.users.repository import UserRepository
 
 
 def get_user_repository() -> Generator[UserRepository, None, None]:

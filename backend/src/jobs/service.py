@@ -3,7 +3,7 @@ from loguru import logger
 from src.jobs.llm import JobsLLMFlow
 from src.jobs.fetcher import JobsFetcher
 from src.jobs.parser import HTMLParser
-from src.jobs.jobs_repository import JobsRepository
+from src.jobs.repository import JobsRepository
 from src.jobs.models import Job, Company, Compensation
 from src.common.utils import generate_slug
 

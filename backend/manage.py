@@ -4,7 +4,7 @@ import inspect
 import os
 
 from typing import Callable
-from src.users.user_repository import UserRepository
+from src.users.repository import UserRepository
 from src.users.models import UserCreate
 
 
