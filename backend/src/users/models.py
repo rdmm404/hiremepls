@@ -1,12 +1,12 @@
 from pydantic import EmailStr
 from sqlmodel import Field, String
 
-from src.common.base_model import BaseModel
+from src.common.base_model import BaseSQLModel
 
 SCHEMA_NAME = "users"
 
 
-class UsersModel(BaseModel):
+class UsersModel(BaseSQLModel):
     __table_args__ = {"schema": SCHEMA_NAME}
 
 

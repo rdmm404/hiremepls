@@ -4,7 +4,7 @@ from datetime import datetime
 from sqlmodel import SQLModel, Field
 
 
-class BaseModel(SQLModel):
+class BaseSQLModel(SQLModel):
     id: int | None = Field(default=None, primary_key=True)
     created_at: datetime | None = Field(  # type: ignore
         default=None, sa_type=sa.DateTime(), sa_column_kwargs={"server_default": sa.func.now()}

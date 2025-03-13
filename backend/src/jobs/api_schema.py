@@ -1,5 +1,5 @@
 from typing import Annotated
-from pydantic import BaseModel, HttpUrl, AfterValidator
+from pydantic import BaseModel, HttpUrl, AfterValidator, UrlConstraints
 
 
 def is_https(value: HttpUrl) -> HttpUrl:
@@ -8,5 +8,17 @@ def is_https(value: HttpUrl) -> HttpUrl:
     return value
 
 
+def clean_url(value: HttpUrl) -> HttpUrl:
+    port = ""
+    if value.port:
+        port = f":{value.port}"
+    url = f"{value.scheme}://{value.host}{port}{value.path}"
+    return HttpUrl(url)
+
+
 class CreateJobByUrl(BaseModel):
-    url: Annotated[HttpUrl, AfterValidator(is_https)]
+    url: Annotated[HttpUrl, UrlConstraints(allowed_schemes=["https"]), AfterValidator(clean_url)]
+
+
+class Job(BaseModel):
+    pass

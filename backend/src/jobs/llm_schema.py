@@ -3,12 +3,14 @@ import json
 from typing import Literal, List, Annotated
 from rich import print
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, HttpUrl
 
 
 class Company(BaseModel):
     name: Annotated[str, Field(description="Name of the company.")]
-    url: Annotated[str | None, Field(description="Url of the homepage of the company, if present.")]
+    url: Annotated[
+        HttpUrl | None, Field(description="Url of the homepage of the company, if present.")
+    ]
     logo_url: Annotated[
         str | None, Field(description="Url of the logo of the company, if present.")
     ]
