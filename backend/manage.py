@@ -3,16 +3,21 @@ import argparse
 import inspect
 import os
 
+from sqlmodel import Session
 from typing import Callable
+
+from src.core.db import engine
+from src.applications.models import Application  # noqa
+from src.jobs.models import Job  # noqa
 from src.users.repository import UserRepository
 from src.users.models import UserCreate
 
 
-def create_admin() -> None:
+def create_admin(session: Session) -> None:
     user = os.getenv("ADMIN_USER", "admin@example.com")
     passwd = os.getenv("ADMIN_PASSWORD", "password")
 
-    user_repo = UserRepository()
+    user_repo = UserRepository(session)
     user_model = UserCreate(
         name="Admin", last_name="Admin", email=user, is_superuser=True, password=passwd
     )
@@ -20,8 +25,8 @@ def create_admin() -> None:
         user_repo.create_user(user_model)
 
 
-def get_commands() -> dict[str, Callable[[], None]]:
-    commands: dict[str, Callable[[], None]] = {}
+def get_commands() -> dict[str, Callable[[Session], None]]:
+    commands: dict[str, Callable[[Session], None]] = {}
     for name, obj in globals().items():
         if (
             inspect.isfunction(obj)
@@ -46,7 +51,8 @@ def main() -> None:
     args: argparse.Namespace = parser.parse_args()
 
     func = commands[args.function_name]
-    func()
+    with Session(engine) as session:
+        func(session)
 
 
 if __name__ == "__main__":

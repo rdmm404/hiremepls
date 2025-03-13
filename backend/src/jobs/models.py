@@ -1,9 +1,14 @@
-from typing import Literal
+from typing import Literal, TYPE_CHECKING
 from sqlmodel import SQLModel, Field, Relationship, ARRAY, Column, AutoString
 from pydantic import HttpUrl
 
 from src.common.base_model import BaseSQLModel
 from src.common.utils import HttpUrlType
+
+
+if TYPE_CHECKING:
+    from src.applications.models import Application
+
 
 Modality = Literal["remote", "in_office", "hybrid"]
 
@@ -64,3 +69,4 @@ class Job(JobBase, BaseSQLModel, table=True):
         nullable=True,
     )
     compensation: Compensation | None = Relationship(back_populates="job")
+    applications: list["Application"] = Relationship(back_populates="job")

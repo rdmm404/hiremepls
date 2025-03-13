@@ -1,7 +1,11 @@
 from pydantic import EmailStr
-from sqlmodel import Field, String
+from sqlmodel import Field, String, Relationship
+from typing import TYPE_CHECKING
 
 from src.common.base_model import BaseSQLModel
+
+if TYPE_CHECKING:
+    from src.applications.models import Application
 
 SCHEMA_NAME = "users"
 
@@ -23,3 +27,4 @@ class UserCreate(UserBase):
 
 class User(UserBase, table=True):
     password: str
+    applications: list["Application"] = Relationship(back_populates="user")

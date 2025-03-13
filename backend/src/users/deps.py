@@ -1,12 +1,12 @@
 from fastapi import Depends
-from typing import Annotated, Generator
+from typing import Annotated
 
+from src.common.deps import SessionDep
 from src.users.repository import UserRepository
 
 
-def get_user_repository() -> Generator[UserRepository, None, None]:
-    with UserRepository() as user_repo:
-        yield user_repo
+def get_user_repository(session: SessionDep) -> UserRepository:
+    return UserRepository(session)
 
 
 UserRepositoryDep = Annotated[UserRepository, Depends(get_user_repository)]

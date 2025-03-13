@@ -9,7 +9,11 @@ from pydantic import BaseModel, Field, HttpUrl
 class Company(BaseModel):
     name: Annotated[str, Field(description="Name of the company.")]
     url: Annotated[
-        HttpUrl | None, Field(description="Url of the homepage of the company, if present.")
+        HttpUrl | None,
+        Field(
+            description="Url of the homepage of the company, if present. "
+            "Please include the full url, containting the schema."
+        ),
     ]
     logo_url: Annotated[
         str | None, Field(description="Url of the logo of the company, if present.")
