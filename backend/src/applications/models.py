@@ -1,4 +1,4 @@
-from sqlmodel import SQLModel, Field, Relationship, AutoString
+from sqlmodel import SQLModel, Field, Relationship, AutoString, UniqueConstraint
 from typing import TYPE_CHECKING
 from enum import StrEnum
 
@@ -25,11 +25,7 @@ class ApplicationStatus(StrEnum):
     GHOSTED = "Ghosted"
 
 
-class ApplicationsModel(SQLModel):
-    __table_args__ = {"schema": SCHEMA_NAME}
-
-
-class ApplicationBase(ApplicationsModel):
+class ApplicationBase(SQLModel):
     status: ApplicationStatus = Field(
         default=ApplicationStatus.PENDING,
         sa_type=AutoString,
@@ -44,6 +40,10 @@ class ApplicationBase(ApplicationsModel):
 
 
 class Application(ApplicationBase, BaseSQLModel, table=True):
+    __table_args__ = (
+        UniqueConstraint("user_id", "job_id", name="user_job_unique_constraint"),
+        {"schema": SCHEMA_NAME},
+    )
     user_id: int | None = Field(
         default=None, foreign_key="users.user.id", ondelete="CASCADE", nullable=False
     )
