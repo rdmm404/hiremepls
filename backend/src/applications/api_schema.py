@@ -11,4 +11,5 @@ class CreateApplicationByJobUrl(BaseModel):
 
 
 class Application(ApplicationBase):
+    id: int
     job: Job

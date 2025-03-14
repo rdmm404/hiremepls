@@ -48,6 +48,9 @@ class JobsFetcher:
             """,
             await_promise=True,
         )
+
+        assert await self._wait_for_cloudflare(page), "Didn't pass cloudflare verification."
+
         attempts = 0
         while attempts < self.MAX_ATTEMPTS:
             html = await page.get_content()  # type: ignore
@@ -80,3 +83,25 @@ class JobsFetcher:
                 return True
 
         return False
+
+    async def _wait_for_cloudflare(self, page: zd.Tab) -> bool:
+        cloudflare_text = "Verifying you are human"
+
+        cloudflare_check = await page.find_element_by_text(cloudflare_text)
+
+        if cloudflare_check:
+            logger.info("Cloudflare verification detected. waiting until done")
+
+        attempts = 0
+        while attempts < self.MAX_ATTEMPTS and cloudflare_check:
+            attempts += 1
+            logger.debug("Cloudflare still verifying")
+            cloudflare_check = await page.find_element_by_text(cloudflare_text)
+            await page.sleep(1)
+
+        if cloudflare_check:
+            logger.info("Cloudflare couldn't be verified. Moving on...")
+            return False
+
+        logger.info("Cloudflare verified. Moving on...")
+        return True

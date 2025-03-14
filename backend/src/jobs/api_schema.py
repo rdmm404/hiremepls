@@ -9,12 +9,15 @@ class CreateJobByUrl(BaseModel):
     url: Annotated[HttpUrl, UrlConstraints(allowed_schemes=["https"]), AfterValidator(clean_url)]
 
 
-class Company(CompanyBase): ...
+class Company(CompanyBase):
+    id: int
 
 
-class Compensation(CompensationBase): ...
+class Compensation(CompensationBase):
+    id: int
 
 
 class Job(JobBase):
+    id: int
     compensation: Compensation
     company: Company

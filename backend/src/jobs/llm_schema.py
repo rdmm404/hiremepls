@@ -101,6 +101,10 @@ class LLMResult(BaseModel):
         "If the input was correctly parsed into a structured schema. "
         "Please set this to false if you do not consider this is a valid job description.",
     ]
+    reason: Annotated[
+        str | None,
+        "If parsed is false, please state the reason here.",
+    ]
 
 
 if __name__ == "__main__":
