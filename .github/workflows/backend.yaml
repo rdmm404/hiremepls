@@ -43,10 +43,10 @@ jobs:
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
             ${{ env.IMAGE_NAME }}:latest
 
-    #   - name: Deploy to Cloud Run
-    #     id: deploy
-    #     uses: google-github-actions/deploy-cloudrun@v2
-    #     with:
-    #       service: ${{ vars.SERVICE_NAME }}
-    #       region: ${{ vars.GCP_REGION }}
-    #       image: ${{ env.IMAGE_NAME }}:${{ github.sha }}
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ vars.SERVICE_NAME }}
+          region: ${{ vars.GCP_REGION }}
+          image: ${{ env.IMAGE_NAME }}:${{ github.sha }}
