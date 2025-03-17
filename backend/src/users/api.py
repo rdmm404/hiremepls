@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, status, Response
 from sqlalchemy.exc import IntegrityError
 from typing import cast
 
@@ -21,7 +21,7 @@ async def list_users(user_repo: UserRepositoryDep, limit: int = 10, offset: int 
     return [User(**u.model_dump()) for u in users_db]
 
 
-@router.get("/{user_id}", dependencies=[DependsCurrentSuperUser], response_model=User)
+@router.get("/{user_id}/", dependencies=[DependsCurrentSuperUser], response_model=User)
 async def get_user(user_id: int, user_repo: UserRepositoryDep) -> User:
     user = user_repo.get_user_by_id(user_id)
 
@@ -31,7 +31,7 @@ async def get_user(user_id: int, user_repo: UserRepositoryDep) -> User:
     return cast(User, user)
 
 
-@router.post("/", response_model=User)
+@router.post("/", dependencies=[DependsCurrentSuperUser], response_model=User)
 async def create_user(user: UserCreate, user_repo: UserRepositoryDep) -> User:
     user_already_exists = HTTPException(
         status_code=400,
@@ -48,3 +48,14 @@ async def create_user(user: UserCreate, user_repo: UserRepositoryDep) -> User:
         raise user_already_exists
 
     return cast(User, user_db)
+
+
+@router.delete(
+    "/{user_id}/",
+    dependencies=[DependsCurrentSuperUser],
+)
+def delete_user(user_id: int, user_repo: UserRepositoryDep) -> Response:
+    if not user_repo.delete_user(user_id):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+
+    return Response(status_code=status.HTTP_204_NO_CONTENT)

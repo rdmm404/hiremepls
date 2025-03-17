@@ -1,5 +1,6 @@
 from typing import cast
-from sqlmodel import select
+from sqlmodel import select, col
+from sqlalchemy import delete
 
 from src.common.base_repository import BaseRepository
 from src.users.models import UserCreate, User
@@ -28,3 +29,9 @@ class UserRepository(BaseRepository):
         self.session.commit()
         self.session.refresh(user_db)
         return user_db
+
+    def delete_user(self, user_id: int) -> bool:
+        query = delete(User).where(col(User.id) == user_id)
+        result = self.session.exec(query)  # type: ignore
+        self.session.commit()
+        return bool(result.rowcount > 0)
