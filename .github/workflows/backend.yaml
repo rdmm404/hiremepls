@@ -43,10 +43,19 @@ jobs:
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
             ${{ env.IMAGE_NAME }}:latest
 
-      - name: Deploy to Cloud Run
-        id: deploy
-        uses: google-github-actions/deploy-cloudrun@v2
-        with:
-          service: ${{ vars.SERVICE_NAME }}
-          region: ${{ vars.GCP_REGION }}
-          image: ${{ env.IMAGE_NAME }}:${{ github.sha }}
+      # - name: Deploy to Cloud Run
+      #   id: deploy
+      #   uses: google-github-actions/deploy-cloudrun@v2
+      #   with:
+      #     service: ${{ vars.SERVICE_NAME }}
+      #     region: ${{ vars.GCP_REGION }}
+      #     image: ${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
+
+      - name: Deploy to cloud run
+        run: gcloud run deploy ${{ vars.SERVICE_NAME }} --region=${{ vars.GCP_REGION }} --image=${{ env.IMAGE_NAME }}:${{ github.sha }}
