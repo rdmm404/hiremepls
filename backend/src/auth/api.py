@@ -23,11 +23,8 @@ def login_access_token(
 ) -> Token:
     user = user_repo.get_user_by_email(form_data.username)
 
-    print(form_data.password)
-
     authenticated = crypto.verify_password(form_data.password, user.password) if user else False
 
-    print(authenticated)
     if not authenticated or not user:
         raise HTTPException(status_code=400, detail="Incorrect email or password")
     # TODO

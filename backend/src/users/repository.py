@@ -22,8 +22,6 @@ class UserRepository(BaseRepository):
 
     def create_user(self, user: UserCreate) -> User:
         hashed_pwd = get_password_hash(user.password)
-        print(f"{user.password=}")
-        print(f"{hashed_pwd=}")
         user_db = User.model_validate(user, update={"password": hashed_pwd})
         self.session.add(user_db)
         self.session.commit()
