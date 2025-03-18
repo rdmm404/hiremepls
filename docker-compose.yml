@@ -1,5 +1,6 @@
 services:
   backend:
+    container_name: hiremepls-be
     build:
       context: ./backend
     develop:
@@ -7,9 +8,9 @@ services:
         - path: ./backend/src
           action: sync
           target: /app/src
-        - path: ./backend/alembic
-          action: sync+restart
-          target: /app/alembic
+        # - path: ./backend/alembic
+        #   action: sync+restart
+        #   target: /app/alembic
         - path: ./backend/uv.lock
           action: rebuild
     ports:
@@ -32,5 +33,21 @@ services:
       POSTGRES_DB: hiremepls
     volumes:
       - db_data:/var/lib/postgresql/data:rw
+
+  frontend:
+    container_name: hiremepls-fe
+    build:
+      context: ./frontend
+    ports:
+      - 8766:5173
+    develop:
+      watch:
+        - path: ./frontend
+          action: sync
+          target: /app
+        - path: ./frontend/pnpm-lock.yaml
+          action: rebuild
+        - path: ./frontend/Dockerfile
+          action: rebuild
 volumes:
   db_data:
