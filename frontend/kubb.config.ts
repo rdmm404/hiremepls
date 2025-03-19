@@ -17,8 +17,10 @@ export default defineConfig(() => {
       },
       plugins: [
         pluginOas({}),
-        pluginTs({}),
-        pluginReactQuery({}),
+        pluginTs({ enumType: "enum" }),
+        pluginReactQuery({
+          exclude: [{ type: "tag", pattern: "users" }],
+        }),
         pluginClient({
           importPath: "../../../client.ts",
           group: {
@@ -27,6 +29,7 @@ export default defineConfig(() => {
               return `${group}Service`;
             },
           },
+          exclude: [{ type: "tag", pattern: "users" }],
         }),
       ],
     },

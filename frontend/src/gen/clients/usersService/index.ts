@@ -1,6 +1,0 @@
-export { getUsersCreateUserUrl, usersCreateUser } from './usersCreateUser.ts'
-export { getUsersDeleteUserUrl, usersDeleteUser } from './usersDeleteUser.ts'
-export { getUsersGetMyUserUrl, usersGetMyUser } from './usersGetMyUser.ts'
-export { getUsersGetUserUrl, usersGetUser } from './usersGetUser.ts'
-export { getUsersListUsersUrl, usersListUsers } from './usersListUsers.ts'
-export { usersService } from './usersService.ts'

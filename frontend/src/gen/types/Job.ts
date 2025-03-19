@@ -1,21 +1,17 @@
 import type { Company } from './Company.ts'
 import type { Compensation } from './Compensation.ts'
 
-export const jobJobTypeEnum = {
-  full_time: 'full_time',
-  part_time: 'part_time',
-  contract: 'contract',
-} as const
+export enum JobJobTypeEnum {
+  'full_time' = 'full_time',
+  'part_time' = 'part_time',
+  'contract' = 'contract',
+}
 
-export type JobJobTypeEnum = (typeof jobJobTypeEnum)[keyof typeof jobJobTypeEnum]
-
-export const jobModalityEnum = {
-  remote: 'remote',
-  in_office: 'in_office',
-  hybrid: 'hybrid',
-} as const
-
-export type JobModalityEnum = (typeof jobModalityEnum)[keyof typeof jobModalityEnum]
+export enum JobModalityEnum {
+  'remote' = 'remote',
+  'in_office' = 'in_office',
+  'hybrid' = 'hybrid',
+}
 
 export type Job = {
   /**
