@@ -1,0 +1,1 @@
+{"type":"string","enum":["Pending","Applied","Received","In Assesment","In Screening","Interviewing","Offer Received","Hired","Rejected","Ghosted"],"title":"ApplicationStatus","x-readme-ref-name":"ApplicationStatus"}

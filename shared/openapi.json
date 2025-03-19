@@ -1,0 +1,592 @@
+{
+  "openapi": "3.1.0",
+  "info": { "title": "FastAPI", "version": "0.1.0" },
+  "paths": {
+    "/users/me": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Get My User",
+        "operationId": "get_my_user_users_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }]
+      }
+    },
+    "/users/": {
+      "get": {
+        "tags": ["users"],
+        "summary": "List Users",
+        "operationId": "list_users_users__get",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 10, "title": "Limit" }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 0, "title": "Offset" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/User" },
+                  "title": "Response List Users Users  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["users"],
+        "summary": "Create User",
+        "operationId": "create_user_users__post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserCreate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Get User",
+        "operationId": "get_user_users__user_id___get",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "User Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["users"],
+        "summary": "Delete User",
+        "operationId": "delete_user_users__user_id___delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "User Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/token": {
+      "post": {
+        "tags": ["login"],
+        "summary": "Login Access Token",
+        "operationId": "login_access_token_auth_token_post",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_login_access_token_auth_token_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Token" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/url": {
+      "post": {
+        "tags": ["jobs"],
+        "summary": "Create From Url",
+        "operationId": "create_from_url_jobs_url_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateJobByUrl" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Job" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }]
+      }
+    },
+    "/applications/url": {
+      "post": {
+        "tags": ["applications"],
+        "summary": "Create From Job Url",
+        "operationId": "create_from_job_url_applications_url_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateApplicationByJobUrl"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Application" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Application": {
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ApplicationStatus",
+            "default": "Pending"
+          },
+          "interview_rounds": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Interview Rounds"
+          },
+          "current_round": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Current Round"
+          },
+          "notes": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Notes"
+          },
+          "fit": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Fit"
+          },
+          "resume_used": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Resume Used"
+          },
+          "id": { "type": "integer", "title": "Id" },
+          "job": { "$ref": "#/components/schemas/Job" }
+        },
+        "type": "object",
+        "required": ["id", "job"],
+        "title": "Application"
+      },
+      "ApplicationStatus": {
+        "type": "string",
+        "enum": [
+          "Pending",
+          "Applied",
+          "Received",
+          "In Assesment",
+          "In Screening",
+          "Interviewing",
+          "Offer Received",
+          "Hired",
+          "Rejected",
+          "Ghosted"
+        ],
+        "title": "ApplicationStatus"
+      },
+      "Body_login_access_token_auth_token_post": {
+        "properties": {
+          "grant_type": {
+            "anyOf": [
+              { "type": "string", "pattern": "^password$" },
+              { "type": "null" }
+            ],
+            "title": "Grant Type"
+          },
+          "username": { "type": "string", "title": "Username" },
+          "password": { "type": "string", "title": "Password" },
+          "scope": { "type": "string", "title": "Scope", "default": "" },
+          "client_id": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Client Id"
+          },
+          "client_secret": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Client Secret"
+          }
+        },
+        "type": "object",
+        "required": ["username", "password"],
+        "title": "Body_login_access_token_auth_token_post"
+      },
+      "Company": {
+        "properties": {
+          "name": { "type": "string", "title": "Name" },
+          "slug": { "type": "string", "title": "Slug" },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2083,
+                "minLength": 1,
+                "format": "uri"
+              },
+              { "type": "null" }
+            ],
+            "title": "Url"
+          },
+          "logo_url": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Logo Url"
+          },
+          "id": { "type": "integer", "title": "Id" }
+        },
+        "type": "object",
+        "required": ["name", "slug", "id"],
+        "title": "Company"
+      },
+      "Compensation": {
+        "properties": {
+          "currency": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Currency"
+          },
+          "hiring_bonus": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Hiring Bonus"
+          },
+          "equity": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Equity"
+          },
+          "minimum": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Minimum"
+          },
+          "maximum": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Maximum"
+          },
+          "details": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Details"
+          },
+          "benefits": {
+            "items": { "type": "string" },
+            "type": "array",
+            "title": "Benefits",
+            "default": []
+          },
+          "id": { "type": "integer", "title": "Id" }
+        },
+        "type": "object",
+        "required": ["id"],
+        "title": "Compensation"
+      },
+      "CreateApplicationByJobUrl": {
+        "properties": {
+          "url": {
+            "type": "string",
+            "maxLength": 2083,
+            "minLength": 1,
+            "format": "uri",
+            "title": "Url"
+          }
+        },
+        "type": "object",
+        "required": ["url"],
+        "title": "CreateApplicationByJobUrl"
+      },
+      "CreateJobByUrl": {
+        "properties": {
+          "url": {
+            "type": "string",
+            "maxLength": 2083,
+            "minLength": 1,
+            "format": "uri",
+            "title": "Url"
+          }
+        },
+        "type": "object",
+        "required": ["url"],
+        "title": "CreateJobByUrl"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": { "$ref": "#/components/schemas/ValidationError" },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Job": {
+        "properties": {
+          "job_title": { "type": "string", "title": "Job Title" },
+          "job_url": {
+            "type": "string",
+            "maxLength": 2083,
+            "minLength": 1,
+            "format": "uri",
+            "title": "Job Url"
+          },
+          "job_type": {
+            "type": "string",
+            "enum": ["full_time", "part_time", "contract"],
+            "title": "Job Type"
+          },
+          "llm_summary": { "type": "string", "title": "Llm Summary" },
+          "job_description": { "type": "string", "title": "Job Description" },
+          "requirements": {
+            "items": { "type": "string" },
+            "type": "array",
+            "title": "Requirements",
+            "default": []
+          },
+          "skills": {
+            "items": { "type": "string" },
+            "type": "array",
+            "title": "Skills",
+            "default": []
+          },
+          "modality": {
+            "items": {
+              "type": "string",
+              "enum": ["remote", "in_office", "hybrid"]
+            },
+            "type": "array",
+            "title": "Modality",
+            "default": []
+          },
+          "location": { "type": "string", "title": "Location" },
+          "other_details": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Other Details"
+          },
+          "id": { "type": "integer", "title": "Id" },
+          "compensation": { "$ref": "#/components/schemas/Compensation" },
+          "company": { "$ref": "#/components/schemas/Company" }
+        },
+        "type": "object",
+        "required": [
+          "job_title",
+          "job_url",
+          "job_type",
+          "llm_summary",
+          "job_description",
+          "location",
+          "id",
+          "compensation",
+          "company"
+        ],
+        "title": "Job"
+      },
+      "Token": {
+        "properties": {
+          "access_token": { "type": "string", "title": "Access Token" },
+          "token_type": {
+            "type": "string",
+            "title": "Token Type",
+            "default": "bearer"
+          }
+        },
+        "type": "object",
+        "required": ["access_token"],
+        "title": "Token"
+      },
+      "User": {
+        "properties": {
+          "id": { "type": "integer", "title": "Id" },
+          "name": { "type": "string", "title": "Name" },
+          "last_name": { "type": "string", "title": "Last Name" },
+          "email": { "type": "string", "title": "Email" },
+          "is_superuser": {
+            "type": "boolean",
+            "title": "Is Superuser",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": ["id", "name", "last_name", "email"],
+        "title": "User"
+      },
+      "UserCreate": {
+        "properties": {
+          "id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Id"
+          },
+          "created_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Updated At"
+          },
+          "name": { "type": "string", "title": "Name" },
+          "last_name": { "type": "string", "title": "Last Name" },
+          "email": { "type": "string", "format": "email", "title": "Email" },
+          "is_superuser": {
+            "type": "boolean",
+            "title": "Is Superuser",
+            "default": false
+          },
+          "password": { "type": "string", "title": "Password" }
+        },
+        "type": "object",
+        "required": ["name", "last_name", "email", "password"],
+        "title": "UserCreate"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": { "type": "string", "title": "Message" },
+          "type": { "type": "string", "title": "Error Type" }
+        },
+        "type": "object",
+        "required": ["loc", "msg", "type"],
+        "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "OAuth2PasswordBearer": {
+        "type": "oauth2",
+        "flows": { "password": { "scopes": {}, "tokenUrl": "/auth/token" } }
+      }
+    }
+  }
+}

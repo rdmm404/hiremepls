@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@kubb/plugin-oas": "^3.6.4",
     "@radix-ui/react-slot": "^1.1.2",
     "@tailwindcss/vite": "^4.0.14",
+    "@tanstack/react-query": "^5.69.0",
     "@tanstack/react-router": "^1.114.23",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -24,6 +26,11 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@kubb/cli": "^3.6.4",
+    "@kubb/core": "^3.6.4",
+    "@kubb/plugin-client": "^3.6.4",
+    "@kubb/plugin-react-query": "^3.6.4",
+    "@kubb/plugin-ts": "^3.6.4",
     "@tanstack/react-router-devtools": "^1.114.23",
     "@tanstack/router-plugin": "^1.114.23",
     "@types/node": "^22.13.10",

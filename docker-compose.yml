@@ -40,9 +40,13 @@ services:
       context: ./frontend
     ports:
       - 8766:5173
+    volumes:
+      - ./frontend/src:/app/src:rw
     develop:
       watch:
         - path: ./frontend
+          ignore:
+            - src/
           action: sync
           target: /app
         - path: ./frontend/pnpm-lock.yaml
