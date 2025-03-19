@@ -1,7 +1,7 @@
 from datetime import timedelta
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import BaseModel
 
@@ -19,7 +19,9 @@ class Token(BaseModel):
 
 @router.post("/token")
 def login_access_token(
-    user_repo: UserRepositoryDep, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
+    response: Response,
+    user_repo: UserRepositoryDep,
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
 ) -> Token:
     user = user_repo.get_user_by_email(form_data.username)
 
@@ -31,6 +33,14 @@ def login_access_token(
     # elif not user.is_active:
     #     raise HTTPException(status_code=400, detail="Inactive user")
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-    return Token(
-        access_token=crypto.create_access_token(user.id, expires_delta=access_token_expires)
+
+    token = crypto.create_access_token(user.id, expires_delta=access_token_expires)
+
+    response.set_cookie(
+        key="jwt",
+        value=token,
+        httponly=True,
+        secure=settings.ENVIRONMENT != "dev",
+        samesite="none",
     )
+    return Token(access_token=token)

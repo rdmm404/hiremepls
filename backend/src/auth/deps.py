@@ -1,5 +1,5 @@
 from fastapi.security import OAuth2PasswordBearer
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Request
 
 from typing import Annotated
 
@@ -8,7 +8,15 @@ from src.auth import crypto
 from src.common.deps import SessionDep
 
 
-reusable_oauth2 = OAuth2PasswordBearer(tokenUrl="/auth/token")
+class Oauth2PasswordBearerFromCookies(OAuth2PasswordBearer):
+    async def __call__(self, request: Request) -> str | None:
+        token_from_cookie = request.cookies.get("jwt")
+        if token_from_cookie:
+            return token_from_cookie
+        return await super().__call__(request)
+
+
+reusable_oauth2 = Oauth2PasswordBearerFromCookies(tokenUrl="/auth/token")
 
 
 TokenDep = Annotated[str, Depends(reusable_oauth2)]
