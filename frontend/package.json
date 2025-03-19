@@ -31,6 +31,7 @@
     "@kubb/plugin-client": "^3.6.4",
     "@kubb/plugin-react-query": "^3.6.4",
     "@kubb/plugin-ts": "^3.6.4",
+    "@tanstack/react-query-devtools": "^5.69.0",
     "@tanstack/react-router-devtools": "^1.114.23",
     "@tanstack/router-plugin": "^1.114.23",
     "@types/node": "^22.13.10",

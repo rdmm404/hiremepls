@@ -3,6 +3,7 @@ import sys
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.routing import APIRoute
+from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 
 from src.users.api import router as users_router
@@ -16,14 +17,25 @@ def custom_generate_unique_id(route: APIRoute) -> str:
     return f"{route.tags[0]}-{route.name}"
 
 
+cors_allowed = []
 if settings.ENVIRONMENT == "prd":
     openapi_url: str | None = None
     logger.remove()
     logger.add(sys.stderr, level="INFO")
 else:
     openapi_url = "/api/v1/openapi.json"
+    cors_allowed.append("*")
 
 app = FastAPI(openapi_url=openapi_url, generate_unique_id_function=custom_generate_unique_id)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=cors_allowed,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(users_router)
 app.include_router(auth_router)
 app.include_router(jobs_router)
