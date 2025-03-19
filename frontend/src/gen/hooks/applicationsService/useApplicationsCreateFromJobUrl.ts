@@ -3,10 +3,10 @@ import type {
   ApplicationsCreateFromJobUrlMutationRequest,
   ApplicationsCreateFromJobUrlMutationResponse,
   ApplicationsCreateFromJobUrl422,
-} from '../types/ApplicationsCreateFromJobUrl.ts'
+} from '../../types/ApplicationsCreateFromJobUrl.ts'
 import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
 import type { UseMutationOptions } from '@tanstack/react-query'
-import { applicationsCreateFromJobUrl } from '../clients/applicationsService/applicationsCreateFromJobUrl.ts'
+import { applicationsCreateFromJobUrl } from '../../clients/applicationsClient/applicationsCreateFromJobUrl.ts'
 import { useMutation } from '@tanstack/react-query'
 
 export const applicationsCreateFromJobUrlMutationKey = () => [{ url: '/applications/url' }] as const

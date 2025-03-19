@@ -1,5 +1,5 @@
 import { jobsCreateFromUrl } from './jobsCreateFromUrl.ts'
 
-export function jobsService() {
+export function jobsClient() {
   return { jobsCreateFromUrl }
 }

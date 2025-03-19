@@ -7,7 +7,14 @@ export type {
   ApplicationsCreateFromJobUrlMutation,
 } from './ApplicationsCreateFromJobUrl.ts'
 export type { ApplicationStatus } from './ApplicationStatus.ts'
-export type { BodyLoginLoginAccessToken } from './BodyLoginLoginAccessToken.ts'
+export type {
+  AuthLoginAccessToken200,
+  AuthLoginAccessToken422,
+  AuthLoginAccessTokenMutationRequest,
+  AuthLoginAccessTokenMutationResponse,
+  AuthLoginAccessTokenMutation,
+} from './AuthLoginAccessToken.ts'
+export type { BodyAuthLoginAccessToken } from './BodyAuthLoginAccessToken.ts'
 export type { Company } from './Company.ts'
 export type { Compensation } from './Compensation.ts'
 export type { CreateApplicationByJobUrl } from './CreateApplicationByJobUrl.ts'
@@ -21,13 +28,6 @@ export type {
   JobsCreateFromUrlMutationResponse,
   JobsCreateFromUrlMutation,
 } from './JobsCreateFromUrl.ts'
-export type {
-  LoginLoginAccessToken200,
-  LoginLoginAccessToken422,
-  LoginLoginAccessTokenMutationRequest,
-  LoginLoginAccessTokenMutationResponse,
-  LoginLoginAccessTokenMutation,
-} from './LoginLoginAccessToken.ts'
 export type { Token } from './Token.ts'
 export type { User } from './User.ts'
 export type { UserCreate } from './UserCreate.ts'

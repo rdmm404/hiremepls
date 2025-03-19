@@ -2,9 +2,11 @@
 
 import type React from "react";
 
+import { useState } from "react";
+
+import { useLoginLoginAccessToken } from "@/gen/hooks/useLoginLoginAccessToken";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -12,7 +14,6 @@ export default function LoginForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
     console.log({ email, password });
   };
 

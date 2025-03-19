@@ -1,5 +1,5 @@
 import { applicationsCreateFromJobUrl } from './applicationsCreateFromJobUrl.ts'
 
-export function applicationsService() {
+export function applicationsClient() {
   return { applicationsCreateFromJobUrl }
 }

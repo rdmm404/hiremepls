@@ -7,7 +7,9 @@
   "paths": {
     "/users/me": {
       "get": {
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "Get My User",
         "operationId": "users-get_my_user",
         "responses": {
@@ -31,7 +33,9 @@
     },
     "/users/": {
       "get": {
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "List Users",
         "operationId": "users-list_users",
         "security": [
@@ -89,7 +93,9 @@
         }
       },
       "post": {
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "Create User",
         "operationId": "users-create_user",
         "security": [
@@ -133,7 +139,9 @@
     },
     "/users/{user_id}/": {
       "get": {
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "Get User",
         "operationId": "users-get_user",
         "security": [
@@ -176,7 +184,9 @@
         }
       },
       "delete": {
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "Delete User",
         "operationId": "users-delete_user",
         "security": [
@@ -219,14 +229,16 @@
     },
     "/auth/token": {
       "post": {
-        "tags": ["login"],
+        "tags": [
+          "auth"
+        ],
         "summary": "Login Access Token",
-        "operationId": "login-login_access_token",
+        "operationId": "auth-login_access_token",
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
               "schema": {
-                "$ref": "#/components/schemas/Body_login-login_access_token"
+                "$ref": "#/components/schemas/Body_auth-login_access_token"
               }
             }
           },
@@ -258,7 +270,9 @@
     },
     "/jobs/url": {
       "post": {
-        "tags": ["jobs"],
+        "tags": [
+          "jobs"
+        ],
         "summary": "Create From Url",
         "operationId": "jobs-create_from_url",
         "requestBody": {
@@ -302,7 +316,9 @@
     },
     "/applications/url": {
       "post": {
-        "tags": ["applications"],
+        "tags": [
+          "applications"
+        ],
         "summary": "Create From Job Url",
         "operationId": "applications-create_from_job_url",
         "requestBody": {
@@ -417,7 +433,10 @@
           }
         },
         "type": "object",
-        "required": ["id", "job"],
+        "required": [
+          "id",
+          "job"
+        ],
         "title": "Application"
       },
       "ApplicationStatus": {
@@ -436,7 +455,7 @@
         ],
         "title": "ApplicationStatus"
       },
-      "Body_login-login_access_token": {
+      "Body_auth-login_access_token": {
         "properties": {
           "grant_type": {
             "anyOf": [
@@ -487,8 +506,11 @@
           }
         },
         "type": "object",
-        "required": ["username", "password"],
-        "title": "Body_login-login_access_token"
+        "required": [
+          "username",
+          "password"
+        ],
+        "title": "Body_auth-login_access_token"
       },
       "Company": {
         "properties": {
@@ -531,7 +553,11 @@
           }
         },
         "type": "object",
-        "required": ["name", "slug", "id"],
+        "required": [
+          "name",
+          "slug",
+          "id"
+        ],
         "title": "Company"
       },
       "Compensation": {
@@ -616,7 +642,9 @@
           }
         },
         "type": "object",
-        "required": ["id"],
+        "required": [
+          "id"
+        ],
         "title": "Compensation"
       },
       "CreateApplicationByJobUrl": {
@@ -630,7 +658,9 @@
           }
         },
         "type": "object",
-        "required": ["url"],
+        "required": [
+          "url"
+        ],
         "title": "CreateApplicationByJobUrl"
       },
       "CreateJobByUrl": {
@@ -644,7 +674,9 @@
           }
         },
         "type": "object",
-        "required": ["url"],
+        "required": [
+          "url"
+        ],
         "title": "CreateJobByUrl"
       },
       "HTTPValidationError": {
@@ -675,7 +707,11 @@
           },
           "job_type": {
             "type": "string",
-            "enum": ["full_time", "part_time", "contract"],
+            "enum": [
+              "full_time",
+              "part_time",
+              "contract"
+            ],
             "title": "Job Type"
           },
           "llm_summary": {
@@ -705,7 +741,11 @@
           "modality": {
             "items": {
               "type": "string",
-              "enum": ["remote", "in_office", "hybrid"]
+              "enum": [
+                "remote",
+                "in_office",
+                "hybrid"
+              ]
             },
             "type": "array",
             "title": "Modality",
@@ -764,7 +804,9 @@
           }
         },
         "type": "object",
-        "required": ["access_token"],
+        "required": [
+          "access_token"
+        ],
         "title": "Token"
       },
       "User": {
@@ -792,7 +834,12 @@
           }
         },
         "type": "object",
-        "required": ["id", "name", "last_name", "email"],
+        "required": [
+          "id",
+          "name",
+          "last_name",
+          "email"
+        ],
         "title": "User"
       },
       "UserCreate": {
@@ -856,7 +903,12 @@
           }
         },
         "type": "object",
-        "required": ["name", "last_name", "email", "password"],
+        "required": [
+          "name",
+          "last_name",
+          "email",
+          "password"
+        ],
         "title": "UserCreate"
       },
       "ValidationError": {
@@ -885,7 +937,11 @@
           }
         },
         "type": "object",
-        "required": ["loc", "msg", "type"],
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
         "title": "ValidationError"
       }
     },

@@ -20,13 +20,19 @@ export default defineConfig(() => {
         pluginTs({ enumType: "enum" }),
         pluginReactQuery({
           exclude: [{ type: "tag", pattern: "users" }],
+          group: {
+            type: "tag",
+            name({ group }) {
+              return `${group}Service`;
+            },
+          },
         }),
         pluginClient({
           importPath: "../../../client.ts",
           group: {
             type: "tag",
             name({ group }) {
-              return `${group}Service`;
+              return `${group}Client`;
             },
           },
           exclude: [{ type: "tag", pattern: "users" }],

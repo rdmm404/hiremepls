@@ -1,4 +1,4 @@
-export type BodyLoginLoginAccessToken = {
+export type BodyAuthLoginAccessToken = {
   grant_type?: string | null
   /**
    * @type string

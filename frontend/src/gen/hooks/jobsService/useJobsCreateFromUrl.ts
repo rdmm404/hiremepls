@@ -1,8 +1,8 @@
 import client from '@kubb/plugin-client/clients/axios'
-import type { JobsCreateFromUrlMutationRequest, JobsCreateFromUrlMutationResponse, JobsCreateFromUrl422 } from '../types/JobsCreateFromUrl.ts'
+import type { JobsCreateFromUrlMutationRequest, JobsCreateFromUrlMutationResponse, JobsCreateFromUrl422 } from '../../types/JobsCreateFromUrl.ts'
 import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
 import type { UseMutationOptions } from '@tanstack/react-query'
-import { jobsCreateFromUrl } from '../clients/jobsService/jobsCreateFromUrl.ts'
+import { jobsCreateFromUrl } from '../../clients/jobsClient/jobsCreateFromUrl.ts'
 import { useMutation } from '@tanstack/react-query'
 
 export const jobsCreateFromUrlMutationKey = () => [{ url: '/jobs/url' }] as const

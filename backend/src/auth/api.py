@@ -9,7 +9,7 @@ from src.auth import crypto
 from src.core.config import settings
 from src.users.deps import UserRepositoryDep
 
-router = APIRouter(prefix="/auth", tags=["login"])
+router = APIRouter(prefix="/auth", tags=["auth"])
 
 
 class Token(BaseModel):
