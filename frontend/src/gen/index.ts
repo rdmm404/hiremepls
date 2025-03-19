@@ -1,6 +1,14 @@
 export type { ApplicationsCreateFromJobUrlMutationKey } from './hooks/applicationsService/useApplicationsCreateFromJobUrl.ts'
 export type { AuthLoginAccessTokenMutationKey } from './hooks/authService/useAuthLoginAccessToken.ts'
 export type { JobsCreateFromUrlMutationKey } from './hooks/jobsService/useJobsCreateFromUrl.ts'
+export type { UsersCreateUserMutationKey } from './hooks/usersService/useUsersCreateUser.ts'
+export type { UsersDeleteUserMutationKey } from './hooks/usersService/useUsersDeleteUser.ts'
+export type { UsersGetMyUserQueryKey } from './hooks/usersService/useUsersGetMyUser.ts'
+export type { UsersGetMyUserSuspenseQueryKey } from './hooks/usersService/useUsersGetMyUserSuspense.ts'
+export type { UsersGetUserQueryKey } from './hooks/usersService/useUsersGetUser.ts'
+export type { UsersGetUserSuspenseQueryKey } from './hooks/usersService/useUsersGetUserSuspense.ts'
+export type { UsersListUsersQueryKey } from './hooks/usersService/useUsersListUsers.ts'
+export type { UsersListUsersSuspenseQueryKey } from './hooks/usersService/useUsersListUsersSuspense.ts'
 export type { Application } from './types/Application.ts'
 export type {
   ApplicationsCreateFromJobUrl200,
@@ -64,8 +72,30 @@ export { authClient } from './clients/authClient/authClient.ts'
 export { getAuthLoginAccessTokenUrl, authLoginAccessToken } from './clients/authClient/authLoginAccessToken.ts'
 export { jobsClient } from './clients/jobsClient/jobsClient.ts'
 export { getJobsCreateFromUrlUrl, jobsCreateFromUrl } from './clients/jobsClient/jobsCreateFromUrl.ts'
+export { usersClient } from './clients/usersClient/usersClient.ts'
+export { getUsersCreateUserUrl, usersCreateUser } from './clients/usersClient/usersCreateUser.ts'
+export { getUsersDeleteUserUrl, usersDeleteUser } from './clients/usersClient/usersDeleteUser.ts'
+export { getUsersGetMyUserUrl, usersGetMyUser } from './clients/usersClient/usersGetMyUser.ts'
+export { getUsersGetUserUrl, usersGetUser } from './clients/usersClient/usersGetUser.ts'
+export { getUsersListUsersUrl, usersListUsers } from './clients/usersClient/usersListUsers.ts'
 export { applicationsCreateFromJobUrlMutationKey, useApplicationsCreateFromJobUrl } from './hooks/applicationsService/useApplicationsCreateFromJobUrl.ts'
 export { authLoginAccessTokenMutationKey, useAuthLoginAccessToken } from './hooks/authService/useAuthLoginAccessToken.ts'
 export { jobsCreateFromUrlMutationKey, useJobsCreateFromUrl } from './hooks/jobsService/useJobsCreateFromUrl.ts'
+export { usersCreateUserMutationKey, useUsersCreateUser } from './hooks/usersService/useUsersCreateUser.ts'
+export { usersDeleteUserMutationKey, useUsersDeleteUser } from './hooks/usersService/useUsersDeleteUser.ts'
+export { usersGetMyUserQueryKey, usersGetMyUserQueryOptions, useUsersGetMyUser } from './hooks/usersService/useUsersGetMyUser.ts'
+export {
+  usersGetMyUserSuspenseQueryKey,
+  usersGetMyUserSuspenseQueryOptions,
+  useUsersGetMyUserSuspense,
+} from './hooks/usersService/useUsersGetMyUserSuspense.ts'
+export { usersGetUserQueryKey, usersGetUserQueryOptions, useUsersGetUser } from './hooks/usersService/useUsersGetUser.ts'
+export { usersGetUserSuspenseQueryKey, usersGetUserSuspenseQueryOptions, useUsersGetUserSuspense } from './hooks/usersService/useUsersGetUserSuspense.ts'
+export { usersListUsersQueryKey, usersListUsersQueryOptions, useUsersListUsers } from './hooks/usersService/useUsersListUsers.ts'
+export {
+  usersListUsersSuspenseQueryKey,
+  usersListUsersSuspenseQueryOptions,
+  useUsersListUsersSuspense,
+} from './hooks/usersService/useUsersListUsersSuspense.ts'
 export { ApplicationStatusEnum } from './types/ApplicationStatus.ts'
 export { JobJobTypeEnum, JobModalityEnum } from './types/Job.ts'

@@ -19,7 +19,6 @@ export default defineConfig(() => {
         pluginOas({}),
         pluginTs({ enumType: "enum" }),
         pluginReactQuery({
-          exclude: [{ type: "tag", pattern: "users" }],
           group: {
             type: "tag",
             name({ group }) {
@@ -35,7 +34,6 @@ export default defineConfig(() => {
               return `${group}Client`;
             },
           },
-          exclude: [{ type: "tag", pattern: "users" }],
         }),
       ],
     },
