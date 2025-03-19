@@ -2,6 +2,7 @@ import sys
 
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from fastapi.routing import APIRoute
 from loguru import logger
 
 from src.users.api import router as users_router
@@ -11,6 +12,10 @@ from src.applications.api import router as applications_router
 from src.core.config import settings
 
 
+def custom_generate_unique_id(route: APIRoute) -> str:
+    return f"{route.tags[0]}-{route.name}"
+
+
 if settings.ENVIRONMENT == "prd":
     openapi_url: str | None = None
     logger.remove()
@@ -18,7 +23,7 @@ if settings.ENVIRONMENT == "prd":
 else:
     openapi_url = "/api/v1/openapi.json"
 
-app = FastAPI(openapi_url=openapi_url)
+app = FastAPI(openapi_url=openapi_url, generate_unique_id_function=custom_generate_unique_id)
 app.include_router(users_router)
 app.include_router(auth_router)
 app.include_router(jobs_router)

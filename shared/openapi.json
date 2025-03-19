@@ -1,43 +1,64 @@
 {
   "openapi": "3.1.0",
-  "info": { "title": "FastAPI", "version": "0.1.0" },
+  "info": {
+    "title": "FastAPI",
+    "version": "0.1.0"
+  },
   "paths": {
     "/users/me": {
       "get": {
         "tags": ["users"],
         "summary": "Get My User",
-        "operationId": "get_my_user_users_me_get",
+        "operationId": "users-get_my_user",
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/User" }
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
               }
             }
           }
         },
-        "security": [{ "OAuth2PasswordBearer": [] }]
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       }
     },
     "/users/": {
       "get": {
         "tags": ["users"],
         "summary": "List Users",
-        "operationId": "list_users_users__get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "operationId": "users-list_users",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "limit",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer", "default": 10, "title": "Limit" }
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "title": "Limit"
+            }
           },
           {
             "name": "offset",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer", "default": 0, "title": "Offset" }
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Offset"
+            }
           }
         ],
         "responses": {
@@ -47,8 +68,10 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/User" },
-                  "title": "Response List Users Users  Get"
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  },
+                  "title": "Response Users-List Users"
                 }
               }
             }
@@ -57,7 +80,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -66,13 +91,19 @@
       "post": {
         "tags": ["users"],
         "summary": "Create User",
-        "operationId": "create_user_users__post",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "operationId": "users-create_user",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/UserCreate" }
+              "schema": {
+                "$ref": "#/components/schemas/UserCreate"
+              }
             }
           }
         },
@@ -81,7 +112,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/User" }
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
               }
             }
           },
@@ -89,7 +122,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -100,14 +135,21 @@
       "get": {
         "tags": ["users"],
         "summary": "Get User",
-        "operationId": "get_user_users__user_id___get",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "operationId": "users-get_user",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "user_id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "title": "User Id" }
+            "schema": {
+              "type": "integer",
+              "title": "User Id"
+            }
           }
         ],
         "responses": {
@@ -115,7 +157,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/User" }
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
               }
             }
           },
@@ -123,7 +167,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -132,26 +178,39 @@
       "delete": {
         "tags": ["users"],
         "summary": "Delete User",
-        "operationId": "delete_user_users__user_id___delete",
-        "security": [{ "OAuth2PasswordBearer": [] }],
+        "operationId": "users-delete_user",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "user_id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "title": "User Id" }
+            "schema": {
+              "type": "integer",
+              "title": "User Id"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -162,12 +221,12 @@
       "post": {
         "tags": ["login"],
         "summary": "Login Access Token",
-        "operationId": "login_access_token_auth_token_post",
+        "operationId": "login-login_access_token",
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
               "schema": {
-                "$ref": "#/components/schemas/Body_login_access_token_auth_token_post"
+                "$ref": "#/components/schemas/Body_login-login_access_token"
               }
             }
           },
@@ -178,7 +237,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Token" }
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
               }
             }
           },
@@ -186,7 +247,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -197,11 +260,13 @@
       "post": {
         "tags": ["jobs"],
         "summary": "Create From Url",
-        "operationId": "create_from_url_jobs_url_post",
+        "operationId": "jobs-create_from_url",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateJobByUrl" }
+              "schema": {
+                "$ref": "#/components/schemas/CreateJobByUrl"
+              }
             }
           },
           "required": true
@@ -211,7 +276,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Job" }
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
               }
             }
           },
@@ -219,19 +286,25 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
         },
-        "security": [{ "OAuth2PasswordBearer": [] }]
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       }
     },
     "/applications/url": {
       "post": {
         "tags": ["applications"],
         "summary": "Create From Job Url",
-        "operationId": "create_from_job_url_applications_url_post",
+        "operationId": "applications-create_from_job_url",
         "requestBody": {
           "content": {
             "application/json": {
@@ -247,7 +320,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Application" }
+                "schema": {
+                  "$ref": "#/components/schemas/Application"
+                }
               }
             }
           },
@@ -255,12 +330,18 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
         },
-        "security": [{ "OAuth2PasswordBearer": [] }]
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       }
     }
   },
@@ -273,27 +354,67 @@
             "default": "Pending"
           },
           "interview_rounds": {
-            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Interview Rounds"
           },
           "current_round": {
-            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Current Round"
           },
           "notes": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Notes"
           },
           "fit": {
-            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Fit"
           },
           "resume_used": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Resume Used"
           },
-          "id": { "type": "integer", "title": "Id" },
-          "job": { "$ref": "#/components/schemas/Job" }
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "job": {
+            "$ref": "#/components/schemas/Job"
+          }
         },
         "type": "object",
         "required": ["id", "job"],
@@ -315,35 +436,70 @@
         ],
         "title": "ApplicationStatus"
       },
-      "Body_login_access_token_auth_token_post": {
+      "Body_login-login_access_token": {
         "properties": {
           "grant_type": {
             "anyOf": [
-              { "type": "string", "pattern": "^password$" },
-              { "type": "null" }
+              {
+                "type": "string",
+                "pattern": "^password$"
+              },
+              {
+                "type": "null"
+              }
             ],
             "title": "Grant Type"
           },
-          "username": { "type": "string", "title": "Username" },
-          "password": { "type": "string", "title": "Password" },
-          "scope": { "type": "string", "title": "Scope", "default": "" },
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          },
+          "scope": {
+            "type": "string",
+            "title": "Scope",
+            "default": ""
+          },
           "client_id": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Client Id"
           },
           "client_secret": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Client Secret"
           }
         },
         "type": "object",
         "required": ["username", "password"],
-        "title": "Body_login_access_token_auth_token_post"
+        "title": "Body_login-login_access_token"
       },
       "Company": {
         "properties": {
-          "name": { "type": "string", "title": "Name" },
-          "slug": { "type": "string", "title": "Slug" },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
           "url": {
             "anyOf": [
               {
@@ -352,15 +508,27 @@
                 "minLength": 1,
                 "format": "uri"
               },
-              { "type": "null" }
+              {
+                "type": "null"
+              }
             ],
             "title": "Url"
           },
           "logo_url": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Logo Url"
           },
-          "id": { "type": "integer", "title": "Id" }
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          }
         },
         "type": "object",
         "required": ["name", "slug", "id"],
@@ -369,36 +537,83 @@
       "Compensation": {
         "properties": {
           "currency": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Currency"
           },
           "hiring_bonus": {
-            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Hiring Bonus"
           },
           "equity": {
-            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Equity"
           },
           "minimum": {
-            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Minimum"
           },
           "maximum": {
-            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Maximum"
           },
           "details": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Details"
           },
           "benefits": {
-            "items": { "type": "string" },
+            "items": {
+              "type": "string"
+            },
             "type": "array",
             "title": "Benefits",
             "default": []
           },
-          "id": { "type": "integer", "title": "Id" }
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          }
         },
         "type": "object",
         "required": ["id"],
@@ -435,7 +650,9 @@
       "HTTPValidationError": {
         "properties": {
           "detail": {
-            "items": { "$ref": "#/components/schemas/ValidationError" },
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
             "type": "array",
             "title": "Detail"
           }
@@ -445,7 +662,10 @@
       },
       "Job": {
         "properties": {
-          "job_title": { "type": "string", "title": "Job Title" },
+          "job_title": {
+            "type": "string",
+            "title": "Job Title"
+          },
           "job_url": {
             "type": "string",
             "maxLength": 2083,
@@ -458,16 +678,26 @@
             "enum": ["full_time", "part_time", "contract"],
             "title": "Job Type"
           },
-          "llm_summary": { "type": "string", "title": "Llm Summary" },
-          "job_description": { "type": "string", "title": "Job Description" },
+          "llm_summary": {
+            "type": "string",
+            "title": "Llm Summary"
+          },
+          "job_description": {
+            "type": "string",
+            "title": "Job Description"
+          },
           "requirements": {
-            "items": { "type": "string" },
+            "items": {
+              "type": "string"
+            },
             "type": "array",
             "title": "Requirements",
             "default": []
           },
           "skills": {
-            "items": { "type": "string" },
+            "items": {
+              "type": "string"
+            },
             "type": "array",
             "title": "Skills",
             "default": []
@@ -481,14 +711,31 @@
             "title": "Modality",
             "default": []
           },
-          "location": { "type": "string", "title": "Location" },
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
           "other_details": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Other Details"
           },
-          "id": { "type": "integer", "title": "Id" },
-          "compensation": { "$ref": "#/components/schemas/Compensation" },
-          "company": { "$ref": "#/components/schemas/Company" }
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "compensation": {
+            "$ref": "#/components/schemas/Compensation"
+          },
+          "company": {
+            "$ref": "#/components/schemas/Company"
+          }
         },
         "type": "object",
         "required": [
@@ -506,7 +753,10 @@
       },
       "Token": {
         "properties": {
-          "access_token": { "type": "string", "title": "Access Token" },
+          "access_token": {
+            "type": "string",
+            "title": "Access Token"
+          },
           "token_type": {
             "type": "string",
             "title": "Token Type",
@@ -519,10 +769,22 @@
       },
       "User": {
         "properties": {
-          "id": { "type": "integer", "title": "Id" },
-          "name": { "type": "string", "title": "Name" },
-          "last_name": { "type": "string", "title": "Last Name" },
-          "email": { "type": "string", "title": "Email" },
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "last_name": {
+            "type": "string",
+            "title": "Last Name"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
           "is_superuser": {
             "type": "boolean",
             "title": "Is Superuser",
@@ -536,32 +798,62 @@
       "UserCreate": {
         "properties": {
           "id": {
-            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Id"
           },
           "created_at": {
             "anyOf": [
-              { "type": "string", "format": "date-time" },
-              { "type": "null" }
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
             ],
             "title": "Created At"
           },
           "updated_at": {
             "anyOf": [
-              { "type": "string", "format": "date-time" },
-              { "type": "null" }
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
             ],
             "title": "Updated At"
           },
-          "name": { "type": "string", "title": "Name" },
-          "last_name": { "type": "string", "title": "Last Name" },
-          "email": { "type": "string", "format": "email", "title": "Email" },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "last_name": {
+            "type": "string",
+            "title": "Last Name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
           "is_superuser": {
             "type": "boolean",
             "title": "Is Superuser",
             "default": false
           },
-          "password": { "type": "string", "title": "Password" }
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
         },
         "type": "object",
         "required": ["name", "last_name", "email", "password"],
@@ -570,12 +862,27 @@
       "ValidationError": {
         "properties": {
           "loc": {
-            "items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] },
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
             "type": "array",
             "title": "Location"
           },
-          "msg": { "type": "string", "title": "Message" },
-          "type": { "type": "string", "title": "Error Type" }
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
         },
         "type": "object",
         "required": ["loc", "msg", "type"],
@@ -585,7 +892,12 @@
     "securitySchemes": {
       "OAuth2PasswordBearer": {
         "type": "oauth2",
-        "flows": { "password": { "scopes": {}, "tokenUrl": "/auth/token" } }
+        "flows": {
+          "password": {
+            "scopes": {},
+            "tokenUrl": "/auth/token"
+          }
+        }
       }
     }
   }
