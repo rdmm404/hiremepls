@@ -17,6 +17,16 @@ def custom_generate_unique_id(route: APIRoute) -> str:
     return f"{route.tags[0]}-{route.name}"
 
 
+def generate_schema(app: FastAPI) -> None:
+    import json
+    from pathlib import Path
+
+    export_path = Path("../shared/openapi.json")
+    export_path.parent.mkdir(exist_ok=True)
+    with export_path.open("w") as f:
+        f.write(json.dumps(app.openapi(), indent=2))
+
+
 cors_allowed = []
 if settings.ENVIRONMENT == "prd":
     openapi_url: str | None = None
@@ -48,3 +58,8 @@ async def general_exception_handler(request: Request, exc: Exception) -> JSONRes
         status_code=500,
         content={"detail": "Internal server error"},
     )
+
+
+if settings.ENVIRONMENT == "dev":
+    logger.debug("Generating OpenAPI schema")
+    generate_schema(app)

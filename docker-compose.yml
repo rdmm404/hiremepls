@@ -23,6 +23,8 @@ services:
       - CREATE_ADMIN_USER=true
     depends_on:
       - postgres
+    volumes:
+      - ./shared/openapi.json:/shared/openapi.json:rw
   postgres:
     image: postgres:17
     ports:

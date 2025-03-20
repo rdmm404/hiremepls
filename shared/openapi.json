@@ -26,7 +26,7 @@
         },
         "security": [
           {
-            "OAuth2PasswordBearer": []
+            "Oauth2PasswordBearerFromCookies": []
           }
         ]
       }
@@ -40,7 +40,7 @@
         "operationId": "users-list_users",
         "security": [
           {
-            "OAuth2PasswordBearer": []
+            "Oauth2PasswordBearerFromCookies": []
           }
         ],
         "parameters": [
@@ -100,7 +100,7 @@
         "operationId": "users-create_user",
         "security": [
           {
-            "OAuth2PasswordBearer": []
+            "Oauth2PasswordBearerFromCookies": []
           }
         ],
         "requestBody": {
@@ -146,7 +146,7 @@
         "operationId": "users-get_user",
         "security": [
           {
-            "OAuth2PasswordBearer": []
+            "Oauth2PasswordBearerFromCookies": []
           }
         ],
         "parameters": [
@@ -191,7 +191,7 @@
         "operationId": "users-delete_user",
         "security": [
           {
-            "OAuth2PasswordBearer": []
+            "Oauth2PasswordBearerFromCookies": []
           }
         ],
         "parameters": [
@@ -309,7 +309,7 @@
         },
         "security": [
           {
-            "OAuth2PasswordBearer": []
+            "Oauth2PasswordBearerFromCookies": []
           }
         ]
       }
@@ -355,7 +355,7 @@
         },
         "security": [
           {
-            "OAuth2PasswordBearer": []
+            "Oauth2PasswordBearerFromCookies": []
           }
         ]
       }
@@ -946,7 +946,7 @@
       }
     },
     "securitySchemes": {
-      "OAuth2PasswordBearer": {
+      "Oauth2PasswordBearerFromCookies": {
         "type": "oauth2",
         "flows": {
           "password": {
