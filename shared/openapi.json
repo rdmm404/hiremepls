@@ -11,6 +11,7 @@
           "users"
         ],
         "summary": "Get My User",
+        "description": "Get the information of the current logged in user.",
         "operationId": "users-get_my_user",
         "responses": {
           "200": {

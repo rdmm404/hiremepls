@@ -10,7 +10,7 @@ from src.auth.deps import DependsCurrentSuperUser, CurrentUserDep
 router = APIRouter(prefix="/users", tags=["users"])
 
 
-@router.get("/me")
+@router.get("/me", description="Get the information of the current logged in user.")
 async def get_my_user(user: CurrentUserDep) -> User:
     return User(**user.model_dump())
 
