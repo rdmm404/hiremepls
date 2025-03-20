@@ -6,6 +6,13 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
 
+import { client } from "@kubb/plugin-client/clients/axios";
+
+client.setConfig({
+  baseURL: import.meta.env.VITE_BACKEND_URL,
+  method: "GET",
+});
+
 // Create a new router instance
 const router = createRouter({ routeTree });
 

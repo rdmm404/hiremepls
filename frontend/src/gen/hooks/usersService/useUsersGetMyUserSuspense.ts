@@ -21,6 +21,7 @@ export function usersGetMyUserSuspenseQueryOptions(config: Partial<RequestConfig
 }
 
 /**
+ * @description Get the information of the current logged in user.
  * @summary Get My User
  * {@link /users/me}
  */

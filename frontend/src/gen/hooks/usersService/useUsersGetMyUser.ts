@@ -21,6 +21,7 @@ export function usersGetMyUserQueryOptions(config: Partial<RequestConfig> & { cl
 }
 
 /**
+ * @description Get the information of the current logged in user.
  * @summary Get My User
  * {@link /users/me}
  */

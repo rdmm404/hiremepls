@@ -25,15 +25,20 @@ export default defineConfig(() => {
               return `${group}Service`;
             },
           },
+          client: {
+            // dataReturnType: "full",
+            // importPath: "@/client.ts",
+          },
         }),
         pluginClient({
-          importPath: "../../../client.ts",
+          // importPath: "@/client.ts",
           group: {
             type: "tag",
             name({ group }) {
               return `${group}Client`;
             },
           },
+          // dataReturnType: "full",
         }),
       ],
     },

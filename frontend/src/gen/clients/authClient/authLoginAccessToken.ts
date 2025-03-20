@@ -1,9 +1,16 @@
-import client from '../../../client.ts'
-import type { RequestConfig, ResponseErrorConfig } from '../../../client.ts'
-import type { AuthLoginAccessTokenMutationRequest, AuthLoginAccessTokenMutationResponse, AuthLoginAccessToken422 } from '../../types/AuthLoginAccessToken.ts'
+import client from "@kubb/plugin-client/clients/axios";
+import type {
+  AuthLoginAccessTokenMutationRequest,
+  AuthLoginAccessTokenMutationResponse,
+  AuthLoginAccessToken422,
+} from "../../types/AuthLoginAccessToken.ts";
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from "@kubb/plugin-client/clients/axios";
 
 export function getAuthLoginAccessTokenUrl() {
-  return `/auth/token` as const
+  return `/auth/token` as const;
 }
 
 /**
@@ -12,16 +19,27 @@ export function getAuthLoginAccessTokenUrl() {
  */
 export async function authLoginAccessToken(
   data: AuthLoginAccessTokenMutationRequest,
-  config: Partial<RequestConfig<AuthLoginAccessTokenMutationRequest>> & { client?: typeof client } = {},
+  config: Partial<RequestConfig<AuthLoginAccessTokenMutationRequest>> & {
+    client?: typeof client;
+  } = {}
 ) {
-  const { client: request = client, ...requestConfig } = config
+  console.log(client.getConfig());
 
-  const res = await request<AuthLoginAccessTokenMutationResponse, ResponseErrorConfig<AuthLoginAccessToken422>, AuthLoginAccessTokenMutationRequest>({
-    method: 'POST',
+  const { client: request = client, ...requestConfig } = config;
+
+  const res = await request<
+    AuthLoginAccessTokenMutationResponse,
+    ResponseErrorConfig<AuthLoginAccessToken422>,
+    AuthLoginAccessTokenMutationRequest
+  >({
+    method: "POST",
     url: getAuthLoginAccessTokenUrl().toString(),
     data,
     ...requestConfig,
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded', ...requestConfig.headers },
-  })
-  return res.data
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      ...requestConfig.headers,
+    },
+  });
+  return res.data;
 }
