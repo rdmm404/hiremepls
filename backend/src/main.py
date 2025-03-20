@@ -14,7 +14,10 @@ from src.core.config import settings
 
 
 def custom_generate_unique_id(route: APIRoute) -> str:
-    return f"{route.tags[0]}-{route.name}"
+    try:
+        return f"{route.tags[0]}-{route.name}"
+    except IndexError:
+        return route.name
 
 
 def generate_schema(app: FastAPI) -> None:
@@ -58,6 +61,11 @@ async def general_exception_handler(request: Request, exc: Exception) -> JSONRes
         status_code=500,
         content={"detail": "Internal server error"},
     )
+
+
+@app.get("/health")
+async def health_check() -> dict[str, str]:
+    return {"status": "healthy"}
 
 
 if settings.ENVIRONMENT == "dev":
