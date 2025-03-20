@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useAuthLoginAccessToken } from "@/gen";
+import { Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/login")({
   component: LoginForm,
@@ -15,13 +16,12 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const loginMutation = useAuthLoginAccessToken({
     mutation: {
-      onSuccess: () => console.log("mutation complete"),
+      onSuccess: () => window.location.replace("/"),
     },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ email, password });
     loginMutation.mutate({
       data: {
         username: email,
@@ -32,14 +32,6 @@ export default function LoginForm() {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      {loginMutation.isPending && <p>Logging in...</p>}
-      {loginMutation.isError ||
-        (loginMutation.isSuccess && !loginMutation.data.access_token && (
-          <p>Something went wrong</p>
-        ))}
-      {loginMutation.isSuccess && loginMutation.data.access_token && (
-        <p>Logged in!!!</p>
-      )}
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-sm p-6 space-y-6 rounded-lg border border-foreground/10"
@@ -64,8 +56,16 @@ export default function LoginForm() {
             required
           />
         </div>
-        <Button type="submit" className="w-full bg-primary hover:bg-primary/80">
-          Login
+        <Button
+          type="submit"
+          className="w-full bg-primary hover:bg-primary/80"
+          disabled={loginMutation.isPending}
+        >
+          {loginMutation.isPending ? (
+            <Loader2 className="animate-spin" />
+          ) : (
+            "Login"
+          )}
         </Button>
       </form>
     </div>

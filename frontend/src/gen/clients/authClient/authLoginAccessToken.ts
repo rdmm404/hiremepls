@@ -23,8 +23,6 @@ export async function authLoginAccessToken(
     client?: typeof client;
   } = {}
 ) {
-  console.log(client.getConfig());
-
   const { client: request = client, ...requestConfig } = config;
 
   const res = await request<
