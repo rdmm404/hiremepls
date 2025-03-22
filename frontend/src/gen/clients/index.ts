@@ -1,5 +1,6 @@
 export { applicationsClient } from './applicationsClient/applicationsClient.ts'
 export { getApplicationsCreateFromJobUrlUrl, applicationsCreateFromJobUrl } from './applicationsClient/applicationsCreateFromJobUrl.ts'
+export { getApplicationsGetApplicationUrl, applicationsGetApplication } from './applicationsClient/applicationsGetApplication.ts'
 export { authClient } from './authClient/authClient.ts'
 export { getAuthLoginAccessTokenUrl, authLoginAccessToken } from './authClient/authLoginAccessToken.ts'
 export { getAuthLogoutUrl, authLogout } from './authClient/authLogout.ts'

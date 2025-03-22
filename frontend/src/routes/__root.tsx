@@ -6,6 +6,7 @@ import {
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/sonner";
 
 import { LogoutButton } from "@/components/LogoutButton";
 import { Auth } from "@/lib/auth";
@@ -31,8 +32,8 @@ function RootComponent() {
         <Link to="/" className="[&.active]:font-bold">
           Home
         </Link>{" "}
-        <Link to="/authenticatedPage" className="[&.active]:font-bold">
-          authpage
+        <Link to="/applications/url" className="[&.active]:font-bold">
+          Create Application
         </Link>{" "}
         {!currentUser && (
           <Link to="/login" className="[&.active]:font-bold">
@@ -42,6 +43,7 @@ function RootComponent() {
         {currentUser && <LogoutButton />}
       </div>
       <Outlet />
+      <Toaster />
       <ReactQueryDevtools />
       <TanStackRouterDevtools />
     </>

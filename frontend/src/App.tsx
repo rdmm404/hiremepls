@@ -7,10 +7,10 @@ const queryClient = new QueryClient();
 
 export function App() {
   return (
-    <>
+    <main className="flex flex-col h-full">
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} context={{ queryClient }} />
       </QueryClientProvider>
-    </>
+    </main>
   );
 }
