@@ -16,7 +16,7 @@ class Oauth2PasswordBearerFromCookies(OAuth2PasswordBearer):
         return await super().__call__(request)
 
 
-reusable_oauth2 = Oauth2PasswordBearerFromCookies(tokenUrl="/auth/token")
+reusable_oauth2 = Oauth2PasswordBearerFromCookies(tokenUrl="/auth/login")
 
 
 TokenDep = Annotated[str, Depends(reusable_oauth2)]

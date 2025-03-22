@@ -228,7 +228,7 @@
         }
       }
     },
-    "/auth/token": {
+    "/auth/login": {
       "post": {
         "tags": [
           "auth"
@@ -263,6 +263,25 @@
                 "schema": {
                   "$ref": "#/components/schemas/HTTPValidationError"
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Logout",
+        "operationId": "auth-logout",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           }
@@ -974,7 +993,7 @@
         "flows": {
           "password": {
             "scopes": {},
-            "tokenUrl": "/auth/token"
+            "tokenUrl": "/auth/login"
           }
         }
       }

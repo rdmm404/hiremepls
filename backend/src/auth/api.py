@@ -1,7 +1,7 @@
 from datetime import timedelta
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import BaseModel
 
@@ -17,7 +17,7 @@ class Token(BaseModel):
     token_type: str = "bearer"
 
 
-@router.post("/token")
+@router.post("/login")
 def login_access_token(
     response: Response,
     user_repo: UserRepositoryDep,
@@ -41,6 +41,13 @@ def login_access_token(
         value=token,
         httponly=True,
         secure=settings.ENVIRONMENT != "dev",
-        samesite="none",
+        samesite="lax" if settings.ENVIRONMENT == "dev" else "none",
     )
     return Token(access_token=token)
+
+
+@router.post("/logout")
+def logout(response: Response) -> Response:
+    response.status_code = status.HTTP_204_NO_CONTENT
+    response.delete_cookie(key="jwt")
+    return response

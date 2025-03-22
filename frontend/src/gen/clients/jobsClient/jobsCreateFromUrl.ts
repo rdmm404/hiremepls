@@ -1,6 +1,6 @@
-import client from '@kubb/plugin-client/clients/axios'
+import client from '@/client'
 import type { JobsCreateFromUrlMutationRequest, JobsCreateFromUrlMutationResponse, JobsCreateFromUrl422 } from '../../types/JobsCreateFromUrl.ts'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
+import type { RequestConfig, ResponseErrorConfig } from '@/client'
 
 export function getJobsCreateFromUrlUrl() {
   return `/jobs/url` as const

@@ -22,23 +22,23 @@ export default defineConfig(() => {
           group: {
             type: "tag",
             name({ group }) {
-              return `${group}Service`;
+              return group ? `${group}Service` : "";
             },
           },
           client: {
-            // dataReturnType: "full",
-            // importPath: "@/client.ts",
+            importPath: "@/client",
           },
+          exclude: [{ type: "path", pattern: "health" }],
         }),
         pluginClient({
-          // importPath: "@/client.ts",
           group: {
             type: "tag",
             name({ group }) {
-              return `${group}Client`;
+              return group ? `${group}Client` : "";
             },
           },
-          // dataReturnType: "full",
+          importPath: "@/client",
+          exclude: [{ type: "path", pattern: "health" }],
         }),
       ],
     },

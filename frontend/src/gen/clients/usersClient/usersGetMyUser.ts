@@ -1,6 +1,6 @@
-import client from '@kubb/plugin-client/clients/axios'
+import client from '@/client'
 import type { UsersGetMyUserQueryResponse } from '../../types/UsersGetMyUser.ts'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
+import type { RequestConfig, ResponseErrorConfig } from '@/client'
 
 export function getUsersGetMyUserUrl() {
   return `/users/me` as const

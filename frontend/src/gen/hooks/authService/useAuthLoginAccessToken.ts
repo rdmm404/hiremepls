@@ -1,17 +1,17 @@
-import client from '@kubb/plugin-client/clients/axios'
+import client from '@/client'
 import type { AuthLoginAccessTokenMutationRequest, AuthLoginAccessTokenMutationResponse, AuthLoginAccessToken422 } from '../../types/AuthLoginAccessToken.ts'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
+import type { RequestConfig, ResponseErrorConfig } from '@/client'
 import type { UseMutationOptions } from '@tanstack/react-query'
 import { authLoginAccessToken } from '../../clients/authClient/authLoginAccessToken.ts'
 import { useMutation } from '@tanstack/react-query'
 
-export const authLoginAccessTokenMutationKey = () => [{ url: '/auth/token' }] as const
+export const authLoginAccessTokenMutationKey = () => [{ url: '/auth/login' }] as const
 
 export type AuthLoginAccessTokenMutationKey = ReturnType<typeof authLoginAccessTokenMutationKey>
 
 /**
  * @summary Login Access Token
- * {@link /auth/token}
+ * {@link /auth/login}
  */
 export function useAuthLoginAccessToken<TContext>(
   options: {

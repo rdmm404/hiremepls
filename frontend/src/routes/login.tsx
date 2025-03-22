@@ -1,22 +1,39 @@
 import type React from "react";
+import { useState } from "react";
+import {
+  createFileRoute,
+  useRouter,
+  Navigate,
+  useLoaderData,
+} from "@tanstack/react-router";
+import { Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
 import { useAuthLoginAccessToken } from "@/gen";
-import { Loader2 } from "lucide-react";
+
+type LoginParams = {
+  redirect?: string;
+};
 
 export const Route = createFileRoute("/login")({
   component: LoginForm,
+  validateSearch: (search: Record<string, unknown>): LoginParams => ({
+    redirect: search?.redirect as string | undefined,
+  }),
 });
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
+  const search = Route.useSearch();
+
   const loginMutation = useAuthLoginAccessToken({
     mutation: {
-      onSuccess: () => window.location.replace("/"),
+      onSuccess: () => {
+        router.navigate({ to: search.redirect || "/" });
+      },
     },
   });
 
@@ -29,6 +46,11 @@ export default function LoginForm() {
       },
     });
   };
+
+  const currentUser = useLoaderData({ from: "__root__" });
+  if (currentUser) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen">

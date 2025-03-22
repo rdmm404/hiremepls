@@ -1,6 +1,6 @@
-import client from '@kubb/plugin-client/clients/axios'
+import client from '@/client'
 import type { UsersGetUserQueryResponse, UsersGetUserPathParams, UsersGetUser422 } from '../../types/UsersGetUser.ts'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
+import type { RequestConfig, ResponseErrorConfig } from '@/client'
 import type { QueryKey, UseSuspenseQueryOptions, UseSuspenseQueryResult } from '@tanstack/react-query'
 import { usersGetUser } from '../../clients/usersClient/usersGetUser.ts'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'

@@ -1,10 +1,10 @@
-import client from '@kubb/plugin-client/clients/axios'
+import client from '@/client'
 import type {
   ApplicationsCreateFromJobUrlMutationRequest,
   ApplicationsCreateFromJobUrlMutationResponse,
   ApplicationsCreateFromJobUrl422,
 } from '../../types/ApplicationsCreateFromJobUrl.ts'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
+import type { RequestConfig, ResponseErrorConfig } from '@/client'
 import type { UseMutationOptions } from '@tanstack/react-query'
 import { applicationsCreateFromJobUrl } from '../../clients/applicationsClient/applicationsCreateFromJobUrl.ts'
 import { useMutation } from '@tanstack/react-query'

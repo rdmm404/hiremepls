@@ -13,7 +13,9 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as ApplicationFromUrlImport } from './routes/applicationFromUrl'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as AuthenticatedAuthenticatedPageImport } from './routes/_authenticated/authenticatedPage'
 
 // Create/Update Routes
 
@@ -29,11 +31,23 @@ const ApplicationFromUrlRoute = ApplicationFromUrlImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthenticatedRouteRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
 } as any)
+
+const AuthenticatedAuthenticatedPageRoute =
+  AuthenticatedAuthenticatedPageImport.update({
+    id: '/authenticatedPage',
+    path: '/authenticatedPage',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -44,6 +58,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRoute
     }
     '/applicationFromUrl': {
@@ -60,47 +81,79 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/authenticatedPage': {
+      id: '/_authenticated/authenticatedPage'
+      path: '/authenticatedPage'
+      fullPath: '/authenticatedPage'
+      preLoaderRoute: typeof AuthenticatedAuthenticatedPageImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAuthenticatedPageRoute: typeof AuthenticatedAuthenticatedPageRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAuthenticatedPageRoute: AuthenticatedAuthenticatedPageRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '': typeof AuthenticatedRouteRouteWithChildren
   '/applicationFromUrl': typeof ApplicationFromUrlRoute
   '/login': typeof LoginRoute
+  '/authenticatedPage': typeof AuthenticatedAuthenticatedPageRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '': typeof AuthenticatedRouteRouteWithChildren
   '/applicationFromUrl': typeof ApplicationFromUrlRoute
   '/login': typeof LoginRoute
+  '/authenticatedPage': typeof AuthenticatedAuthenticatedPageRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/applicationFromUrl': typeof ApplicationFromUrlRoute
   '/login': typeof LoginRoute
+  '/_authenticated/authenticatedPage': typeof AuthenticatedAuthenticatedPageRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/applicationFromUrl' | '/login'
+  fullPaths: '/' | '' | '/applicationFromUrl' | '/login' | '/authenticatedPage'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/applicationFromUrl' | '/login'
-  id: '__root__' | '/' | '/applicationFromUrl' | '/login'
+  to: '/' | '' | '/applicationFromUrl' | '/login' | '/authenticatedPage'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/applicationFromUrl'
+    | '/login'
+    | '/_authenticated/authenticatedPage'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   ApplicationFromUrlRoute: typeof ApplicationFromUrlRoute
   LoginRoute: typeof LoginRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   ApplicationFromUrlRoute: ApplicationFromUrlRoute,
   LoginRoute: LoginRoute,
 }
@@ -116,6 +169,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/_authenticated",
         "/applicationFromUrl",
         "/login"
       ]
@@ -123,11 +177,21 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.tsx"
     },
+    "/_authenticated": {
+      "filePath": "_authenticated/route.tsx",
+      "children": [
+        "/_authenticated/authenticatedPage"
+      ]
+    },
     "/applicationFromUrl": {
       "filePath": "applicationFromUrl.tsx"
     },
     "/login": {
       "filePath": "login.tsx"
+    },
+    "/_authenticated/authenticatedPage": {
+      "filePath": "_authenticated/authenticatedPage.tsx",
+      "parent": "/_authenticated"
     }
   }
 }

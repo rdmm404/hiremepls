@@ -1,6 +1,6 @@
-import client from '@kubb/plugin-client/clients/axios'
+import client from '@/client'
 import type { UsersDeleteUserMutationResponse, UsersDeleteUserPathParams, UsersDeleteUser422 } from '../../types/UsersDeleteUser.ts'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
+import type { RequestConfig, ResponseErrorConfig } from '@/client'
 import type { UseMutationOptions } from '@tanstack/react-query'
 import { usersDeleteUser } from '../../clients/usersClient/usersDeleteUser.ts'
 import { useMutation } from '@tanstack/react-query'

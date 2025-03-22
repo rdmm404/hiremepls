@@ -37,7 +37,7 @@ if settings.ENVIRONMENT == "prd":
     logger.add(sys.stderr, level="INFO")
 else:
     openapi_url = "/api/v1/openapi.json"
-    cors_allowed.append("*")
+    cors_allowed.append("http://localhost:8766")
 
 app = FastAPI(openapi_url=openapi_url, generate_unique_id_function=custom_generate_unique_id)
 
