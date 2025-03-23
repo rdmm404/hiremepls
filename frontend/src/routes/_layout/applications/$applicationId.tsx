@@ -5,7 +5,7 @@ import {
 } from "@/gen";
 
 export const Route = createFileRoute(
-  "/_authenticated/applications/$applicationId"
+  "/_layout/applications/$applicationId"
 )({
   component: ApplicationDetail,
   loader: async ({ params, context }) => {

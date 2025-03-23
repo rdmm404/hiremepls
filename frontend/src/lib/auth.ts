@@ -1,7 +1,7 @@
 import { User, usersGetMyUser } from "@/gen";
 
 export type Auth = {
-  getCurrentUser(): Promise<User | null>;
+  getCurrentUser(): Promise<User | undefined>;
 };
 
 export const auth: Auth = {
@@ -9,7 +9,7 @@ export const auth: Auth = {
     try {
       return await usersGetMyUser();
     } catch {
-      return null;
+      return undefined;
     }
   },
 };

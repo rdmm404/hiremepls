@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useApplicationsCreateFromJobUrl } from "@/gen";
 
-export const Route = createFileRoute("/_authenticated/applications/url")({
+export const Route = createFileRoute("/_layout/applications/new")({
   component: CreateApplicationWithUrl,
 });
 
@@ -26,7 +26,7 @@ function CreateApplicationWithUrl() {
       onError: (error) =>
         toast.error(`Something went wrong`, {
           description: error.response?.data.detail![0].msg,
-        }), // add a toast here
+        }),
     },
   });
   const [url, setUrl] = useState("");
@@ -37,7 +37,7 @@ function CreateApplicationWithUrl() {
   };
 
   return (
-    <div className="flex items-center justify-center grow">
+    <div className="flex items-center justify-center grow h-full">
       <form onSubmit={handleFormSubmit}>
         <div className="flex gap-2">
           <Input

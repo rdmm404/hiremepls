@@ -12,10 +12,10 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
-import { Route as AuthenticatedRouteImport } from './routes/_authenticated/route'
-import { Route as IndexImport } from './routes/index'
-import { Route as AuthenticatedApplicationsUrlImport } from './routes/_authenticated/applications/url'
-import { Route as AuthenticatedApplicationsApplicationIdImport } from './routes/_authenticated/applications/$applicationId'
+import { Route as LayoutRouteImport } from './routes/_layout/route'
+import { Route as LayoutIndexImport } from './routes/_layout/index'
+import { Route as LayoutApplicationsNewImport } from './routes/_layout/applications/new'
+import { Route as LayoutApplicationsApplicationIdImport } from './routes/_layout/applications/$applicationId'
 
 // Create/Update Routes
 
@@ -25,47 +25,39 @@ const LoginRoute = LoginImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthenticatedRouteRoute = AuthenticatedRouteImport.update({
-  id: '/_authenticated',
+const LayoutRouteRoute = LayoutRouteImport.update({
+  id: '/_layout',
   getParentRoute: () => rootRoute,
 } as any)
 
-const IndexRoute = IndexImport.update({
+const LayoutIndexRoute = LayoutIndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => LayoutRouteRoute,
 } as any)
 
-const AuthenticatedApplicationsUrlRoute =
-  AuthenticatedApplicationsUrlImport.update({
-    id: '/applications/url',
-    path: '/applications/url',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
+const LayoutApplicationsNewRoute = LayoutApplicationsNewImport.update({
+  id: '/applications/new',
+  path: '/applications/new',
+  getParentRoute: () => LayoutRouteRoute,
+} as any)
 
-const AuthenticatedApplicationsApplicationIdRoute =
-  AuthenticatedApplicationsApplicationIdImport.update({
+const LayoutApplicationsApplicationIdRoute =
+  LayoutApplicationsApplicationIdImport.update({
     id: '/applications/$applicationId',
     path: '/applications/$applicationId',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    getParentRoute: () => LayoutRouteRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/_authenticated': {
-      id: '/_authenticated'
+    '/_layout': {
+      id: '/_layout'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AuthenticatedRouteImport
+      preLoaderRoute: typeof LayoutRouteImport
       parentRoute: typeof rootRoute
     }
     '/login': {
@@ -75,93 +67,99 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
-    '/_authenticated/applications/$applicationId': {
-      id: '/_authenticated/applications/$applicationId'
+    '/_layout/': {
+      id: '/_layout/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof LayoutIndexImport
+      parentRoute: typeof LayoutRouteImport
+    }
+    '/_layout/applications/$applicationId': {
+      id: '/_layout/applications/$applicationId'
       path: '/applications/$applicationId'
       fullPath: '/applications/$applicationId'
-      preLoaderRoute: typeof AuthenticatedApplicationsApplicationIdImport
-      parentRoute: typeof AuthenticatedRouteImport
+      preLoaderRoute: typeof LayoutApplicationsApplicationIdImport
+      parentRoute: typeof LayoutRouteImport
     }
-    '/_authenticated/applications/url': {
-      id: '/_authenticated/applications/url'
-      path: '/applications/url'
-      fullPath: '/applications/url'
-      preLoaderRoute: typeof AuthenticatedApplicationsUrlImport
-      parentRoute: typeof AuthenticatedRouteImport
+    '/_layout/applications/new': {
+      id: '/_layout/applications/new'
+      path: '/applications/new'
+      fullPath: '/applications/new'
+      preLoaderRoute: typeof LayoutApplicationsNewImport
+      parentRoute: typeof LayoutRouteImport
     }
   }
 }
 
 // Create and export the route tree
 
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedApplicationsApplicationIdRoute: typeof AuthenticatedApplicationsApplicationIdRoute
-  AuthenticatedApplicationsUrlRoute: typeof AuthenticatedApplicationsUrlRoute
+interface LayoutRouteRouteChildren {
+  LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutApplicationsApplicationIdRoute: typeof LayoutApplicationsApplicationIdRoute
+  LayoutApplicationsNewRoute: typeof LayoutApplicationsNewRoute
 }
 
-const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedApplicationsApplicationIdRoute:
-    AuthenticatedApplicationsApplicationIdRoute,
-  AuthenticatedApplicationsUrlRoute: AuthenticatedApplicationsUrlRoute,
+const LayoutRouteRouteChildren: LayoutRouteRouteChildren = {
+  LayoutIndexRoute: LayoutIndexRoute,
+  LayoutApplicationsApplicationIdRoute: LayoutApplicationsApplicationIdRoute,
+  LayoutApplicationsNewRoute: LayoutApplicationsNewRoute,
 }
 
-const AuthenticatedRouteRouteWithChildren =
-  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+const LayoutRouteRouteWithChildren = LayoutRouteRoute._addFileChildren(
+  LayoutRouteRouteChildren,
+)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '': typeof AuthenticatedRouteRouteWithChildren
+  '': typeof LayoutRouteRouteWithChildren
   '/login': typeof LoginRoute
-  '/applications/$applicationId': typeof AuthenticatedApplicationsApplicationIdRoute
-  '/applications/url': typeof AuthenticatedApplicationsUrlRoute
+  '/': typeof LayoutIndexRoute
+  '/applications/$applicationId': typeof LayoutApplicationsApplicationIdRoute
+  '/applications/new': typeof LayoutApplicationsNewRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '': typeof AuthenticatedRouteRouteWithChildren
   '/login': typeof LoginRoute
-  '/applications/$applicationId': typeof AuthenticatedApplicationsApplicationIdRoute
-  '/applications/url': typeof AuthenticatedApplicationsUrlRoute
+  '/': typeof LayoutIndexRoute
+  '/applications/$applicationId': typeof LayoutApplicationsApplicationIdRoute
+  '/applications/new': typeof LayoutApplicationsNewRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/_layout': typeof LayoutRouteRouteWithChildren
   '/login': typeof LoginRoute
-  '/_authenticated/applications/$applicationId': typeof AuthenticatedApplicationsApplicationIdRoute
-  '/_authenticated/applications/url': typeof AuthenticatedApplicationsUrlRoute
+  '/_layout/': typeof LayoutIndexRoute
+  '/_layout/applications/$applicationId': typeof LayoutApplicationsApplicationIdRoute
+  '/_layout/applications/new': typeof LayoutApplicationsNewRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | ''
     | '/login'
+    | '/'
     | '/applications/$applicationId'
-    | '/applications/url'
+    | '/applications/new'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/login' | '/applications/$applicationId' | '/applications/url'
+  to: '/login' | '/' | '/applications/$applicationId' | '/applications/new'
   id:
     | '__root__'
-    | '/'
-    | '/_authenticated'
+    | '/_layout'
     | '/login'
-    | '/_authenticated/applications/$applicationId'
-    | '/_authenticated/applications/url'
+    | '/_layout/'
+    | '/_layout/applications/$applicationId'
+    | '/_layout/applications/new'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  LayoutRouteRoute: typeof LayoutRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  LayoutRouteRoute: LayoutRouteRouteWithChildren,
   LoginRoute: LoginRoute,
 }
 
@@ -175,31 +173,32 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
-        "/_authenticated",
+        "/_layout",
         "/login"
       ]
     },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/_authenticated": {
-      "filePath": "_authenticated/route.tsx",
+    "/_layout": {
+      "filePath": "_layout/route.tsx",
       "children": [
-        "/_authenticated/applications/$applicationId",
-        "/_authenticated/applications/url"
+        "/_layout/",
+        "/_layout/applications/$applicationId",
+        "/_layout/applications/new"
       ]
     },
     "/login": {
       "filePath": "login.tsx"
     },
-    "/_authenticated/applications/$applicationId": {
-      "filePath": "_authenticated/applications/$applicationId.tsx",
-      "parent": "/_authenticated"
+    "/_layout/": {
+      "filePath": "_layout/index.tsx",
+      "parent": "/_layout"
     },
-    "/_authenticated/applications/url": {
-      "filePath": "_authenticated/applications/url.tsx",
-      "parent": "/_authenticated"
+    "/_layout/applications/$applicationId": {
+      "filePath": "_layout/applications/$applicationId.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/applications/new": {
+      "filePath": "_layout/applications/new.tsx",
+      "parent": "/_layout"
     }
   }
 }
