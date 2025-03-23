@@ -17,11 +17,17 @@ function CreateApplicationWithUrl() {
   const mutation = useApplicationsCreateFromJobUrl({
     mutation: {
       onSuccess: (data) => {
-        toast.success("Application created");
-        router.navigate({
-          to: "/applications/$applicationId",
-          params: { applicationId: data.id.toString() },
+        toast.info("Job application registered successfully", {
+          action: {
+            label: "View",
+            onClick: () =>
+              router.navigate({
+                to: "/applications/$applicationId",
+                params: { applicationId: data.id.toString() },
+              }),
+          },
         });
+
       },
       onError: (error) =>
         toast.error(`Something went wrong`, {
