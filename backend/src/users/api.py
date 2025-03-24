@@ -6,7 +6,7 @@ from src.users.api_schema import User
 from src.users.deps import UserRepositoryDep
 from src.auth.deps import DependsCurrentSuperUser, CurrentUserDep
 from src.common.deps import PaginationDep
-from src.common.api_schema import PaginatedResponse
+from src.common.pagination import PaginatedResponse
 
 router = APIRouter(prefix="/users", tags=["users"])
 

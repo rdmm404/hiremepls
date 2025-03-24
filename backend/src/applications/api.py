@@ -6,7 +6,7 @@ from src.auth.deps import CurrentUserDep
 from src.applications.deps import ApplicationsServiceDep, ApplicationRepositoryDep
 from src.applications.api_schema import Application, CreateApplicationByJobUrl
 from src.applications.models import Application as ApplicationDB
-from src.common.api_schema import PaginatedResponse
+from src.common.pagination import PaginatedResponse
 from src.common.deps import PaginationDep
 
 router = APIRouter(prefix="/applications", tags=["applications"])
