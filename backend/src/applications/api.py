@@ -4,7 +4,7 @@ from typing import cast
 
 from src.auth.deps import CurrentUserDep
 from src.applications.deps import ApplicationsServiceDep, ApplicationRepositoryDep
-from src.applications.api_schema import Application, CreateApplicationByJobUrl
+from src.applications.api_schema import Application, CreateApplicationByJobUrl, ApplicationSummary
 from src.applications.models import Application as ApplicationDB
 from src.common.pagination import PaginatedResponse
 from src.common.deps import PaginationDep
@@ -38,7 +38,7 @@ async def get_application(
     return application
 
 
-@router.get("/", response_model=PaginatedResponse[Application])
+@router.get("/", response_model=PaginatedResponse[ApplicationSummary])
 async def list_applications(
     pagination: PaginationDep,
     application_repo: ApplicationRepositoryDep,

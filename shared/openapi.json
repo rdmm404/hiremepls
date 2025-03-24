@@ -48,18 +48,20 @@
           {
             "name": "page",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
+              "default": 1,
               "title": "Page"
             }
           },
           {
             "name": "page_size",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
+              "default": 10,
               "title": "Page Size"
             }
           }
@@ -437,18 +439,20 @@
           {
             "name": "page",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
+              "default": 1,
               "title": "Page"
             }
           },
           {
             "name": "page_size",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
+              "default": 10,
               "title": "Page Size"
             }
           }
@@ -459,7 +463,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaginatedResponse_Application_"
+                  "$ref": "#/components/schemas/PaginatedResponse_ApplicationSummary_"
                 }
               }
             }
@@ -593,6 +597,33 @@
           "Ghosted"
         ],
         "title": "ApplicationStatus"
+      },
+      "ApplicationSummary": {
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ApplicationStatus"
+          },
+          "fit": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fit"
+          },
+          "job": {
+            "$ref": "#/components/schemas/JobSummary"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "job"
+        ],
+        "title": "ApplicationSummary"
       },
       "Body_auth-login_access_token": {
         "properties": {
@@ -786,6 +817,52 @@
         ],
         "title": "Compensation"
       },
+      "CompensationSummary": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "currency": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Currency"
+          },
+          "minimum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minimum"
+          },
+          "maximum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Maximum"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "title": "CompensationSummary"
+      },
       "CreateApplicationByJobUrl": {
         "properties": {
           "url": {
@@ -930,7 +1007,64 @@
         ],
         "title": "Job"
       },
-      "PaginatedResponse_Application_": {
+      "JobSummary": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "job_title": {
+            "type": "string",
+            "title": "Job Title"
+          },
+          "job_url": {
+            "type": "string",
+            "maxLength": 2083,
+            "minLength": 1,
+            "format": "uri",
+            "title": "Job Url"
+          },
+          "llm_summary": {
+            "type": "string",
+            "title": "Llm Summary"
+          },
+          "modality": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "remote",
+                "in_office",
+                "hybrid"
+              ]
+            },
+            "type": "array",
+            "title": "Modality"
+          },
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "compensation": {
+            "$ref": "#/components/schemas/CompensationSummary"
+          },
+          "company": {
+            "$ref": "#/components/schemas/Company"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "job_title",
+          "job_url",
+          "llm_summary",
+          "modality",
+          "location",
+          "compensation",
+          "company"
+        ],
+        "title": "JobSummary"
+      },
+      "PaginatedResponse_ApplicationSummary_": {
         "properties": {
           "page": {
             "type": "integer",
@@ -957,7 +1091,7 @@
           },
           "data": {
             "items": {
-              "$ref": "#/components/schemas/Application"
+              "$ref": "#/components/schemas/ApplicationSummary"
             },
             "type": "array",
             "title": "Data"
@@ -971,7 +1105,7 @@
           "item_count",
           "data"
         ],
-        "title": "PaginatedResponse[Application]"
+        "title": "PaginatedResponse[ApplicationSummary]"
       },
       "PaginatedResponse_User_": {
         "properties": {
