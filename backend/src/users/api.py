@@ -1,38 +1,43 @@
 from fastapi import APIRouter, HTTPException, status, Response
 from sqlalchemy.exc import IntegrityError
-from typing import cast
 
-from src.users.models import UserCreate
+from src.users.models import UserCreate, User as UserDB
 from src.users.api_schema import User
 from src.users.deps import UserRepositoryDep
 from src.auth.deps import DependsCurrentSuperUser, CurrentUserDep
+from src.common.deps import PaginationDep
+from src.common.api_schema import PaginatedResponse
 
 router = APIRouter(prefix="/users", tags=["users"])
 
 
-@router.get("/me", description="Get the information of the current logged in user.")
-async def get_my_user(user: CurrentUserDep) -> User:
-    return User(**user.model_dump())
+@router.get(
+    "/me", description="Get the information of the current logged in user.", response_model=User
+)
+async def get_my_user(user: CurrentUserDep) -> UserDB:
+    return user
 
 
-@router.get("/", dependencies=[DependsCurrentSuperUser])
-async def list_users(user_repo: UserRepositoryDep, limit: int = 10, offset: int = 0) -> list[User]:
-    users_db = user_repo.get_all_users(limit, offset)
-    return [User(**u.model_dump()) for u in users_db]
+@router.get("/", dependencies=[DependsCurrentSuperUser], response_model=PaginatedResponse[User])
+async def list_users(
+    user_repo: UserRepositoryDep, pagination: PaginationDep
+) -> PaginatedResponse[UserDB]:
+    count_users = user_repo.count_all_users()
+    return pagination.handle_pagination(count_users, user_repo.get_all_users)
 
 
 @router.get("/{user_id}/", dependencies=[DependsCurrentSuperUser], response_model=User)
-async def get_user(user_id: int, user_repo: UserRepositoryDep) -> User:
+async def get_user(user_id: int, user_repo: UserRepositoryDep) -> UserDB:
     user = user_repo.get_user_by_id(user_id)
 
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    return cast(User, user)
+    return user
 
 
 @router.post("/", dependencies=[DependsCurrentSuperUser], response_model=User)
-async def create_user(user: UserCreate, user_repo: UserRepositoryDep) -> User:
+async def create_user(user: UserCreate, user_repo: UserRepositoryDep) -> UserDB:
     user_already_exists = HTTPException(
         status_code=400,
         detail="User already exists.",
@@ -47,7 +52,7 @@ async def create_user(user: UserCreate, user_repo: UserRepositoryDep) -> User:
     except IntegrityError:
         raise user_already_exists
 
-    return cast(User, user_db)
+    return user_db
 
 
 @router.delete(

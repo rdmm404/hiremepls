@@ -46,23 +46,21 @@
         ],
         "parameters": [
           {
-            "name": "limit",
+            "name": "page",
             "in": "query",
-            "required": false,
+            "required": true,
             "schema": {
               "type": "integer",
-              "default": 10,
-              "title": "Limit"
+              "title": "Page"
             }
           },
           {
-            "name": "offset",
+            "name": "page_size",
             "in": "query",
-            "required": false,
+            "required": true,
             "schema": {
               "type": "integer",
-              "default": 0,
-              "title": "Offset"
+              "title": "Page Size"
             }
           }
         ],
@@ -72,11 +70,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  },
-                  "title": "Response Users-List Users"
+                  "$ref": "#/components/schemas/PaginatedResponse_User_"
                 }
               }
             }
@@ -357,7 +351,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/src__applications__api_schema__Application"
+                  "$ref": "#/components/schemas/Application"
                 }
               }
             }
@@ -409,7 +403,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/src__applications__api_schema__Application"
+                  "$ref": "#/components/schemas/Application"
                 }
               }
             }
@@ -508,6 +502,82 @@
   },
   "components": {
     "schemas": {
+      "Application": {
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ApplicationStatus",
+            "default": "Pending"
+          },
+          "interview_rounds": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interview Rounds"
+          },
+          "current_round": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Round"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "fit": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fit"
+          },
+          "resume_used": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resume Used"
+          },
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "job": {
+            "$ref": "#/components/schemas/Job"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "job"
+        ],
+        "title": "Application"
+      },
       "ApplicationStatus": {
         "type": "string",
         "enum": [
@@ -887,7 +957,7 @@
           },
           "data": {
             "items": {
-              "$ref": "#/components/schemas/src__applications__models__Application"
+              "$ref": "#/components/schemas/Application"
             },
             "type": "array",
             "title": "Data"
@@ -902,6 +972,49 @@
           "data"
         ],
         "title": "PaginatedResponse[Application]"
+      },
+      "PaginatedResponse_User_": {
+        "properties": {
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "next_page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Page"
+          },
+          "total_pages": {
+            "type": "integer",
+            "title": "Total Pages"
+          },
+          "item_count": {
+            "type": "integer",
+            "title": "Item Count"
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/User"
+            },
+            "type": "array",
+            "title": "Data"
+          }
+        },
+        "type": "object",
+        "required": [
+          "page",
+          "next_page",
+          "total_pages",
+          "item_count",
+          "data"
+        ],
+        "title": "PaginatedResponse[User]"
       },
       "Token": {
         "properties": {
@@ -1055,204 +1168,6 @@
           "type"
         ],
         "title": "ValidationError"
-      },
-      "src__applications__api_schema__Application": {
-        "properties": {
-          "status": {
-            "$ref": "#/components/schemas/ApplicationStatus",
-            "default": "Pending"
-          },
-          "interview_rounds": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Interview Rounds"
-          },
-          "current_round": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Current Round"
-          },
-          "notes": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Notes"
-          },
-          "fit": {
-            "anyOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Fit"
-          },
-          "resume_used": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Resume Used"
-          },
-          "id": {
-            "type": "integer",
-            "title": "Id"
-          },
-          "job": {
-            "$ref": "#/components/schemas/Job"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "job"
-        ],
-        "title": "Application"
-      },
-      "src__applications__models__Application": {
-        "properties": {
-          "id": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Id"
-          },
-          "created_at": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Created At"
-          },
-          "updated_at": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Updated At"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApplicationStatus",
-            "default": "Pending"
-          },
-          "interview_rounds": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Interview Rounds"
-          },
-          "current_round": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Current Round"
-          },
-          "notes": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Notes"
-          },
-          "fit": {
-            "anyOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Fit"
-          },
-          "resume_used": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Resume Used"
-          },
-          "user_id": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "User Id"
-          },
-          "job_id": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Job Id"
-          }
-        },
-        "type": "object",
-        "title": "Application"
       }
     },
     "securitySchemes": {

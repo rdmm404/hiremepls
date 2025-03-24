@@ -1,5 +1,5 @@
 from typing import cast
-from sqlmodel import select, col
+from sqlmodel import select, col, func
 from sqlalchemy import delete
 
 from src.common.base_repository import BaseRepository
@@ -33,3 +33,7 @@ class UserRepository(BaseRepository):
         result = self.session.exec(query)  # type: ignore
         self.session.commit()
         return bool(result.rowcount > 0)
+
+    def count_all_users(self) -> int:
+        query = select(func.count(col(User.id)))
+        return self.session.exec(query).one()
