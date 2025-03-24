@@ -600,6 +600,10 @@
       },
       "ApplicationSummary": {
         "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
           "status": {
             "$ref": "#/components/schemas/ApplicationStatus"
           },
@@ -620,6 +624,7 @@
         },
         "type": "object",
         "required": [
+          "id",
           "status",
           "job"
         ],

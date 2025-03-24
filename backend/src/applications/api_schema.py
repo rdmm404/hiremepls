@@ -16,6 +16,7 @@ class Application(ApplicationBase):
 
 
 class ApplicationSummary(BaseModel):
+    id: int
     status: ApplicationStatus
     fit: float | None = None
     job: JobSummary

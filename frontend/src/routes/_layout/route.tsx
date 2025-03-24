@@ -20,7 +20,7 @@ function AuthenticatedRoute() {
   return (
     <SidebarProvider>
       <AppSidebar currentUser={currentUser} />
-      <main className="size-full">
+      <main className="size-full flex items-center justify-center @container">
         <Outlet />
         <MobileSidebarTrigger />
       </main>
