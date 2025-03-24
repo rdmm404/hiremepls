@@ -1,4 +1,5 @@
-from sqlmodel import select
+from sqlmodel import select, func, col
+from collections.abc import Sequence
 
 from src.common.base_repository import BaseRepository
 from src.applications.models import Application
@@ -18,3 +19,15 @@ class ApplicationRepository(BaseRepository):
             Application.id == application_id and Application.user_id == user_id
         )
         return self.session.exec(query).first()
+
+    def get_all_user_applications(
+        self, user_id: int, limit: int, offset: int
+    ) -> Sequence[Application]:
+        query = (
+            select(Application).where(Application.user_id == user_id).limit(limit).offset(offset)
+        )
+        return self.session.exec(query).all()
+
+    def count_all_user_applications(self, user_id: int) -> int:
+        query = select(func.count(col(Application.id))).where(Application.user_id == user_id)
+        return self.session.exec(query).one()

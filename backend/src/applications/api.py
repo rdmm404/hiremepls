@@ -1,10 +1,13 @@
 from fastapi import APIRouter, HTTPException, status
+
 from typing import cast
 
 from src.auth.deps import CurrentUserDep
 from src.applications.deps import ApplicationsServiceDep, ApplicationRepositoryDep
 from src.applications.api_schema import Application, CreateApplicationByJobUrl
 from src.applications.models import Application as ApplicationDB
+from src.common.api_schema import PaginatedResponse
+from src.common.deps import PaginationDep
 
 router = APIRouter(prefix="/applications", tags=["applications"])
 
@@ -33,3 +36,19 @@ async def get_application(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
     return application
+
+
+@router.get("/", response_model=PaginatedResponse[Application])
+async def list_applications(
+    pagination: PaginationDep,
+    application_repo: ApplicationRepositoryDep,
+    user: CurrentUserDep,
+) -> PaginatedResponse[ApplicationDB]:
+    count = application_repo.count_all_user_applications(cast(int, user.id))
+
+    return pagination.handle_pagination(
+        count,
+        lambda limit, offset: application_repo.get_all_user_applications(
+            cast(int, user.id), limit, offset
+        ),
+    )
