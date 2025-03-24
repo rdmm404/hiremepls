@@ -1,6 +1,6 @@
 import math
-from fastapi import Depends, Query
-from typing import Annotated, Generator, Callable, Sequence
+from fastapi import Depends, Query, HTTPException, status
+from typing import Annotated, Generator, Callable, Sequence, Self
 from sqlmodel import Session
 
 from src.core.db import engine
@@ -16,8 +16,17 @@ SessionDep = Annotated[Session, Depends(get_session)]
 
 
 class Pagination:
-    def __init__(self, request_pagination: Annotated[RequestPagination, Query()]):
+    def __init__(self, max_page_size: int = 100):
+        self.max_page_size = max_page_size
+
+    def __call__(self, request_pagination: Annotated[RequestPagination, Query()]) -> Self:
         self.pagination = request_pagination
+        if self.pagination.page_size > self.max_page_size:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Maximum page size is {self.max_page_size}",
+            )
+        return self
 
     def handle_pagination[T](
         self, count: int, data_func: Callable[[int, int], Sequence[T]]
@@ -39,4 +48,4 @@ class Pagination:
         )
 
 
-PaginationDep = Annotated[Pagination, Depends(Pagination)]
+PaginationDep = Annotated[Pagination, Depends(Pagination())]

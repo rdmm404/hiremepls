@@ -3,8 +3,8 @@ from pydantic import BaseModel
 
 
 class RequestPagination(BaseModel):
-    page: int
-    page_size: int
+    page: int = 1
+    page_size: int = 10
 
 
 class PaginatedResponse[DataType](BaseModel):
