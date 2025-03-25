@@ -16,6 +16,8 @@ type LoginParams = {
   redirect?: string;
 };
 
+// TODO: ADD ERROR MESSAGES
+
 export const Route = createFileRoute("/login")({
   component: LoginForm,
   validateSearch: (search: Record<string, unknown>): LoginParams => ({
@@ -53,7 +55,7 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center h-full">
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-sm p-6 space-y-6 rounded-lg border border-foreground/10"

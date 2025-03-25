@@ -46,22 +46,23 @@ function CreateApplicationWithUrl() {
   };
 
   return (
-    <div className="flex items-center justify-center grow h-full">
-      <form onSubmit={handleFormSubmit}>
-        <div className="flex gap-2">
-          <Input
-            type="text"
-            className="w-90"
-            placeholder="Enter the job description url"
-            id="url"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-          />
-          <Button disabled={mutation.isPending}>
-            {mutation.isPending && <Loader2 className="animate-spin" />}Submit
-          </Button>
-        </div>
-      </form>
-    </div>
+    <form onSubmit={handleFormSubmit} className="w-full">
+      <div className="flex flex-col px-4 @lg:flex-row gap-2 @lg:px-0 w-full justify-center items-center">
+        <Input
+          type="text"
+          className="w-full max-w-90"
+          placeholder="Enter the job description url"
+          id="url"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+        />
+        <Button
+          disabled={mutation.isPending}
+          className="max-w-90 @max-lg:w-full"
+        >
+          {mutation.isPending && <Loader2 className="animate-spin" />}Submit
+        </Button>
+      </div>
+    </form>
   );
 }
