@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as LayoutRouteImport } from './routes/_layout/route'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
+import { Route as LayoutApplicationsRouteImport } from './routes/_layout/applications/route'
 import { Route as LayoutApplicationsIndexImport } from './routes/_layout/applications/index'
 import { Route as LayoutApplicationsNewImport } from './routes/_layout/applications/new'
 import { Route as LayoutApplicationsApplicationIdImport } from './routes/_layout/applications/$applicationId'
@@ -37,23 +38,29 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   getParentRoute: () => LayoutRouteRoute,
 } as any)
 
-const LayoutApplicationsIndexRoute = LayoutApplicationsIndexImport.update({
-  id: '/applications/',
-  path: '/applications/',
+const LayoutApplicationsRouteRoute = LayoutApplicationsRouteImport.update({
+  id: '/applications',
+  path: '/applications',
   getParentRoute: () => LayoutRouteRoute,
 } as any)
 
+const LayoutApplicationsIndexRoute = LayoutApplicationsIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LayoutApplicationsRouteRoute,
+} as any)
+
 const LayoutApplicationsNewRoute = LayoutApplicationsNewImport.update({
-  id: '/applications/new',
-  path: '/applications/new',
-  getParentRoute: () => LayoutRouteRoute,
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => LayoutApplicationsRouteRoute,
 } as any)
 
 const LayoutApplicationsApplicationIdRoute =
   LayoutApplicationsApplicationIdImport.update({
-    id: '/applications/$applicationId',
-    path: '/applications/$applicationId',
-    getParentRoute: () => LayoutRouteRoute,
+    id: '/$applicationId',
+    path: '/$applicationId',
+    getParentRoute: () => LayoutApplicationsRouteRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -74,6 +81,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
+    '/_layout/applications': {
+      id: '/_layout/applications'
+      path: '/applications'
+      fullPath: '/applications'
+      preLoaderRoute: typeof LayoutApplicationsRouteImport
+      parentRoute: typeof LayoutRouteImport
+    }
     '/_layout/': {
       id: '/_layout/'
       path: '/'
@@ -83,42 +97,56 @@ declare module '@tanstack/react-router' {
     }
     '/_layout/applications/$applicationId': {
       id: '/_layout/applications/$applicationId'
-      path: '/applications/$applicationId'
+      path: '/$applicationId'
       fullPath: '/applications/$applicationId'
       preLoaderRoute: typeof LayoutApplicationsApplicationIdImport
-      parentRoute: typeof LayoutRouteImport
+      parentRoute: typeof LayoutApplicationsRouteImport
     }
     '/_layout/applications/new': {
       id: '/_layout/applications/new'
-      path: '/applications/new'
+      path: '/new'
       fullPath: '/applications/new'
       preLoaderRoute: typeof LayoutApplicationsNewImport
-      parentRoute: typeof LayoutRouteImport
+      parentRoute: typeof LayoutApplicationsRouteImport
     }
     '/_layout/applications/': {
       id: '/_layout/applications/'
-      path: '/applications'
-      fullPath: '/applications'
+      path: '/'
+      fullPath: '/applications/'
       preLoaderRoute: typeof LayoutApplicationsIndexImport
-      parentRoute: typeof LayoutRouteImport
+      parentRoute: typeof LayoutApplicationsRouteImport
     }
   }
 }
 
 // Create and export the route tree
 
-interface LayoutRouteRouteChildren {
-  LayoutIndexRoute: typeof LayoutIndexRoute
+interface LayoutApplicationsRouteRouteChildren {
   LayoutApplicationsApplicationIdRoute: typeof LayoutApplicationsApplicationIdRoute
   LayoutApplicationsNewRoute: typeof LayoutApplicationsNewRoute
   LayoutApplicationsIndexRoute: typeof LayoutApplicationsIndexRoute
 }
 
+const LayoutApplicationsRouteRouteChildren: LayoutApplicationsRouteRouteChildren =
+  {
+    LayoutApplicationsApplicationIdRoute: LayoutApplicationsApplicationIdRoute,
+    LayoutApplicationsNewRoute: LayoutApplicationsNewRoute,
+    LayoutApplicationsIndexRoute: LayoutApplicationsIndexRoute,
+  }
+
+const LayoutApplicationsRouteRouteWithChildren =
+  LayoutApplicationsRouteRoute._addFileChildren(
+    LayoutApplicationsRouteRouteChildren,
+  )
+
+interface LayoutRouteRouteChildren {
+  LayoutApplicationsRouteRoute: typeof LayoutApplicationsRouteRouteWithChildren
+  LayoutIndexRoute: typeof LayoutIndexRoute
+}
+
 const LayoutRouteRouteChildren: LayoutRouteRouteChildren = {
+  LayoutApplicationsRouteRoute: LayoutApplicationsRouteRouteWithChildren,
   LayoutIndexRoute: LayoutIndexRoute,
-  LayoutApplicationsApplicationIdRoute: LayoutApplicationsApplicationIdRoute,
-  LayoutApplicationsNewRoute: LayoutApplicationsNewRoute,
-  LayoutApplicationsIndexRoute: LayoutApplicationsIndexRoute,
 }
 
 const LayoutRouteRouteWithChildren = LayoutRouteRoute._addFileChildren(
@@ -128,10 +156,11 @@ const LayoutRouteRouteWithChildren = LayoutRouteRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteRouteWithChildren
   '/login': typeof LoginRoute
+  '/applications': typeof LayoutApplicationsRouteRouteWithChildren
   '/': typeof LayoutIndexRoute
   '/applications/$applicationId': typeof LayoutApplicationsApplicationIdRoute
   '/applications/new': typeof LayoutApplicationsNewRoute
-  '/applications': typeof LayoutApplicationsIndexRoute
+  '/applications/': typeof LayoutApplicationsIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -146,6 +175,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_layout': typeof LayoutRouteRouteWithChildren
   '/login': typeof LoginRoute
+  '/_layout/applications': typeof LayoutApplicationsRouteRouteWithChildren
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/applications/$applicationId': typeof LayoutApplicationsApplicationIdRoute
   '/_layout/applications/new': typeof LayoutApplicationsNewRoute
@@ -157,10 +187,11 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/login'
+    | '/applications'
     | '/'
     | '/applications/$applicationId'
     | '/applications/new'
-    | '/applications'
+    | '/applications/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -172,6 +203,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_layout'
     | '/login'
+    | '/_layout/applications'
     | '/_layout/'
     | '/_layout/applications/$applicationId'
     | '/_layout/applications/new'
@@ -206,14 +238,21 @@ export const routeTree = rootRoute
     "/_layout": {
       "filePath": "_layout/route.tsx",
       "children": [
-        "/_layout/",
-        "/_layout/applications/$applicationId",
-        "/_layout/applications/new",
-        "/_layout/applications/"
+        "/_layout/applications",
+        "/_layout/"
       ]
     },
     "/login": {
       "filePath": "login.tsx"
+    },
+    "/_layout/applications": {
+      "filePath": "_layout/applications/route.tsx",
+      "parent": "/_layout",
+      "children": [
+        "/_layout/applications/$applicationId",
+        "/_layout/applications/new",
+        "/_layout/applications/"
+      ]
     },
     "/_layout/": {
       "filePath": "_layout/index.tsx",
@@ -221,15 +260,15 @@ export const routeTree = rootRoute
     },
     "/_layout/applications/$applicationId": {
       "filePath": "_layout/applications/$applicationId.tsx",
-      "parent": "/_layout"
+      "parent": "/_layout/applications"
     },
     "/_layout/applications/new": {
       "filePath": "_layout/applications/new.tsx",
-      "parent": "/_layout"
+      "parent": "/_layout/applications"
     },
     "/_layout/applications/": {
       "filePath": "_layout/applications/index.tsx",
-      "parent": "/_layout"
+      "parent": "/_layout/applications"
     }
   }
 }

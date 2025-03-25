@@ -7,6 +7,7 @@ import {
 
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar, MobileSidebarTrigger } from "@/components/AppSidebar";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const Route = createFileRoute("/_layout")({
   component: AuthenticatedRoute,
@@ -20,10 +21,15 @@ function AuthenticatedRoute() {
   return (
     <SidebarProvider>
       <AppSidebar currentUser={currentUser} />
-      <main className="size-full flex items-center justify-center @container">
-        <Outlet />
-        <MobileSidebarTrigger />
-      </main>
+      <div className="size-full flex flex-col">
+        <div className="p-4">
+          <Breadcrumbs />
+        </div>
+        <div className="w-full grow flex items-center justify-center @container">
+          <Outlet />
+          <MobileSidebarTrigger />
+        </div>
+      </div>
     </SidebarProvider>
   );
 }

@@ -12,10 +12,11 @@ const applicationListQueryParams: ApplicationsListApplicationsQueryParams = {
 };
 export const Route = createFileRoute("/_layout/applications/")({
   component: ListApplications,
-  loader: ({ context }) =>
+  loader: ({ context }) => {
     context.queryClient.ensureQueryData(
       applicationsListApplicationsQueryOptions(applicationListQueryParams)
-    ),
+    );
+  },
   pendingComponent: () => <p>Loading...</p>,
 });
 

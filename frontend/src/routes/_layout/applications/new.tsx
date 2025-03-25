@@ -10,6 +10,9 @@ import { useApplicationsCreateFromJobUrl } from "@/gen";
 
 export const Route = createFileRoute("/_layout/applications/new")({
   component: CreateApplicationWithUrl,
+  loader: () => ({
+    crumb: "Create",
+  }),
 });
 
 function CreateApplicationWithUrl() {
