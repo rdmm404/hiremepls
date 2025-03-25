@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import client from '@/client'
 import type { UsersDeleteUserMutationResponse, UsersDeleteUserPathParams, UsersDeleteUser422 } from '../../types/UsersDeleteUser.ts'
 import type { RequestConfig, ResponseErrorConfig } from '@/client'

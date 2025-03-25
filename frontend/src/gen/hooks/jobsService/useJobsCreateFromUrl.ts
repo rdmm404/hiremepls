@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import client from '@/client'
 import type { JobsCreateFromUrlMutationRequest, JobsCreateFromUrlMutationResponse, JobsCreateFromUrl422 } from '../../types/JobsCreateFromUrl.ts'
 import type { RequestConfig, ResponseErrorConfig } from '@/client'

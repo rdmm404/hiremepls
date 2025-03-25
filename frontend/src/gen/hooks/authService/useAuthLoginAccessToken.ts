@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import client from '@/client'
 import type { AuthLoginAccessTokenMutationRequest, AuthLoginAccessTokenMutationResponse, AuthLoginAccessToken422 } from '../../types/AuthLoginAccessToken.ts'
 import type { RequestConfig, ResponseErrorConfig } from '@/client'

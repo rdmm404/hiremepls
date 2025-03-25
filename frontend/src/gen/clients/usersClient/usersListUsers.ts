@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import client from '@/client'
 import type { UsersListUsersQueryResponse, UsersListUsersQueryParams, UsersListUsers422 } from '../../types/UsersListUsers.ts'
 import type { RequestConfig, ResponseErrorConfig } from '@/client'

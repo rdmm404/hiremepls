@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import client from '@/client'
 import type { UsersCreateUserMutationRequest, UsersCreateUserMutationResponse, UsersCreateUser422 } from '../../types/UsersCreateUser.ts'
 import type { RequestConfig, ResponseErrorConfig } from '@/client'

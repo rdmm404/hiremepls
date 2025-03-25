@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import client from '@/client'
 import type { AuthLogoutMutationResponse } from '../../types/AuthLogout.ts'
 import type { RequestConfig, ResponseErrorConfig } from '@/client'
