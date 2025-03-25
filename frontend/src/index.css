@@ -102,14 +102,14 @@
   --popover-foreground: oklch(91.4% 0.0137 314.75);
   --primary: oklch(74.2% 0.1485 301.88);
   --card-foreground: oklch(91.4% 0.0137 314.75);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(74.2% 0.1485 168.88);
+  --secondary-foreground: oklch(91.4% 0.0137 314.75);
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(75% 0.0137 314.75);
   --accent: oklch(1 0 0 / 5%);
   --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: hsl(0 0% 98%);
+  --destructive: oklch(64.84% 0.27 18.44);
+  --destructive-foreground: oklch(91.4% 0.0137 314.75);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 10%);
   --ring: oklch(0.556 0 0);
@@ -127,6 +127,10 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0); */
   --radius: 0.625rem;
+
+  /* My extra colors */
+  --neon-blue: oklch(74.2% 0.1336 215.62);
+  --neon-pink: oklch(75.46% 0.1831 346.81);
 }
 
 @theme inline {
@@ -167,6 +171,8 @@
   --color-sidebar-border: var(--border);
   --color-sidebar-ring: var(--ring);
   --font-mono: var(--font-mono);
+  --color-neon-blue: var(--neon-blue)
+  --color-neon-pink: var(--neon-pink)
 }
 
 @layer base {

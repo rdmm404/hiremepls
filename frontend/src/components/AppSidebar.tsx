@@ -95,7 +95,7 @@ export function MobileSidebarTrigger() {
   return (
     <Button
       className={cn("fixed bottom-4 right-4", !isMobile && "hidden")}
-      variant={"ghost"}
+      variant={"outline"}
       onClick={(e) => {
         e.preventDefault();
         toggleSidebar();
