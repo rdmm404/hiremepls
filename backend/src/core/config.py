@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     ENVIRONMENT: Literal["dev", "prd"] = "dev"
     SECRET_KEY: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
+    FRONTEND_URL: str = "http://localhost:8766"
 
 
 settings = Settings()  # type: ignore

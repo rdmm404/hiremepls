@@ -30,20 +30,18 @@ def generate_schema(app: FastAPI) -> None:
         f.write(json.dumps(app.openapi(), indent=2))
 
 
-cors_allowed = []
 if settings.ENVIRONMENT == "prd":
     openapi_url: str | None = None
     logger.remove()
     logger.add(sys.stderr, level="INFO")
 else:
     openapi_url = "/api/v1/openapi.json"
-    cors_allowed.append("http://localhost:8766")
 
 app = FastAPI(openapi_url=openapi_url, generate_unique_id_function=custom_generate_unique_id)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=cors_allowed,
+    allow_origins=[settings.FRONTEND_URL],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
