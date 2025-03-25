@@ -22,10 +22,10 @@ function AuthenticatedRoute() {
     <SidebarProvider>
       <AppSidebar currentUser={currentUser} />
       <div className="size-full flex flex-col">
-        <div className="p-4">
+        <div className="hidden sm:block p-4">
           <Breadcrumbs />
         </div>
-        <div className="w-full grow flex items-center justify-center @container">
+        <div className="w-full grow flex flex-col items-center justify-center @container">
           <Outlet />
           <MobileSidebarTrigger />
         </div>

@@ -121,10 +121,10 @@ const items: SidebarItem[] = [
     },
   },
   {
-    title: "New Application",
+    title: "Applications",
     icon: Briefcase,
     linkOptions: {
-      to: "/applications/new",
+      to: "/applications",
     },
   },
 ];

@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Plus } from "lucide-react";
 
 import {
   useApplicationsListApplicationsSuspense,
@@ -6,6 +7,7 @@ import {
   ApplicationsListApplicationsQueryParams,
 } from "@/gen";
 import { ApplicationCard } from "@/components/ApplicationCard";
+import { Button } from "@/components/ui/button";
 
 const applicationListQueryParams: ApplicationsListApplicationsQueryParams = {
   page_size: 100,
@@ -25,10 +27,22 @@ function ListApplications() {
     applicationListQueryParams
   );
   return (
-    <div className="w-full max-h-full @3xl:w-3/4 p-5 @3xl:p-0 max-w-4xl gap-3 grid grid-cols-1 @2xl:grid-cols-2">
-      {data.data.map((app) => (
-        <ApplicationCard application={app} key={app.id} />
-      ))}
-    </div>
+    <>
+      <div className="w-full max-h-full @3xl:w-3/4 p-5 @3xl:p-0 max-w-4xl">
+        <div className="w-full flex justify-between mb-3 md:mb-6 px-1 items-center">
+          <h1 className="text-xl md:text-3xl">My applications</h1>
+          <Button size={"icon"} asChild>
+            <Link to={"/applications/new"}>
+              <Plus className="size-4 md:size-5" />
+            </Link>
+          </Button>
+        </div>
+        <div className="w-full gap-3 grid grid-cols-1 @2xl:grid-cols-2">
+          {data.data.map((app) => (
+            <ApplicationCard application={app} key={app.id} />
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
