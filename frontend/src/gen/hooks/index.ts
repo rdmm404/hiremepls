@@ -1,3 +1,4 @@
+export type { ApplicationsApplicationPartialUpdateMutationKey } from './applicationsService/useApplicationsApplicationPartialUpdate.ts'
 export type { ApplicationsCreateFromJobUrlMutationKey } from './applicationsService/useApplicationsCreateFromJobUrl.ts'
 export type { ApplicationsGetApplicationQueryKey } from './applicationsService/useApplicationsGetApplication.ts'
 export type { ApplicationsGetApplicationSuspenseQueryKey } from './applicationsService/useApplicationsGetApplicationSuspense.ts'
@@ -14,6 +15,10 @@ export type { UsersGetUserQueryKey } from './usersService/useUsersGetUser.ts'
 export type { UsersGetUserSuspenseQueryKey } from './usersService/useUsersGetUserSuspense.ts'
 export type { UsersListUsersQueryKey } from './usersService/useUsersListUsers.ts'
 export type { UsersListUsersSuspenseQueryKey } from './usersService/useUsersListUsersSuspense.ts'
+export {
+  applicationsApplicationPartialUpdateMutationKey,
+  useApplicationsApplicationPartialUpdate,
+} from './applicationsService/useApplicationsApplicationPartialUpdate.ts'
 export { applicationsCreateFromJobUrlMutationKey, useApplicationsCreateFromJobUrl } from './applicationsService/useApplicationsCreateFromJobUrl.ts'
 export {
   applicationsGetApplicationQueryKey,

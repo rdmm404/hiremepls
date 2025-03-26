@@ -1,4 +1,11 @@
-export type { Application } from './Application.ts'
+export type {
+  ApplicationsApplicationPartialUpdatePathParams,
+  ApplicationsApplicationPartialUpdate200,
+  ApplicationsApplicationPartialUpdate422,
+  ApplicationsApplicationPartialUpdateMutationRequest,
+  ApplicationsApplicationPartialUpdateMutationResponse,
+  ApplicationsApplicationPartialUpdateMutation,
+} from './ApplicationsApplicationPartialUpdate.ts'
 export type {
   ApplicationsCreateFromJobUrl200,
   ApplicationsCreateFromJobUrl422,
@@ -49,7 +56,10 @@ export type {
 export type { JobSummary } from './JobSummary.ts'
 export type { PaginatedResponseApplicationSummary } from './PaginatedResponseApplicationSummary.ts'
 export type { PaginatedResponseUser } from './PaginatedResponseUser.ts'
+export type { SrcApplicationsApiSchemaApplication } from './SrcApplicationsApiSchemaApplication.ts'
+export type { SrcApplicationsModelsApplication } from './SrcApplicationsModelsApplication.ts'
 export type { Token } from './Token.ts'
+export type { UpdateApplicationPartial } from './UpdateApplicationPartial.ts'
 export type { User } from './User.ts'
 export type { UserCreate } from './UserCreate.ts'
 export type {

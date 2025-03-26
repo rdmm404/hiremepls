@@ -1,3 +1,4 @@
+export type { ApplicationsApplicationPartialUpdateMutationKey } from './hooks/applicationsService/useApplicationsApplicationPartialUpdate.ts'
 export type { ApplicationsCreateFromJobUrlMutationKey } from './hooks/applicationsService/useApplicationsCreateFromJobUrl.ts'
 export type { ApplicationsGetApplicationQueryKey } from './hooks/applicationsService/useApplicationsGetApplication.ts'
 export type { ApplicationsGetApplicationSuspenseQueryKey } from './hooks/applicationsService/useApplicationsGetApplicationSuspense.ts'
@@ -14,7 +15,14 @@ export type { UsersGetUserQueryKey } from './hooks/usersService/useUsersGetUser.
 export type { UsersGetUserSuspenseQueryKey } from './hooks/usersService/useUsersGetUserSuspense.ts'
 export type { UsersListUsersQueryKey } from './hooks/usersService/useUsersListUsers.ts'
 export type { UsersListUsersSuspenseQueryKey } from './hooks/usersService/useUsersListUsersSuspense.ts'
-export type { Application } from './types/Application.ts'
+export type {
+  ApplicationsApplicationPartialUpdatePathParams,
+  ApplicationsApplicationPartialUpdate200,
+  ApplicationsApplicationPartialUpdate422,
+  ApplicationsApplicationPartialUpdateMutationRequest,
+  ApplicationsApplicationPartialUpdateMutationResponse,
+  ApplicationsApplicationPartialUpdateMutation,
+} from './types/ApplicationsApplicationPartialUpdate.ts'
 export type {
   ApplicationsCreateFromJobUrl200,
   ApplicationsCreateFromJobUrl422,
@@ -65,7 +73,10 @@ export type {
 export type { JobSummary } from './types/JobSummary.ts'
 export type { PaginatedResponseApplicationSummary } from './types/PaginatedResponseApplicationSummary.ts'
 export type { PaginatedResponseUser } from './types/PaginatedResponseUser.ts'
+export type { SrcApplicationsApiSchemaApplication } from './types/SrcApplicationsApiSchemaApplication.ts'
+export type { SrcApplicationsModelsApplication } from './types/SrcApplicationsModelsApplication.ts'
 export type { Token } from './types/Token.ts'
+export type { UpdateApplicationPartial } from './types/UpdateApplicationPartial.ts'
 export type { User } from './types/User.ts'
 export type { UserCreate } from './types/UserCreate.ts'
 export type {
@@ -92,6 +103,10 @@ export type {
   UsersListUsersQuery,
 } from './types/UsersListUsers.ts'
 export type { ValidationError } from './types/ValidationError.ts'
+export {
+  getApplicationsApplicationPartialUpdateUrl,
+  applicationsApplicationPartialUpdate,
+} from './clients/applicationsClient/applicationsApplicationPartialUpdate.ts'
 export { applicationsClient } from './clients/applicationsClient/applicationsClient.ts'
 export { getApplicationsCreateFromJobUrlUrl, applicationsCreateFromJobUrl } from './clients/applicationsClient/applicationsCreateFromJobUrl.ts'
 export { getApplicationsGetApplicationUrl, applicationsGetApplication } from './clients/applicationsClient/applicationsGetApplication.ts'
@@ -107,6 +122,10 @@ export { getUsersDeleteUserUrl, usersDeleteUser } from './clients/usersClient/us
 export { getUsersGetMyUserUrl, usersGetMyUser } from './clients/usersClient/usersGetMyUser.ts'
 export { getUsersGetUserUrl, usersGetUser } from './clients/usersClient/usersGetUser.ts'
 export { getUsersListUsersUrl, usersListUsers } from './clients/usersClient/usersListUsers.ts'
+export {
+  applicationsApplicationPartialUpdateMutationKey,
+  useApplicationsApplicationPartialUpdate,
+} from './hooks/applicationsService/useApplicationsApplicationPartialUpdate.ts'
 export { applicationsCreateFromJobUrlMutationKey, useApplicationsCreateFromJobUrl } from './hooks/applicationsService/useApplicationsCreateFromJobUrl.ts'
 export {
   applicationsGetApplicationQueryKey,

@@ -35,12 +35,12 @@ function ApplicationStatusBadge({ status }: { status: ApplicationStatusEnum }) {
     // Initial states
     case ApplicationStatusEnum.Pending:
     case ApplicationStatusEnum.Applied:
-    case ApplicationStatusEnum.Received:
+    case ApplicationStatusEnum["Received by Employer"]:
       variant = "secondary";
       break;
 
     // Active states
-    case ApplicationStatusEnum["In Assesment"]:
+    case ApplicationStatusEnum["In Assessment"]:
     case ApplicationStatusEnum["In Screening"]:
     case ApplicationStatusEnum.Interviewing:
       variant = "default";
@@ -51,6 +51,10 @@ function ApplicationStatusBadge({ status }: { status: ApplicationStatusEnum }) {
       variant = "default";
       className += " bg-primary/80 hover:bg-primary/70";
       break;
+    case ApplicationStatusEnum.Negotiating:
+      variant = "default";
+      className += " bg-primary/90 hover:bg-primary/80";
+      break;
     case ApplicationStatusEnum.Hired:
       variant = "default";
       className += " bg-primary hover:bg-primary/90";
@@ -59,6 +63,7 @@ function ApplicationStatusBadge({ status }: { status: ApplicationStatusEnum }) {
     // Negative outcomes
     case ApplicationStatusEnum.Rejected:
     case ApplicationStatusEnum.Ghosted:
+    case ApplicationStatusEnum["Offer Declined"]:
       variant = "destructive";
       break;
 

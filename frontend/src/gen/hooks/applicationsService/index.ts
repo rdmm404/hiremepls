@@ -1,8 +1,10 @@
+export type { ApplicationsApplicationPartialUpdateMutationKey } from './useApplicationsApplicationPartialUpdate.ts'
 export type { ApplicationsCreateFromJobUrlMutationKey } from './useApplicationsCreateFromJobUrl.ts'
 export type { ApplicationsGetApplicationQueryKey } from './useApplicationsGetApplication.ts'
 export type { ApplicationsGetApplicationSuspenseQueryKey } from './useApplicationsGetApplicationSuspense.ts'
 export type { ApplicationsListApplicationsQueryKey } from './useApplicationsListApplications.ts'
 export type { ApplicationsListApplicationsSuspenseQueryKey } from './useApplicationsListApplicationsSuspense.ts'
+export { applicationsApplicationPartialUpdateMutationKey, useApplicationsApplicationPartialUpdate } from './useApplicationsApplicationPartialUpdate.ts'
 export { applicationsCreateFromJobUrlMutationKey, useApplicationsCreateFromJobUrl } from './useApplicationsCreateFromJobUrl.ts'
 export { applicationsGetApplicationQueryKey, applicationsGetApplicationQueryOptions, useApplicationsGetApplication } from './useApplicationsGetApplication.ts'
 export {

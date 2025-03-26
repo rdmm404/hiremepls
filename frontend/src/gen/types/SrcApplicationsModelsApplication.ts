@@ -1,7 +1,9 @@
 import type { ApplicationStatus } from './ApplicationStatus.ts'
-import type { Job } from './Job.ts'
 
-export type Application = {
+export type SrcApplicationsModelsApplication = {
+  id?: number | null
+  created_at?: string | null
+  updated_at?: string | null
   /**
    * @type string | undefined
    */
@@ -11,12 +13,6 @@ export type Application = {
   notes?: string | null
   fit?: number | null
   resume_used?: string | null
-  /**
-   * @type integer
-   */
-  id: number
-  /**
-   * @type object
-   */
-  job: Job
+  user_id?: number | null
+  job_id?: number | null
 }
