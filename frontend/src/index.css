@@ -171,8 +171,8 @@
   --color-sidebar-border: var(--border);
   --color-sidebar-ring: var(--ring);
   --font-mono: var(--font-mono);
-  --color-neon-blue: var(--neon-blue)
-  --color-neon-pink: var(--neon-pink)
+  --color-neon-blue: var(--neon-blue);
+  --color-neon-pink: var(--neon-pink);
 }
 
 @layer base {
