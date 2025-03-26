@@ -57,7 +57,7 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
             <EllipsisVertical className="size-4 text-muted-foreground hover:text-foreground" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <Link to={application.job.job_url}>
+            <Link to={application.job.job_url} target="_blank">
               <DropdownMenuItem>
                 <ExternalLink />
                 Go to URL
@@ -79,11 +79,8 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
         </DropdownMenu>
       </div>
       <hr className="my-2" />
-      <div className="flex grow items-center flex-wrap">
-        <ApplicationStatusBadge
-          status={application.status}
-          className="mr-2 mb-2"
-        />
+      <div className="flex gap-y-2 grow items-center flex-wrap  ">
+        <ApplicationStatusBadge status={application.status} className="mr-2" />
         <span className="inline-flex gap-1 items-center justify-end text-sm">
           <MapPin className="size-4" /> {application.job.location}
         </span>

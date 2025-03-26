@@ -78,7 +78,14 @@ class Job(BaseModel):
     ]
     requirements: Annotated[List[str], Field(description="List of job requirements.")]
     skills: Annotated[List[str], Field(description="List of required skills.")]
-    location: Annotated[str, Field(description="Job location.")]
+    location: Annotated[
+        str,
+        Field(
+            description="Job location. Please do not include modality here, just geographic location. "
+            "Please keep it short as well, in the format 'City, 2 letter state code'. "
+            "For example, instead of 'Toronto, Ontario, Canada', use 'Toronto, ON'"
+        ),
+    ]
     modality: Annotated[
         List[Modality],
         Field(description="List of work modalities offered (remote, in_office, hybrid)."),
