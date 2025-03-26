@@ -1,3 +1,4 @@
+import React from "react";
 import { useMatches, isMatch, Link } from "@tanstack/react-router";
 
 import {
@@ -17,21 +18,18 @@ export function Breadcrumbs() {
     isMatch(match, "loaderData.crumb")
   );
 
-  console.log(matches);
-  console.log(matchesWithCrumbs);
-
   return (
     <Breadcrumb>
       <BreadcrumbList>
         {matchesWithCrumbs.map((match, i) => (
-          <>
-            <BreadcrumbItem key={i}>
+          <React.Fragment key={i}>
+            <BreadcrumbItem>
               <BreadcrumbLink asChild>
                 <Link from={match.fullPath}>{match.loaderData?.crumb}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             {i + 1 < matchesWithCrumbs.length ? <BreadcrumbSeparator /> : null}
-          </>
+          </React.Fragment>
         ))}
       </BreadcrumbList>
     </Breadcrumb>
