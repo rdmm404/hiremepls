@@ -4,7 +4,6 @@ import {
   Link as LinkIcon,
   EllipsisVertical,
   Pencil,
-  Eye,
   Trash2,
   RefreshCw,
 } from "lucide-react";

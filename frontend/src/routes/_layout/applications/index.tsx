@@ -6,7 +6,7 @@ import {
   applicationsListApplicationsQueryOptions,
   ApplicationsListApplicationsQueryParams,
 } from "@/gen";
-import { ApplicationCard } from "@/components/ApplicationCard";
+import { ApplicationCard } from "@/components/application/ApplicationCard";
 import { Button } from "@/components/ui/button";
 
 const applicationListQueryParams: ApplicationsListApplicationsQueryParams = {

@@ -1,6 +1,5 @@
 from src.applications.models import ApplicationStatus
 
-# If something is not here, then it's freestylw
 APPLICATION_STATUS_FLOW: dict[ApplicationStatus, tuple[ApplicationStatus, ...]] = {
     ApplicationStatus.PENDING: (ApplicationStatus.APPLIED,),
     ApplicationStatus.OFFER_RECEIVED: (
