@@ -1,11 +1,12 @@
 import {
   MapPin,
-  Info,
-  Link as LinkIcon,
   EllipsisVertical,
   Pencil,
   Trash2,
   RefreshCw,
+  ExternalLink,
+  Dot,
+  Building,
 } from "lucide-react";
 
 import { ApplicationSummary } from "@/gen";
@@ -17,6 +18,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ApplicationStatusBadge } from "./ApplicationStatusBadge";
 
 interface ApplicationCardProps {
   application: ApplicationSummary;
@@ -55,6 +57,12 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
             <EllipsisVertical className="size-4 text-muted-foreground hover:text-foreground" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <Link to={application.job.job_url}>
+              <DropdownMenuItem>
+                <ExternalLink />
+                Go to URL
+              </DropdownMenuItem>
+            </Link>
             <DropdownMenuItem>
               <Pencil />
               Edit
@@ -71,18 +79,22 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
         </DropdownMenu>
       </div>
       <hr className="my-2" />
-      <div className="flex grow gap-2 items-center flex-wrap">
-        <Link to={application.job.job_url} className="hover:text-white">
-          <LinkIcon className="size-4" />
-        </Link>
-        |
+      <div className="flex grow items-center flex-wrap">
+        <ApplicationStatusBadge
+          status={application.status}
+          className="mr-2 mb-2"
+        />
         <span className="inline-flex gap-1 items-center justify-end text-sm">
           <MapPin className="size-4" /> {application.job.location}
         </span>
-        |
-        <span className="inline-flex gap-1 items-center justify-end text-sm">
-          <Info className="size-4" /> {application.status}
-        </span>
+        {application.job.modality.map((modality) => (
+          <>
+            <Dot />
+            <span className="inline-flex gap-1 items-center justify-end text-sm capitalize">
+              <Building className="size-4" /> {modality.replace("_", " ")}
+            </span>
+          </>
+        ))}
       </div>
     </div>
   );
