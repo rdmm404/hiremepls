@@ -1,6 +1,10 @@
 export { getApplicationsApplicationPartialUpdateUrl, applicationsApplicationPartialUpdate } from './applicationsClient/applicationsApplicationPartialUpdate.ts'
 export { applicationsClient } from './applicationsClient/applicationsClient.ts'
 export { getApplicationsCreateFromJobUrlUrl, applicationsCreateFromJobUrl } from './applicationsClient/applicationsCreateFromJobUrl.ts'
+export {
+  getApplicationsGetAllowedStatusesForUpdateUrl,
+  applicationsGetAllowedStatusesForUpdate,
+} from './applicationsClient/applicationsGetAllowedStatusesForUpdate.ts'
 export { getApplicationsGetApplicationUrl, applicationsGetApplication } from './applicationsClient/applicationsGetApplication.ts'
 export { getApplicationsListApplicationsUrl, applicationsListApplications } from './applicationsClient/applicationsListApplications.ts'
 export { authClient } from './authClient/authClient.ts'

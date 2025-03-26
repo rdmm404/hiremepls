@@ -10,36 +10,38 @@ export function ApplicationStatusBadge({
   status,
   className: classNameOverride,
 }: ApplicationStatusBadgeProps) {
-  let variant: "default" | "secondary" | "destructive" | "outline" = "outline";
-  let className = cn(classNameOverride, "text-sm font-medium");
+  let variant:
+    | "default"
+    | "secondary"
+    | "destructive"
+    | "outline"
+    | "neonBlue" = "outline";
+  const className = cn(classNameOverride, "text-sm font-medium");
 
   switch (status) {
     // Initial states
     case ApplicationStatusEnum.Pending:
     case ApplicationStatusEnum.Applied:
     case ApplicationStatusEnum["Received by Employer"]:
-      variant = "secondary";
+      variant = "default";
       break;
 
     // Active states
     case ApplicationStatusEnum["In Assessment"]:
     case ApplicationStatusEnum["In Screening"]:
     case ApplicationStatusEnum.Interviewing:
-      variant = "default";
+      variant = "neonBlue";
       break;
 
     // Positive outcomes
     case ApplicationStatusEnum["Offer Received"]:
-      variant = "default";
-      className += " bg-primary/80 hover:bg-primary/70";
+      variant = "secondary";
       break;
     case ApplicationStatusEnum.Negotiating:
-      variant = "default";
-      className += " bg-primary/90 hover:bg-primary/80";
+      variant = "secondary";
       break;
     case ApplicationStatusEnum.Hired:
-      variant = "default";
-      className += " bg-primary hover:bg-primary/90";
+      variant = "secondary";
       break;
 
     // Negative outcomes

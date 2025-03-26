@@ -3,9 +3,16 @@
 
 import { applicationsApplicationPartialUpdate } from './applicationsApplicationPartialUpdate.ts'
 import { applicationsCreateFromJobUrl } from './applicationsCreateFromJobUrl.ts'
+import { applicationsGetAllowedStatusesForUpdate } from './applicationsGetAllowedStatusesForUpdate.ts'
 import { applicationsGetApplication } from './applicationsGetApplication.ts'
 import { applicationsListApplications } from './applicationsListApplications.ts'
 
 export function applicationsClient() {
-  return { applicationsCreateFromJobUrl, applicationsGetApplication, applicationsApplicationPartialUpdate, applicationsListApplications }
+  return {
+    applicationsCreateFromJobUrl,
+    applicationsGetAllowedStatusesForUpdate,
+    applicationsGetApplication,
+    applicationsApplicationPartialUpdate,
+    applicationsListApplications,
+  }
 }

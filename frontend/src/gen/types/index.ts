@@ -14,6 +14,13 @@ export type {
   ApplicationsCreateFromJobUrlMutation,
 } from './ApplicationsCreateFromJobUrl.ts'
 export type {
+  ApplicationsGetAllowedStatusesForUpdateQueryParams,
+  ApplicationsGetAllowedStatusesForUpdate200,
+  ApplicationsGetAllowedStatusesForUpdate422,
+  ApplicationsGetAllowedStatusesForUpdateQueryResponse,
+  ApplicationsGetAllowedStatusesForUpdateQuery,
+} from './ApplicationsGetAllowedStatusesForUpdate.ts'
+export type {
   ApplicationsGetApplicationPathParams,
   ApplicationsGetApplication200,
   ApplicationsGetApplication422,

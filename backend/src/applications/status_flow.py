@@ -37,3 +37,14 @@ def validate_status_change(
             f"Invalid status transition ({initial_status} => {new_status}). Valid statuses: {', '.join(valid_statuses)}",
         )
     return True, ""
+
+
+def get_available_statuses(status: ApplicationStatus) -> list[ApplicationStatus]:
+    all_statuses = [
+        member
+        for member in ApplicationStatus
+        if member not in (ApplicationStatus.PENDING, ApplicationStatus.APPLIED)
+    ]
+    valid_statuses = APPLICATION_STATUS_FLOW.get(status, all_statuses)
+
+    return list(valid_statuses)

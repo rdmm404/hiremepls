@@ -376,6 +376,56 @@
         ]
       }
     },
+    "/applications/status_flow": {
+      "get": {
+        "tags": [
+          "applications"
+        ],
+        "summary": "Get Allowed Statuses For Update",
+        "operationId": "applications-get_allowed_statuses_for_update",
+        "security": [
+          {
+            "Oauth2PasswordBearerFromCookies": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ApplicationStatus"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicationStatus"
+                  },
+                  "title": "Response Applications-Get Allowed Statuses For Update"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/applications/{application_id}": {
       "get": {
         "tags": [

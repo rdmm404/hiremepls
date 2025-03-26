@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, status
 
 from typing import cast
 
-from src.auth.deps import CurrentUserDep
+from src.auth.deps import CurrentUserDep, DependsCurrentUser
 from src.applications.deps import ApplicationsServiceDep, ApplicationRepositoryDep
 from src.applications.api_schema import (
     Application,
@@ -10,12 +10,12 @@ from src.applications.api_schema import (
     ApplicationSummary,
     UpdateApplicationPartial,
 )
-from src.applications.models import Application as ApplicationDB
+from src.applications.models import Application as ApplicationDB, ApplicationStatus
 from src.common.pagination import PaginatedResponse
 from src.common.deps import PaginationDep
-from src.applications.status_flow import validate_status_change
+from src.applications.status_flow import validate_status_change, get_available_statuses
 
-router = APIRouter(prefix="/applications", tags=["applications"])
+router = APIRouter(prefix="/applications", tags=["applications"], dependencies=[DependsCurrentUser])
 
 
 @router.post("/url", response_model=Application)
@@ -29,6 +29,11 @@ async def create_from_job_url(
     except Exception:  # TODO: Improve exception handling
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, "Application couldn't be parsed")
     return app
+
+
+@router.get("/status_flow")
+def get_allowed_statuses_for_update(status: ApplicationStatus) -> list[ApplicationStatus]:
+    return get_available_statuses(status)
 
 
 @router.get("/{application_id}", response_model=Application)

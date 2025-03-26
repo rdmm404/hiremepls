@@ -22,9 +22,19 @@ import { ApplicationStatusBadge } from "./ApplicationStatusBadge";
 
 interface ApplicationCardProps {
   application: ApplicationSummary;
+  onUpdateStatus?: (application: ApplicationSummary) => void;
 }
 
-export function ApplicationCard({ application }: ApplicationCardProps) {
+export function ApplicationCard({
+  application,
+  onUpdateStatus,
+}: ApplicationCardProps) {
+  const handleUpdateStatus = () => {
+    if (onUpdateStatus) {
+      onUpdateStatus(application);
+    }
+  };
+
   return (
     <div className="bg-card border-border border rounded-lg p-4 flex flex-col">
       <div className="flex justify-between items-start">
@@ -67,7 +77,7 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
               <Pencil />
               Edit
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleUpdateStatus}>
               <RefreshCw />
               Update Status
             </DropdownMenuItem>
@@ -79,18 +89,18 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
         </DropdownMenu>
       </div>
       <hr className="my-2" />
-      <div className="flex gap-y-2 grow items-center flex-wrap  ">
+      <div className="flex gap-y-2 grow items-center flex-wrap">
         <ApplicationStatusBadge status={application.status} className="mr-2" />
         <span className="inline-flex gap-1 items-center justify-end text-sm">
           <MapPin className="size-4" /> {application.job.location}
         </span>
         {application.job.modality.map((modality) => (
-          <>
+          <div key={modality} className="inline-flex">
             <Dot />
             <span className="inline-flex gap-1 items-center justify-end text-sm capitalize">
               <Building className="size-4" /> {modality.replace("_", " ")}
             </span>
-          </>
+          </div>
         ))}
       </div>
     </div>

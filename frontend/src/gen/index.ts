@@ -1,5 +1,7 @@
 export type { ApplicationsApplicationPartialUpdateMutationKey } from './hooks/applicationsService/useApplicationsApplicationPartialUpdate.ts'
 export type { ApplicationsCreateFromJobUrlMutationKey } from './hooks/applicationsService/useApplicationsCreateFromJobUrl.ts'
+export type { ApplicationsGetAllowedStatusesForUpdateQueryKey } from './hooks/applicationsService/useApplicationsGetAllowedStatusesForUpdate.ts'
+export type { ApplicationsGetAllowedStatusesForUpdateSuspenseQueryKey } from './hooks/applicationsService/useApplicationsGetAllowedStatusesForUpdateSuspense.ts'
 export type { ApplicationsGetApplicationQueryKey } from './hooks/applicationsService/useApplicationsGetApplication.ts'
 export type { ApplicationsGetApplicationSuspenseQueryKey } from './hooks/applicationsService/useApplicationsGetApplicationSuspense.ts'
 export type { ApplicationsListApplicationsQueryKey } from './hooks/applicationsService/useApplicationsListApplications.ts'
@@ -30,6 +32,13 @@ export type {
   ApplicationsCreateFromJobUrlMutationResponse,
   ApplicationsCreateFromJobUrlMutation,
 } from './types/ApplicationsCreateFromJobUrl.ts'
+export type {
+  ApplicationsGetAllowedStatusesForUpdateQueryParams,
+  ApplicationsGetAllowedStatusesForUpdate200,
+  ApplicationsGetAllowedStatusesForUpdate422,
+  ApplicationsGetAllowedStatusesForUpdateQueryResponse,
+  ApplicationsGetAllowedStatusesForUpdateQuery,
+} from './types/ApplicationsGetAllowedStatusesForUpdate.ts'
 export type {
   ApplicationsGetApplicationPathParams,
   ApplicationsGetApplication200,
@@ -109,6 +118,10 @@ export {
 } from './clients/applicationsClient/applicationsApplicationPartialUpdate.ts'
 export { applicationsClient } from './clients/applicationsClient/applicationsClient.ts'
 export { getApplicationsCreateFromJobUrlUrl, applicationsCreateFromJobUrl } from './clients/applicationsClient/applicationsCreateFromJobUrl.ts'
+export {
+  getApplicationsGetAllowedStatusesForUpdateUrl,
+  applicationsGetAllowedStatusesForUpdate,
+} from './clients/applicationsClient/applicationsGetAllowedStatusesForUpdate.ts'
 export { getApplicationsGetApplicationUrl, applicationsGetApplication } from './clients/applicationsClient/applicationsGetApplication.ts'
 export { getApplicationsListApplicationsUrl, applicationsListApplications } from './clients/applicationsClient/applicationsListApplications.ts'
 export { authClient } from './clients/authClient/authClient.ts'
@@ -127,6 +140,16 @@ export {
   useApplicationsApplicationPartialUpdate,
 } from './hooks/applicationsService/useApplicationsApplicationPartialUpdate.ts'
 export { applicationsCreateFromJobUrlMutationKey, useApplicationsCreateFromJobUrl } from './hooks/applicationsService/useApplicationsCreateFromJobUrl.ts'
+export {
+  applicationsGetAllowedStatusesForUpdateQueryKey,
+  applicationsGetAllowedStatusesForUpdateQueryOptions,
+  useApplicationsGetAllowedStatusesForUpdate,
+} from './hooks/applicationsService/useApplicationsGetAllowedStatusesForUpdate.ts'
+export {
+  applicationsGetAllowedStatusesForUpdateSuspenseQueryKey,
+  applicationsGetAllowedStatusesForUpdateSuspenseQueryOptions,
+  useApplicationsGetAllowedStatusesForUpdateSuspense,
+} from './hooks/applicationsService/useApplicationsGetAllowedStatusesForUpdateSuspense.ts'
 export {
   applicationsGetApplicationQueryKey,
   applicationsGetApplicationQueryOptions,
