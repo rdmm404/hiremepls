@@ -20,3 +20,7 @@ class ApplicationSummary(BaseModel):
     status: ApplicationStatus
     fit: float | None = None
     job: JobSummary
+
+
+class UpdateApplicationPartial(ApplicationBase):
+    status: ApplicationStatus | None = None  # type: ignore

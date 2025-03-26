@@ -31,3 +31,12 @@ class ApplicationRepository(BaseRepository):
     def count_all_user_applications(self, user_id: int) -> int:
         query = select(func.count(col(Application.id))).where(Application.user_id == user_id)
         return self.session.exec(query).one()
+
+    # TODO: This is the exacte same as create_application. maybe reuse some?
+    def update_application(self, application: Application) -> Application:
+        self.session.add(application)
+        print("commiting")
+        self.session.commit()
+        print("commited")
+        self.session.refresh(application)
+        return application

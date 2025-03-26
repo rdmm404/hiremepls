@@ -1,5 +1,5 @@
 from sqlmodel import SQLModel, Field, Relationship, AutoString, UniqueConstraint
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Annotated
 from enum import StrEnum
 
 from src.common.base_model import BaseSQLModel
@@ -15,11 +15,13 @@ SCHEMA_NAME = "applications"
 class ApplicationStatus(StrEnum):
     PENDING = "Pending"
     APPLIED = "Applied"
-    RECEIVED = "Received"
-    ASSESMENT = "In Assesment"
+    RECEIVED = "Received by Employer"
+    ASSESSMENT = "In Assessment"
     SCREENING = "In Screening"
     INTERVIEWING = "Interviewing"
     OFFER_RECEIVED = "Offer Received"
+    NEGOTIATING = "Negotiating"
+    OFFER_DECLINED = "Offer Declined"
     HIRED = "Hired"
     REJECTED = "Rejected"
     GHOSTED = "Ghosted"
@@ -32,8 +34,8 @@ class ApplicationBase(SQLModel):
         sa_column_kwargs={"server_default": ApplicationStatus.PENDING.name},
         nullable=False,
     )
-    interview_rounds: int | None = None
-    current_round: int | None = None
+    interview_rounds: Annotated[int, Field(ge=1)] | None = None
+    current_round: Annotated[int, Field(ge=1)] | None = None
     notes: str | None = None
     fit: float | None = None
     resume_used: str | None = None
