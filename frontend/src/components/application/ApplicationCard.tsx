@@ -50,6 +50,7 @@ export function ApplicationCard({
             <Link
               to={application.job?.company?.url || "#"}
               className={cn(!application.job?.company?.url && "cursor-auto")}
+              target="_blank"
             >
               <span
                 className={cn(
