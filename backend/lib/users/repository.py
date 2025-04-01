@@ -4,8 +4,7 @@ from sqlalchemy import delete
 
 from lib.base_repository import BaseRepository
 from lib.users.models import UserCreate, User
-from web.auth.crypto import get_password_hash  # TODO: take away from here
-
+from lib.crypto import get_password_hash
 
 class UserRepository(BaseRepository):
     def get_all_users(self, limit: int = 10, offset: int = 0) -> list[User]:

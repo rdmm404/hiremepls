@@ -7,8 +7,8 @@ from sqlmodel import Session
 from typing import Callable
 
 from web.core.db import engine
-from web.applications.models import Application  # noqa
-from web.jobs.models import Job  # noqa
+from lib.applications.models import Application  # noqa
+from lib.jobs.models import Job  # noqa
 from lib.users.repository import UserRepository
 from lib.users.models import UserCreate
 

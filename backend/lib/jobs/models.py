@@ -3,7 +3,7 @@ from sqlmodel import SQLModel, Field, Relationship, ARRAY, Column, AutoString
 from pydantic import HttpUrl
 
 from lib.base_model import BaseSQLModel
-from web.common.utils import HttpUrlType
+from lib.utils import HttpUrlType
 
 
 if TYPE_CHECKING:

@@ -5,7 +5,8 @@ from fastapi import APIRouter, Depends, HTTPException, Response, status
 from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import BaseModel
 
-from web.auth import crypto
+from lib import crypto
+from web.auth.token import create_access_token
 from web.core.config import settings
 from web.users.deps import UserRepositoryDep
 
@@ -34,7 +35,7 @@ def login_access_token(
     #     raise HTTPException(status_code=400, detail="Inactive user")
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
 
-    token = crypto.create_access_token(user.id, expires_delta=access_token_expires)
+    token = create_access_token(user.id, expires_delta=access_token_expires)
 
     response.set_cookie(
         key="jwt",

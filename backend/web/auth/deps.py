@@ -4,7 +4,7 @@ from fastapi import Depends, HTTPException, status, Request
 from typing import Annotated
 
 from lib.users.models import User
-from web.auth import crypto
+from web.auth.token import get_subject_from_token
 from web.common.deps import SessionDep
 
 
@@ -23,7 +23,7 @@ TokenDep = Annotated[str, Depends(reusable_oauth2)]
 
 
 def get_current_user(session: SessionDep, token: TokenDep) -> User:
-    id = crypto.get_subject_from_token(token)
+    id = get_subject_from_token(token)
 
     if not id:
         raise HTTPException(
