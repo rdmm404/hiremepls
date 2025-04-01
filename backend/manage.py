@@ -9,8 +9,8 @@ from typing import Callable
 from web.core.db import engine
 from web.applications.models import Application  # noqa
 from web.jobs.models import Job  # noqa
-from web.users.repository import UserRepository
-from web.users.models import UserCreate
+from lib.users.repository import UserRepository
+from lib.users.models import UserCreate
 
 
 def create_admin(session: Session) -> None:

@@ -2,9 +2,9 @@ from typing import cast
 from sqlmodel import select, col, func
 from sqlalchemy import delete
 
-from web.common.base_repository import BaseRepository
-from web.users.models import UserCreate, User
-from web.auth.crypto import get_password_hash
+from lib.base_repository import BaseRepository
+from lib.users.models import UserCreate, User
+from web.auth.crypto import get_password_hash  # TODO: take away from here
 
 
 class UserRepository(BaseRepository):

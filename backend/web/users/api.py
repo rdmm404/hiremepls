@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Response
 from sqlalchemy.exc import IntegrityError
 
-from web.users.models import UserCreate, User as UserDB
+from lib.users.models import UserCreate, User as UserDB
 from web.users.api_schema import User
 from web.users.deps import UserRepositoryDep
 from web.auth.deps import DependsCurrentSuperUser, CurrentUserDep

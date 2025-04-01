@@ -1,8 +1,8 @@
 from sqlmodel import select, func, col
 from collections.abc import Sequence
 
-from web.common.base_repository import BaseRepository
-from web.applications.models import Application
+from lib.base_repository import BaseRepository
+from lib.applications.models import Application
 
 
 class ApplicationRepository(BaseRepository):

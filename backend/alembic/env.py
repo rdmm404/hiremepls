@@ -5,7 +5,7 @@ from sqlmodel import SQLModel
 
 from alembic import context
 
-from web.users.models import *
+from lib.users.models import *
 from web.jobs.models import *
 from web.applications.models import *
 

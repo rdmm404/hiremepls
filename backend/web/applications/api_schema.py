@@ -1,7 +1,7 @@
 from pydantic import BaseModel, HttpUrl, AfterValidator, UrlConstraints
 from typing import Annotated
 
-from web.applications.models import ApplicationBase, ApplicationStatus
+from lib.applications.models import ApplicationBase, ApplicationStatus
 from web.common.utils import clean_url
 from web.jobs.api_schema import Job, JobSummary
 

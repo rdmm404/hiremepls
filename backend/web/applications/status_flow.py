@@ -1,4 +1,4 @@
-from web.applications.models import ApplicationStatus
+from lib.applications.models import ApplicationStatus
 
 APPLICATION_STATUS_FLOW: dict[ApplicationStatus, tuple[ApplicationStatus, ...]] = {
     ApplicationStatus.PENDING: (ApplicationStatus.APPLIED,),

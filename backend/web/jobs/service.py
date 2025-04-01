@@ -1,7 +1,7 @@
 from loguru import logger
 
-from web.jobs.repository import JobsRepository
-from web.jobs.models import Job, Company, Compensation
+from lib.jobs.repository import JobsRepository
+from lib.jobs.models import Job, Company, Compensation
 from web.common.utils import generate_slug
 
 
