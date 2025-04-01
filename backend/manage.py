@@ -6,11 +6,11 @@ import os
 from sqlmodel import Session
 from typing import Callable
 
-from src.core.db import engine
-from src.applications.models import Application  # noqa
-from src.jobs.models import Job  # noqa
-from src.users.repository import UserRepository
-from src.users.models import UserCreate
+from web.core.db import engine
+from web.applications.models import Application  # noqa
+from web.jobs.models import Job  # noqa
+from web.users.repository import UserRepository
+from web.users.models import UserCreate
 
 
 def create_admin(session: Session) -> None:

@@ -5,12 +5,12 @@ from sqlmodel import SQLModel
 
 from alembic import context
 
-from src.users.models import *
-from src.jobs.models import *
-from src.applications.models import *
+from web.users.models import *
+from web.jobs.models import *
+from web.applications.models import *
 
-from src.core.config import settings
-from src.core.db import get_connection_string
+from web.core.config import settings
+from web.core.db import get_connection_string
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
