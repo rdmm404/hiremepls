@@ -37,3 +37,6 @@ exclude = ["alembic/"]
 [[tool.mypy.overrides]]
 module = "passlib.*"
 ignore_missing_imports = true
+
+[tool.uv.workspace]
+members = ["tasks", "web"]
