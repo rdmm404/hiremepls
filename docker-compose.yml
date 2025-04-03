@@ -4,6 +4,7 @@ services:
     build:
       context: ./backend
       dockerfile: packages/web/Dockerfile
+      target: dev
     develop:
       watch:
         - path: ./backend/packages/web
