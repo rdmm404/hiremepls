@@ -11,8 +11,7 @@ dev = [
     "mypy>=1.15.0",
     "pre-commit>=4.1.0",
     "rich>=13.9.4",
-    "ruff>=0.9.9",
-    "alembic>=1.14.1",
+    "ruff>=0.9.9"
 ]
 
 [tool.ruff]
@@ -28,4 +27,4 @@ module = "passlib.*"
 ignore_missing_imports = true
 
 [tool.uv.workspace]
-members = ["src/*"]
+members = ["packages/*"]

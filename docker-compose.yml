@@ -3,14 +3,12 @@ services:
     container_name: hiremepls-be
     build:
       context: ./backend
+      dockerfile: packages/web/Dockerfile
     develop:
       watch:
-        - path: ./backend/src
+        - path: ./backend/packages/web
           action: sync
-          target: /app/src
-        # - path: ./backend/alembic
-        #   action: sync+restart
-        #   target: /app/alembic
+          target: /app/packages/web
         - path: ./backend/uv.lock
           action: rebuild
     ports:

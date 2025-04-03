@@ -8,14 +8,15 @@ WORKDIR /app
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --frozen --no-install-project --no-dev
+    uv sync --frozen --no-install-workspace --no-dev --package web
 
+COPY ./packages/web ./packages/web
+COPY ./packages/lib/ ./packages/lib
 
-COPY ./src ./src
+# TODO: take migrations out
 COPY pyproject.toml uv.lock ./
 
-RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --no-dev
+RUN uv sync --frozen --no-dev --package web
 
 
 FROM python:3.13-slim-bookworm
@@ -34,4 +35,4 @@ RUN chmod +x entrypoint.sh && chmod +x manage.py
 
 ENTRYPOINT ["./entrypoint.sh"]
 
-CMD ["fastapi", "run", "src/main.py", "--reload", "--host", "0.0.0.0"]
+CMD ["fastapi", "run", "packages/web/main.py", "--reload", "--host", "0.0.0.0"]
