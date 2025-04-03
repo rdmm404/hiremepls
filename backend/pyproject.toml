@@ -4,18 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = [
-    "email-validator>=2.2.0",
-    "fastapi[standard]>=0.115.10",
-    "loguru>=0.7.3",
-    "passlib[bcrypt]>=1.7.4",
-    "psycopg[binary]>=3.2.5",
-    "pydantic>=2.10.6",
-    "pydantic-settings>=2.8.1",
-    "pyjwt>=2.10.1",
-    "python-slugify>=8.0.4",
-    "sqlmodel>=0.0.23",
-]
+dependencies = []
 
 [dependency-groups]
 dev = [
@@ -39,4 +28,4 @@ module = "passlib.*"
 ignore_missing_imports = true
 
 [tool.uv.workspace]
-members = ["tasks", "web"]
+members = ["src/*"]
