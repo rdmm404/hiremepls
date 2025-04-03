@@ -6,6 +6,7 @@ from lib.base_repository import BaseRepository
 from lib.users.models import UserCreate, User
 from lib.crypto import get_password_hash
 
+
 class UserRepository(BaseRepository):
     def get_all_users(self, limit: int = 10, offset: int = 0) -> list[User]:
         query = select(User).limit(limit).offset(offset)

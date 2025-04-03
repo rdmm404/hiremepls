@@ -1,12 +1,11 @@
 from typing import Annotated
-from pydantic import BaseModel, HttpUrl, AfterValidator, UrlConstraints
+from pydantic import BaseModel, HttpUrl, UrlConstraints
 
 from lib.jobs.models import JobBase, CompanyBase, CompensationBase, Modality
-from web.common.utils import clean_url
 
 
 class CreateJobByUrl(BaseModel):
-    url: Annotated[HttpUrl, UrlConstraints(allowed_schemes=["https"]), AfterValidator(clean_url)]
+    url: Annotated[HttpUrl, UrlConstraints(allowed_schemes=["https"])]
 
 
 class Company(CompanyBase):
