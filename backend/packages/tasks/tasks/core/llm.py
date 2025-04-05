@@ -2,7 +2,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 from typing import cast
 
-from web.jobs.llm_schema import LLMResult
+from tasks.core.llm_schema import LLMResult
 
 
 class JobsLLMFlow:
