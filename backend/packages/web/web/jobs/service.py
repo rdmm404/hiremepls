@@ -1,3 +1,4 @@
+from pydantic import HttpUrl
 from lib.jobs.repository import JobsRepository
 from lib.jobs.models import Job, Company, Compensation
 
@@ -10,7 +11,7 @@ class JobsService:
         company = Company(
             name="Acme Corp",
             slug="acme-corp",
-            url="https://www.acmecorp.com",
+            url=HttpUrl("https://www.acmecorp.com"),
             logo_url="https://www.acmecorp.com/logo.png",
         )
 
@@ -26,7 +27,7 @@ class JobsService:
 
         job = Job(
             job_title="Software Engineer",
-            job_url="https://www.acmecorp.com/jobs/123",
+            job_url=HttpUrl("https://www.acmecorp.com/jobs/123"),
             job_type="full_time",
             llm_summary="Exciting software engineering role",
             job_description="Develop and maintain software applications",
@@ -40,42 +41,5 @@ class JobsService:
         )
 
         return job
-        # existing_job = self.jobs_repo.get_job_by_url(url)
-        # if existing_job:
-        #     logger.info(f"Job with url {url} already exists, returning")
-        #     return existing_job
-        # # TODO: Validate http response before calling the LLM flow
-        # job_html = await self.fetcher.get_page_contents(url)
-        # parsed_html = self.parser.parse(job_html)
 
-        # logger.info("HTML parsed, sending to LLM")
-        # # TODO: pass existing companies to LLM for better context
-        # result = await self.llm.get_job_from_raw_content(parsed_html)
-
-        # logger.debug(f"LLM schema {result}")
-
-        # assert result.parsed, "Job couldn't be parsed"
-
-        # company_slug = generate_slug(result.job_description.company.name)
-        # company = self.jobs_repo.get_company_by_slug(company_slug)
-
-        # if not company:
-        #     company = Company.model_validate(
-        #         result.job_description.company,
-        #         update={"slug": company_slug},
-        #     )
-        # logger.debug(f"validated company {company}")
-
-        # compensation = Compensation.model_validate(result.job_description.compensation)
-        # job = Job.model_validate(
-        #     result.job_description,
-        #     update={
-        #         "job_url": url,
-        #         "company_id": None,
-        #         "company": company,
-        #         "compensation_id": None,
-        #         "compensation": compensation,
-        #     },
-        # )
-        # return self.jobs_repo.create_job(job)
         return Job(id=1, company=Company(id=1, logo_url="https://foo.bar"))

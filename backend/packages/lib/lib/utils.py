@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Type
 from sqlalchemy.types import String, TypeDecorator
 from pydantic import HttpUrl
 
@@ -6,7 +6,10 @@ from pydantic import HttpUrl
 class HttpUrlType(TypeDecorator[HttpUrl]):
     impl = String(2083)
     cache_ok = True
-    python_type = HttpUrl
+
+    @property
+    def python_type(self) -> Type[HttpUrl]:
+        return HttpUrl
 
     def process_bind_param(self, value: HttpUrl | None, dialect: Any) -> str | None:
         return str(value) if value else None

@@ -59,10 +59,11 @@ class JobBase(JobsModel):
 
 class Job(JobBase, BaseSQLModel, table=True):
     company_id: int | None = Field(
-        foreign_key=f"{SCHEMA_NAME}.company.id", ondelete="SET NULL", nullable=True
+        default=None, foreign_key=f"{SCHEMA_NAME}.company.id", ondelete="SET NULL", nullable=True
     )
     company: Company = Relationship(back_populates="jobs")
     compensation_id: int | None = Field(
+        default=None,
         foreign_key=f"{SCHEMA_NAME}.compensation.id",
         ondelete="SET NULL",
         unique=True,

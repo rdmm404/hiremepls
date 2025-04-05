@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 from lib import crypto
 from web.auth.token import create_access_token
-from web.core.config import settings
+from web.core.config import env_settings, settings
 from web.users.deps import UserRepositoryDep
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -41,8 +41,8 @@ def login_access_token(
         key="jwt",
         value=token,
         httponly=True,
-        secure=settings.ENVIRONMENT != "dev",
-        samesite="lax" if settings.ENVIRONMENT == "dev" else "none",
+        secure=env_settings.ENVIRONMENT != "dev",
+        samesite="lax" if env_settings.ENVIRONMENT == "dev" else "none",
     )
     return Token(access_token=token)
 

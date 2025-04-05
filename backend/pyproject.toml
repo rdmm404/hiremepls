@@ -8,10 +8,10 @@ dependencies = []
 
 [dependency-groups]
 dev = [
-    "mypy>=1.15.0",
     "pre-commit>=4.1.0",
+    "pyright>=1.1.398",
     "rich>=13.9.4",
-    "ruff>=0.9.9"
+    "ruff>=0.9.9",
 ]
 
 [tool.ruff]
@@ -21,10 +21,20 @@ exclude = ["alembic/"]
 [tool.mypy]
 strict = true
 exclude = ["alembic/"]
+packages = ["lib"]
 
 [[tool.mypy.overrides]]
 module = "passlib.*"
 ignore_missing_imports = true
+
+
+[tool.pyright]
+include = ["packages/**"]
+typeCheckingMode = "standard"
+extraPaths = ["packages/lib", "packages/web", "packages/tasks"]
+
+reportDuplicateImport = "warning"
+
 
 [tool.uv.workspace]
 members = ["packages/*"]

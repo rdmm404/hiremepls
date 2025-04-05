@@ -15,7 +15,6 @@ TaskManager.register_task(create_job_from_url.CreateJobFromUrlTask)
 class RunTaskBody(BaseModel):
     name: str
     params: CreateJobFromUrlParams | HelloWorldParams
-    task_id: str
 
 
 @app.post("/run", status_code=status.HTTP_204_NO_CONTENT)

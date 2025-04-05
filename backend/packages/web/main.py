@@ -10,7 +10,7 @@ from web.users.api import router as users_router
 from web.auth.api import router as auth_router
 from web.jobs.api import router as jobs_router
 from web.applications.api import router as applications_router
-from web.core.config import settings
+from web.core.config import settings, env_settings
 
 
 def custom_generate_unique_id(route: APIRoute) -> str:
@@ -30,7 +30,7 @@ def generate_schema(app: FastAPI) -> None:
         f.write(json.dumps(app.openapi(), indent=2))
 
 
-if settings.ENVIRONMENT == "prd":
+if env_settings.ENVIRONMENT == "prd":
     openapi_url: str | None = None
     logger.remove()
     logger.add(sys.stderr, level="INFO")
@@ -66,6 +66,6 @@ async def health_check() -> dict[str, str]:
     return {"status": "healthy"}
 
 
-if settings.ENVIRONMENT == "dev":
+if env_settings.ENVIRONMENT == "dev":
     logger.debug("Generating OpenAPI schema")
     generate_schema(app)

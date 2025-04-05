@@ -52,16 +52,17 @@ class JobsFetcher:
         assert await self._wait_for_cloudflare(page), "Didn't pass cloudflare verification."
 
         attempts = 0
+        html = ""
         while attempts < self.MAX_ATTEMPTS:
-            html = await page.get_content()  # type: ignore
+            html = await page.get_content()
             content = self._get_text_from_html(html)
             if content != og_content:
                 break
             await page.sleep(0.5)
             attempts += 1
 
-        await page.close()  # type: ignore
-        await browser.stop()  # type: ignore
+        await page.close()
+        await browser.stop()
         return str(html)
 
     def _get_text_from_html(self, html: str) -> str:

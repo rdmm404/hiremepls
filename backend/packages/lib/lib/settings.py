@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from typing import Literal
 
 
 class DatabaseSettings(BaseSettings):
@@ -8,3 +9,7 @@ class DatabaseSettings(BaseSettings):
     DATABASE_HOST: str
     DATABASE_PORT: int
     DATABASE_DB: str = ""
+
+
+class EnvironmentSettings(BaseSettings):
+    ENVIRONMENT: Literal["dev", "prd"] = "dev"

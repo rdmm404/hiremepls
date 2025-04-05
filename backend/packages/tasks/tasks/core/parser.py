@@ -91,5 +91,8 @@ class HTMLParser:
                 child.extract()
                 continue
 
-            if hasattr(child, "name") and child.name is not None:
-                self._clean_attributes_and_tags(cast(Tag, child))
+            if not isinstance(child, Tag):
+                continue
+
+            if child.name is not None:
+                self._clean_attributes_and_tags(child)
