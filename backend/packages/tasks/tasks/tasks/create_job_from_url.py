@@ -3,6 +3,7 @@ from sqlmodel import Session
 from loguru import logger
 
 from lib.jobs.repository import JobsRepository
+
 from lib.utils import generate_slug
 from lib.tasks import CreateJobFromUrlParams, CreateJobFromUrlResponse
 from lib.jobs.models import Company, Compensation, Job
@@ -37,7 +38,8 @@ class CreateJobFromUrlTask(Task[CreateJobFromUrlParams, CreateJobFromUrlResponse
         result = await self.llm.get_job_from_raw_content(parsed_html)
 
         logger.debug(f"LLM schema {result}")
-        assert result.parsed, "Job couldn't be parsed"
+        if not result.parsed:
+            return Result(False, "Job couldn't be parsed", should_retry=False)
 
         company_slug = generate_slug(result.job_description.company.name)
         company = self.jobs_repo.get_company_by_slug(company_slug)

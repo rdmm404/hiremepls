@@ -76,5 +76,7 @@ services:
     env_file: backend/.env
     depends_on:
       - postgres
+    environment:
+      - DATABASE_HOST=postgres
 volumes:
   db_data:

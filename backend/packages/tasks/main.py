@@ -1,3 +1,5 @@
+import traceback
+
 from fastapi import FastAPI, status, HTTPException
 from pydantic import BaseModel
 from loguru import logger
@@ -44,6 +46,7 @@ async def handle_task(body: RunTaskBody) -> CreateJobFromUrlResponse | HelloWorl
     except base.InvalidParamsError as e:
         raise HTTPException(status_code=STATUS_ERROR_NO_RETRY, detail=str(e))
     except Exception as e:
+        logger.debug(traceback.format_exc())
         logger.error(f"Error while executing task {body.name} with params {body.params} - {e}")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
