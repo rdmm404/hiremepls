@@ -1,13 +1,14 @@
 from loguru import logger
 
-from lib.tasks import HelloWorldParams
+from lib.tasks import HelloWorldParams, HelloWorldResponse
 from tasks.tasks.base import Task, Result
 
 
-class HelloWorldTask(Task[HelloWorldParams]):
+class HelloWorldTask(Task[HelloWorldParams, HelloWorldResponse]):
     name = "hello_world"
     param_type = HelloWorldParams
 
-    def _run(self, params: HelloWorldParams) -> Result:
-        logger.info(f"Hello {params.name if params.name else 'World'}")
-        return Result(True)
+    async def _run(self, params: HelloWorldParams) -> Result:
+        resp = HelloWorldResponse(hello=f"Hello {params.name if params.name else 'World'}")
+        logger.info(resp.hello)
+        return Result(True, resp)

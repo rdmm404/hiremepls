@@ -707,6 +707,7 @@ dependencies = [
     { name = "psycopg", extra = ["binary"] },
     { name = "pydantic" },
     { name = "pydantic-settings" },
+    { name = "python-slugify" },
     { name = "sqlmodel" },
 ]
 
@@ -718,6 +719,7 @@ requires-dist = [
     { name = "psycopg", extras = ["binary"], specifier = ">=3.2.5" },
     { name = "pydantic", specifier = ">=2.10.6" },
     { name = "pydantic-settings", specifier = ">=2.8.1" },
+    { name = "python-slugify", specifier = ">=8.0.4" },
     { name = "sqlmodel", specifier = ">=0.0.23" },
 ]
 
@@ -1481,7 +1483,6 @@ dependencies = [
     { name = "google-cloud-tasks" },
     { name = "lib" },
     { name = "pyjwt" },
-    { name = "python-slugify" },
 ]
 
 [package.metadata]
@@ -1491,7 +1492,6 @@ requires-dist = [
     { name = "google-cloud-tasks", specifier = ">=2.19.2" },
     { name = "lib", editable = "packages/lib" },
     { name = "pyjwt", specifier = ">=2.10.1" },
-    { name = "python-slugify", specifier = ">=8.0.4" },
 ]
 
 [[package]]

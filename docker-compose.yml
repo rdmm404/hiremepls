@@ -12,6 +12,8 @@ services:
           target: /app/packages/web
         - path: ./backend/uv.lock
           action: rebuild
+        - path: ./backend/packages/lib
+          action: rebuild
     ports:
       - 8765:8000
     tty: true
@@ -65,6 +67,8 @@ services:
           action: sync
           target: /app/packages/tasks
         - path: ./backend/uv.lock
+          action: rebuild
+        - path: ./backend/packages/lib
           action: rebuild
     ports:
       - 8764:8000

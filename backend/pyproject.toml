@@ -34,6 +34,8 @@ typeCheckingMode = "standard"
 extraPaths = ["packages/lib", "packages/web", "packages/tasks"]
 
 reportDuplicateImport = "warning"
+deprecateTypingAliases = true
+reportMissingTypeArgument = "error"
 
 
 [tool.uv.workspace]

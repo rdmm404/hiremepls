@@ -1,6 +1,6 @@
 from sqlmodel import create_engine
 
-from web.core.config import env_settings, db_settings
+from tasks.settings import env_settings, db_settings
 from lib.db import get_connection_string
 
 

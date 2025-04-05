@@ -2,17 +2,22 @@ from typing import Protocol, ClassVar, Type, cast, Any
 from dataclasses import dataclass
 from abc import abstractmethod
 from sqlmodel import Session
+from pydantic import BaseModel
 
 from tasks.db import engine
 
 
 @dataclass
-class Result:
+class Result[D]:
     success: bool
-    msg: str | None = None
+    data: D | str | None = None
+    should_retry: bool | None = None
 
 
-class Task[T](Protocol):
+class InvalidParamsError(Exception): ...
+
+
+class Task[P: BaseModel, R: BaseModel](Protocol):
     name: ClassVar[str]
     param_type: ClassVar[Type[Any]]
 
@@ -24,12 +29,15 @@ class Task[T](Protocol):
     def get_name(cls) -> str:
         return cls.name
 
-    def run(self, params: T) -> Result:
-        assert isinstance(params, self.param_type), "Invalid params"
-        return self._run(cast(T, params))
+    async def run(self, params: P) -> Result[R]:
+        if not isinstance(params, self.param_type):
+            raise InvalidParamsError(
+                f"Invalid parameters received for task {self.get_name()} - {params}"
+            )
+        return await self._run(cast(P, params))
 
     @abstractmethod
-    def _run(self, params: T) -> Result: ...
+    async def _run(self, params: P) -> Result[R]: ...
 
-    @abstractmethod
-    def init(self, db_session: Session) -> None: ...
+    def init(self, db_session: Session) -> None:
+        pass

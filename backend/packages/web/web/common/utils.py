@@ -1,9 +1,4 @@
 from pydantic import HttpUrl
-from slugify import slugify
-
-
-def generate_slug(text: str) -> str:
-    return slugify(text)
 
 
 def clean_url(value: HttpUrl) -> HttpUrl:
