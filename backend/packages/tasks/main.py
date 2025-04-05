@@ -1,4 +1,5 @@
 import traceback
+import sys
 
 from fastapi import FastAPI, status, HTTPException
 from pydantic import BaseModel
@@ -12,13 +13,21 @@ from lib.tasks import (
 )
 from tasks.manager import TaskManager
 from tasks.tasks import hello_world, create_job_from_url, base
+from tasks.settings import env_settings
 
 
 TaskManager.register_task(hello_world.HelloWorldTask)
 TaskManager.register_task(create_job_from_url.CreateJobFromUrlTask)
 
+if env_settings.ENVIRONMENT == "prd":
+    openapi_url: str | None = None
+    logger.remove()
+    logger.add(sys.stderr, level="INFO")
+else:
+    openapi_url = "/openapi.json"
 
-app = FastAPI()
+
+app = FastAPI(openapi_url=openapi_url)
 
 
 class RunTaskBody(BaseModel):
