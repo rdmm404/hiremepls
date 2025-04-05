@@ -33,3 +33,5 @@ COPY --from=builder /app /app
 
 WORKDIR /app
 ENV PATH="/app/.venv/bin:$PATH"
+
+CMD ["fastapi", "run", "packages/tasks/main.py", "--reload", "--host", "0.0.0.0"]

@@ -17,6 +17,7 @@ class Task[T](Protocol):
         return cls.name
 
     def run(self, params: T) -> Result:
+        print(params)
         assert isinstance(params, self.param_type), "Invalid params"
         return self._run(cast(T, params))
 

@@ -54,5 +54,23 @@ services:
           action: rebuild
         - path: ./frontend/Dockerfile
           action: rebuild
+  tasks:
+    container_name: hiremepls-tasks
+    build:
+      context: ./backend
+      dockerfile: packages/tasks/Dockerfile
+    develop:
+      watch:
+        - path: ./backend/packages/tasks
+          action: sync
+          target: /app/packages/tasks
+        - path: ./backend/uv.lock
+          action: rebuild
+    ports:
+      - 8764:8000
+    tty: true
+    env_file: backend/.env
+    depends_on:
+      - postgres
 volumes:
   db_data:
