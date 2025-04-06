@@ -8,7 +8,7 @@ class HelloWorldTask(Task[HelloWorldParams, HelloWorldResponse]):
     name = "hello_world"
     param_type = HelloWorldParams
 
-    async def _run(self, params: HelloWorldParams) -> Result:
+    async def _run(self, params: HelloWorldParams) -> Result[HelloWorldResponse]:
         resp = HelloWorldResponse(hello=f"Hello {params.name if params.name else 'World'}")
         logger.info(resp.hello)
         return Result(True, resp)

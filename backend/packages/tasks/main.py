@@ -43,7 +43,7 @@ async def health_check() -> dict[str, str]:
     return {"status": "healthy"}
 
 
-@app.post("/run")
+@app.post("/")
 async def handle_task(body: RunTaskBody) -> CreateJobFromUrlResponse | HelloWorldResponse | None:
     try:
         task = TaskManager.get_task(body.name)
