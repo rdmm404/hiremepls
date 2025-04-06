@@ -14,7 +14,11 @@ from tasks.core.parser import HTMLParser
 
 class CreateJobFromUrlTask(Task[CreateJobFromUrlParams, CreateJobFromUrlResponse]):
     name: ClassVar[str] = "create_job_from_url"
-    param_type: ClassVar[type[CreateJobFromUrlParams]] = CreateJobFromUrlParams
+    # param_type: ClassVar[type[CreateJobFromUrlParams]] = CreateJobFromUrlParams
+
+    @classmethod
+    def get_param_type(cls) -> type[CreateJobFromUrlParams]:
+        return CreateJobFromUrlParams
 
     def init(self, db_session: Session) -> None:
         self.jobs_repo = JobsRepository(db_session)

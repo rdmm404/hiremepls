@@ -15,3 +15,11 @@ class HelloWorldParams(BaseModel):
 
 class HelloWorldResponse(BaseModel):
     hello: str
+
+
+class CreateApplicationFromUrlParams(BaseModel):
+    url: str
+
+
+class CreateApplicationFromUrlResponse(BaseModel):
+    application_id: int

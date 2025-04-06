@@ -1,23 +1,26 @@
 import traceback
 import sys
 
-from fastapi import FastAPI, status, HTTPException
-from pydantic import BaseModel
+from fastapi import FastAPI, status, HTTPException, Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel, Field
 from loguru import logger
+from typing import Annotated
 
 from lib.tasks import (
     HelloWorldParams,
     CreateJobFromUrlParams,
     CreateJobFromUrlResponse,
     HelloWorldResponse,
+    CreateApplicationFromUrlParams,
+    CreateApplicationFromUrlResponse,
 )
 from tasks.manager import TaskManager
-from tasks.tasks import hello_world, create_job_from_url, base
+from tasks.tasks import hello_world, create_job_from_url, base, create_application_from_url
 from tasks.settings import env_settings
 
-
-TaskManager.register_task(hello_world.HelloWorldTask)
-TaskManager.register_task(create_job_from_url.CreateJobFromUrlTask)
 
 if env_settings.ENVIRONMENT == "prd":
     openapi_url: str | None = None
@@ -27,17 +30,19 @@ else:
     openapi_url = "/openapi.json"
 
 
+STATUS_ERROR_NO_RETRY = 299
+
+
 app = FastAPI(openapi_url=openapi_url)
 
 
-class RunTaskBody(BaseModel):
-    name: str
-    task_id: str
-    user_id: int | None = None
-    params: CreateJobFromUrlParams | HelloWorldParams
-
-
-STATUS_ERROR_NO_RETRY = 299
+# To avoid retries on validation errors
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=STATUS_ERROR_NO_RETRY,
+        content=jsonable_encoder({"detail": exc.errors()}),
+    )
 
 
 @app.get("/health")
@@ -45,8 +50,28 @@ async def health_check() -> dict[str, str]:
     return {"status": "healthy"}
 
 
+TaskManager.register_task(hello_world.HelloWorldTask)
+TaskManager.register_task(create_job_from_url.CreateJobFromUrlTask)
+TaskManager.register_task(create_application_from_url.CreateApplicationFromUrlTask)
+
+
+type TaskParams = CreateJobFromUrlParams | HelloWorldParams | CreateApplicationFromUrlParams
+type TaskResponse = (
+    CreateJobFromUrlResponse | HelloWorldResponse | CreateApplicationFromUrlResponse | None
+)
+
+
+class RunTaskBody(BaseModel):
+    name: str
+    task_id: str
+    user_id: Annotated[int, Field(gt=0)] | None = None
+    params: TaskParams
+
+
 @app.post("/")
-async def handle_task(body: RunTaskBody) -> CreateJobFromUrlResponse | HelloWorldResponse | None:
+async def handle_task(
+    body: RunTaskBody,
+) -> TaskResponse:
     try:
         task = TaskManager.get_task(body.name)
     except Exception as e:

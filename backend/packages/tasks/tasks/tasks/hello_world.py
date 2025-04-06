@@ -7,7 +7,10 @@ from tasks.tasks.base import Task, Result
 
 class HelloWorldTask(Task[HelloWorldParams, HelloWorldResponse]):
     name = "hello_world"
-    param_type = HelloWorldParams
+
+    @classmethod
+    def get_param_type(cls) -> type[HelloWorldParams]:
+        return HelloWorldParams
 
     async def _run(self, params: HelloWorldParams, task: TaskModel) -> Result[HelloWorldResponse]:
         resp = HelloWorldResponse(hello=f"Hello {params.name if params.name else 'World'}")
