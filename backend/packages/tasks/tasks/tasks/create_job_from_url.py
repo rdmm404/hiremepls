@@ -5,7 +5,7 @@ from loguru import logger
 from lib.repository.job import JobsRepository
 from lib.utils import generate_slug
 from lib.tasks import CreateJobFromUrlParams, CreateJobFromUrlResponse
-from lib.model import Company, Compensation, Job
+from lib.model import Company, Compensation, Job, Task as TaskModel
 from tasks.tasks.base import Task, Result
 from tasks.core.fetcher import JobsFetcher
 from tasks.core.llm import JobsLLMFlow
@@ -22,7 +22,9 @@ class CreateJobFromUrlTask(Task[CreateJobFromUrlParams, CreateJobFromUrlResponse
         self.llm = JobsLLMFlow()
         self.parser = HTMLParser()
 
-    async def _run(self, params: CreateJobFromUrlParams) -> Result[CreateJobFromUrlResponse]:
+    async def _run(
+        self, params: CreateJobFromUrlParams, task: TaskModel
+    ) -> Result[CreateJobFromUrlResponse]:
         url = str(params.url)
         existing_job = self.jobs_repo.get_job_by_url(url)
         if existing_job:
@@ -34,11 +36,11 @@ class CreateJobFromUrlTask(Task[CreateJobFromUrlParams, CreateJobFromUrlResponse
         job_html = await self.fetcher.get_page_contents(url)
         parsed_html = self.parser.parse(job_html)
 
-        logger.info("HTML parsed, sending to LLM")
+        logger.info(f"task_name={task.name} task_id={task.task_id} - HTML parsed, sending to LLM")
         # TODO: pass existing companies to LLM for better context
         result = await self.llm.get_job_from_raw_content(parsed_html)
 
-        logger.debug(f"LLM schema {result}")
+        logger.debug(f"task_name={task.name} task_id={task.task_id} - LLM schema {result}")
         if not result.parsed:
             return Result(success=False, data="Job couldn't be parsed", should_retry=False)
 
@@ -50,7 +52,7 @@ class CreateJobFromUrlTask(Task[CreateJobFromUrlParams, CreateJobFromUrlResponse
                 result.job_description.company,
                 update={"slug": company_slug},
             )
-        logger.debug(f"validated company {company}")
+        logger.debug(f"task_name={task.name} task_id={task.task_id} - validated company {company}")
 
         compensation = Compensation.model_validate(result.job_description.compensation)
         job = Job.model_validate(

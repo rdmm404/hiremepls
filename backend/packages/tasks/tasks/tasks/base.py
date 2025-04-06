@@ -48,7 +48,7 @@ class Task[P: BaseModel | None, R: BaseModel](Protocol):
             task_obj = self._create_task(params, task_id, user_id)
 
         try:
-            result = await self._run(cast(P, params))
+            result = await self._run(cast(P, params), task_obj)
         except Exception as e:
             result = Result(success=False, data=str(e), should_retry=True)
 
@@ -61,7 +61,7 @@ class Task[P: BaseModel | None, R: BaseModel](Protocol):
         )
         return self.session.exec(query).first()
 
-    def _create_task(self, params: P, task_id: str | None, user_id: int | None) -> TaskModel:
+    def _create_task(self, params: P, task_id: str, user_id: int | None) -> TaskModel:
         task = TaskModel(
             task_id=task_id,
             name=self.get_name(),
@@ -78,7 +78,7 @@ class Task[P: BaseModel | None, R: BaseModel](Protocol):
 
         return task
 
-    def _handle_task_result(self, task: TaskModel, result: Result) -> None:
+    def _handle_task_result(self, task: TaskModel, result: Result[R]) -> None:
         if result.success:
             task.status = TaskStatus.DONE
         elif result.should_retry:
@@ -91,7 +91,7 @@ class Task[P: BaseModel | None, R: BaseModel](Protocol):
         self.session.commit()
 
     @abstractmethod
-    async def _run(self, params: P) -> Result[R]: ...
+    async def _run(self, params: P, task: TaskModel) -> Result[R]: ...
 
     def init(self, db_session: Session) -> None:
         pass
