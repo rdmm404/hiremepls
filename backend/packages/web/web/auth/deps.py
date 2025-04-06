@@ -3,7 +3,7 @@ from fastapi import Depends, HTTPException, status, Request
 
 from typing import Annotated
 
-from lib.models import User
+from lib.model import User
 from web.auth.token import get_subject_from_token
 from web.common.deps import SessionDep
 

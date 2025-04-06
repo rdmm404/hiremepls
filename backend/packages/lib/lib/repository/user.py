@@ -3,8 +3,8 @@ from typing import cast
 from sqlmodel import select, col, func
 from sqlalchemy import delete
 
-from lib.base_repository import BaseRepository
-from lib.models import UserCreate, User
+from lib.repository.base import BaseRepository
+from lib.model import UserCreate, User
 from lib.crypto import get_password_hash
 
 

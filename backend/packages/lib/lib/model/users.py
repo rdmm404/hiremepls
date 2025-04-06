@@ -2,10 +2,10 @@ from pydantic import EmailStr
 from sqlmodel import Field, String, Relationship
 from typing import TYPE_CHECKING
 
-from lib.models.base import BaseSQLModel
+from lib.model.base import BaseSQLModel
 
 if TYPE_CHECKING:
-    from lib.models import Application
+    from lib.model import Application
 
 SCHEMA_NAME = "users"
 

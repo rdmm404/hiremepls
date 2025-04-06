@@ -1,6 +1,6 @@
 # from loguru import logger
 
-from lib.jobs.repository import JobsRepository
+from lib.repository.job import JobsRepository
 # from lib.models import Job
 
 

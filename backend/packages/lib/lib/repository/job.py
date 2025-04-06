@@ -1,7 +1,7 @@
 from sqlmodel import select
 
-from lib.base_repository import BaseRepository
-from lib.models import Job, Company
+from lib.repository.base import BaseRepository
+from lib.model import Job, Company
 
 
 class JobsRepository(BaseRepository):

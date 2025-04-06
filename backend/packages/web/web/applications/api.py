@@ -10,7 +10,7 @@ from web.applications.api_schema import (
     ApplicationSummary,
     UpdateApplicationPartial,
 )
-from lib.models import Application as ApplicationDB, ApplicationStatus
+from lib.model import Application as ApplicationDB, ApplicationStatus
 from web.common.pagination import PaginatedResponse
 from web.common.deps import PaginationDep
 from web.applications.status_flow import validate_status_change, get_available_statuses

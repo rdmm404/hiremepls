@@ -7,8 +7,8 @@ from sqlmodel import Session
 from typing import Callable
 
 from web.core.db import engine
-from lib.users.repository import UserRepository
-from lib.models import UserCreate
+from lib.repository.user import UserRepository
+from lib.model import UserCreate
 
 
 def create_admin(session: Session) -> None:

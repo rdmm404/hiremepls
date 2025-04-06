@@ -3,7 +3,7 @@ from typing import Annotated
 
 from web.common.deps import SessionDep
 from web.jobs.service import JobsService
-from lib.jobs.repository import JobsRepository
+from lib.repository.job import JobsRepository
 
 
 def get_jobs_repository(session: SessionDep) -> JobsRepository:

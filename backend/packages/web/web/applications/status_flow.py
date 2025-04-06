@@ -1,4 +1,4 @@
-from lib.models import ApplicationStatus
+from lib.model import ApplicationStatus
 
 APPLICATION_STATUS_FLOW: dict[ApplicationStatus, tuple[ApplicationStatus, ...]] = {
     ApplicationStatus.PENDING: (ApplicationStatus.APPLIED,),

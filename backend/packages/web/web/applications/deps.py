@@ -4,7 +4,7 @@ from fastapi import Depends
 from web.common.deps import SessionDep
 from web.jobs.deps import JobsServiceDep
 from web.applications.service import ApplicationsService
-from lib.applications.repository import ApplicationRepository
+from lib.repository.application import ApplicationRepository
 
 
 def get_applications_repository(session: SessionDep) -> ApplicationRepository:

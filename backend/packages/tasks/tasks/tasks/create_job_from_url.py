@@ -2,11 +2,11 @@ from typing import ClassVar
 from sqlmodel import Session
 from loguru import logger
 
-from lib.jobs.repository import JobsRepository
+from lib.repository.job import JobsRepository
 
 from lib.utils import generate_slug
 from lib.tasks import CreateJobFromUrlParams, CreateJobFromUrlResponse
-from lib.models import Company, Compensation, Job
+from lib.model import Company, Compensation, Job
 from tasks.tasks.base import Task, Result
 from tasks.core.fetcher import JobsFetcher
 from tasks.core.llm import JobsLLMFlow

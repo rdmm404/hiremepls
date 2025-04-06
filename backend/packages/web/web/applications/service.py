@@ -1,7 +1,7 @@
 from web.jobs.service import JobsService
-from lib.models import Application
-from lib.applications.repository import ApplicationRepository
-from lib.models import User
+from lib.model import Application
+from lib.repository.application import ApplicationRepository
+from lib.model import User
 
 
 class ApplicationsService:
