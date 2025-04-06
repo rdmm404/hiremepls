@@ -12,4 +12,5 @@ class DatabaseSettings(BaseSettings):
 
 
 class EnvironmentSettings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
     ENVIRONMENT: Literal["dev", "prd"] = "dev"

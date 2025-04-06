@@ -1,11 +1,13 @@
 import traceback
 import sys
+import time
 
 from fastapi import FastAPI, status, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from loguru import logger
+from starlette.concurrency import iterate_in_threadpool
 
 from lib.tasks import RunTaskBody, TaskResponse
 from tasks.manager import TaskManager
@@ -34,6 +36,31 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         status_code=STATUS_ERROR_NO_RETRY,
         content=jsonable_encoder({"detail": exc.errors()}),
     )
+
+
+@app.middleware("http")
+async def middleware(request: Request, call_next):
+    try:
+        req_body = await request.json()
+    except Exception:
+        req_body = None
+
+    logger.info(
+        f"REQUEST {request.method} {request.url} BODY {req_body} PARAMS {request.query_params}"
+    )
+    start_time = time.perf_counter()
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+
+    res_body = [section async for section in response.body_iterator]
+    response.body_iterator = iterate_in_threadpool(iter(res_body))
+
+    # Stringified response body object
+    res_body = res_body[0].decode()
+
+    logger.info(f"RESPONSE {response.status_code} BODY {res_body} TIME {process_time * 1000} ms")
+
+    return response
 
 
 @app.get("/health")

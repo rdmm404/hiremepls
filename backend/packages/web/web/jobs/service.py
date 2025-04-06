@@ -30,3 +30,6 @@ class JobsService:
 
         data = cast(CreateJobFromUrlResponse, result)
         return self.jobs_repo.get_job(data.job_id)
+
+    def get_job_by_url(self, url: str) -> Job | None:
+        return self.jobs_repo.get_job_by_url(url)

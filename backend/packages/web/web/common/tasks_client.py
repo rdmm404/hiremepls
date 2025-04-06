@@ -51,17 +51,14 @@ class TasksClient:
             query = select(Task).where(Task.task_id == task_id)
             task = self.session.exec(query).first()
 
-            if not task:
-                raise TaskDoesNotExist(f"Task with id {task_id} not found")
-
-            if task.status in (TaskStatus.DONE, TaskStatus.ERROR):
+            if task and task.status in (TaskStatus.DONE, TaskStatus.ERROR):
                 return TaskResult[R].model_validate(task.result)
 
             await asyncio.sleep(timeout_seconds)
 
         raise TimeoutError(f"Task {task_id} not done within timeout")
 
-    async def _create_buffered_task(self, body: RunTaskBody):
+    async def _create_buffered_task(self, body: RunTaskBody) -> None:
         credentials, _ = google.auth.default()
 
         auth_req = google.auth.transport.requests.Request()
@@ -73,8 +70,10 @@ class TasksClient:
             "Content-Type": "application/json",
         }
 
+        data = body.model_dump()
+        logger.debug(f"Creating task with body {data}")
         async with httpx.AsyncClient() as client:
-            resp = await client.post(self.BUFFER_URL, headers=headers, json=body.model_dump())
+            resp = await client.post(self.BUFFER_URL, headers=headers, json=data)
 
         resp.raise_for_status()
         logger.info(

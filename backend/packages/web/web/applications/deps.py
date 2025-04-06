@@ -1,7 +1,7 @@
 from typing import Annotated
 from fastapi import Depends
 
-from web.common.deps import SessionDep
+from web.common.deps import SessionDep, TasksClientDep
 from web.jobs.deps import JobsServiceDep
 from web.applications.service import ApplicationsService
 from lib.repository.application import ApplicationRepository
@@ -15,9 +15,11 @@ ApplicationRepositoryDep = Annotated[ApplicationRepository, Depends(get_applicat
 
 
 def get_application_service(
-    jobs_service: JobsServiceDep, application_repo: ApplicationRepositoryDep
+    jobs_service: JobsServiceDep,
+    application_repo: ApplicationRepositoryDep,
+    tasks_client: TasksClientDep,
 ) -> ApplicationsService:
-    return ApplicationsService(jobs_service, application_repo)
+    return ApplicationsService(jobs_service, application_repo, tasks_client)
 
 
 ApplicationsServiceDep = Annotated[ApplicationsService, Depends(get_application_service)]
