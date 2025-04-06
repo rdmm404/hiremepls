@@ -7,7 +7,7 @@ from lib.utils import HttpUrlType
 
 
 if TYPE_CHECKING:
-    from lib.model import Application
+    from lib.model.applications import Application
 
 
 Modality = Literal["remote", "in_office", "hybrid"]

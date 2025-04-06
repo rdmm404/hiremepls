@@ -510,7 +510,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/lib__applications__models__Application"
+                  "$ref": "#/components/schemas/lib__model__applications__Application"
                 }
               }
             }
@@ -1412,7 +1412,7 @@
         ],
         "title": "ValidationError"
       },
-      "lib__applications__models__Application": {
+      "lib__model__applications__Application": {
         "properties": {
           "id": {
             "anyOf": [

@@ -5,7 +5,8 @@ from typing import TYPE_CHECKING
 from lib.model.base import BaseSQLModel
 
 if TYPE_CHECKING:
-    from lib.model import Application
+    from lib.model.applications import Application
+    from lib.model.tasks import Task
 
 SCHEMA_NAME = "users"
 
@@ -28,3 +29,4 @@ class UserCreate(UserBase):
 class User(UserBase, table=True):
     password: str
     applications: list["Application"] = Relationship(back_populates="user")
+    tasks: list["Task"] = Relationship(back_populates="user")

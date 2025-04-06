@@ -35,8 +35,6 @@ class ApplicationRepository(BaseRepository):
     # TODO: This is the exacte same as create_application. maybe reuse some?
     def update_application(self, application: Application) -> Application:
         self.session.add(application)
-        print("commiting")
         self.session.commit()
-        print("commited")
         self.session.refresh(application)
         return application

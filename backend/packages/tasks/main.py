@@ -32,6 +32,8 @@ app = FastAPI(openapi_url=openapi_url)
 
 class RunTaskBody(BaseModel):
     name: str
+    task_id: str
+    user_id: int | None = None
     params: CreateJobFromUrlParams | HelloWorldParams
 
 
@@ -51,8 +53,8 @@ async def handle_task(body: RunTaskBody) -> CreateJobFromUrlResponse | HelloWorl
         raise HTTPException(status_code=STATUS_ERROR_NO_RETRY, detail=str(e))
 
     try:
-        result = await task.run(params=body.params)
-    except base.InvalidParamsError as e:
+        result = await task.run(params=body.params, task_id=body.task_id, user_id=body.user_id)
+    except (base.InvalidParamsError, base.TaskAlreadyExists) as e:
         raise HTTPException(status_code=STATUS_ERROR_NO_RETRY, detail=str(e))
     except Exception as e:
         logger.debug(traceback.format_exc())

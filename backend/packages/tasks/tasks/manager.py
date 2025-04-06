@@ -1,5 +1,8 @@
 from typing import Any, ClassVar
+from sqlmodel import Session
+
 from tasks.tasks.base import Task
+from tasks.db import engine
 
 
 class TaskNotFoundError(Exception): ...
@@ -19,4 +22,6 @@ class TaskManager:
         task_cls = cls.tasks.get(name)
         if not task_cls:
             raise TaskNotFoundError(f"Task with name {name} is not found")
-        return task_cls()
+
+        with Session(engine) as session:
+            return task_cls(session)

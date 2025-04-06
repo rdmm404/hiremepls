@@ -3,7 +3,6 @@ from sqlmodel import Session
 from loguru import logger
 
 from lib.repository.job import JobsRepository
-
 from lib.utils import generate_slug
 from lib.tasks import CreateJobFromUrlParams, CreateJobFromUrlResponse
 from lib.model import Company, Compensation, Job
@@ -27,7 +26,9 @@ class CreateJobFromUrlTask(Task[CreateJobFromUrlParams, CreateJobFromUrlResponse
         url = str(params.url)
         existing_job = self.jobs_repo.get_job_by_url(url)
         if existing_job:
-            return Result(False, f"Job with url {url} already exists", should_retry=False)
+            return Result(
+                success=False, data=f"Job with url {url} already exists", should_retry=False
+            )
 
         # TODO: Validate http response before calling the LLM flow
         job_html = await self.fetcher.get_page_contents(url)
@@ -39,7 +40,7 @@ class CreateJobFromUrlTask(Task[CreateJobFromUrlParams, CreateJobFromUrlResponse
 
         logger.debug(f"LLM schema {result}")
         if not result.parsed:
-            return Result(False, "Job couldn't be parsed", should_retry=False)
+            return Result(success=False, data="Job couldn't be parsed", should_retry=False)
 
         company_slug = generate_slug(result.job_description.company.name)
         company = self.jobs_repo.get_company_by_slug(company_slug)
@@ -65,4 +66,4 @@ class CreateJobFromUrlTask(Task[CreateJobFromUrlParams, CreateJobFromUrlResponse
         job = self.jobs_repo.create_job(job)
         assert job.id
         resp = CreateJobFromUrlResponse(job_id=job.id)
-        return Result(True, resp)
+        return Result(success=True, data=resp)

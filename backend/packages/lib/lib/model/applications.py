@@ -5,8 +5,8 @@ from enum import StrEnum
 from lib.model.base import BaseSQLModel
 
 if TYPE_CHECKING:
-    from lib.model import User
-    from lib.model import Job
+    from lib.model.users import User
+    from lib.model.jobs import Job
 
 
 SCHEMA_NAME = "applications"
