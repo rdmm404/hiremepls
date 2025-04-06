@@ -353,7 +353,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/src__applications__api_schema__Application"
+                  "$ref": "#/components/schemas/web__applications__api_schema__Application"
                 }
               }
             }
@@ -455,7 +455,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/src__applications__api_schema__Application"
+                  "$ref": "#/components/schemas/web__applications__api_schema__Application"
                 }
               }
             }
@@ -510,7 +510,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/src__applications__models__Application"
+                  "$ref": "#/components/schemas/lib__model__applications__Application"
                 }
               }
             }
@@ -1412,85 +1412,7 @@
         ],
         "title": "ValidationError"
       },
-      "src__applications__api_schema__Application": {
-        "properties": {
-          "status": {
-            "$ref": "#/components/schemas/ApplicationStatus",
-            "default": "Pending"
-          },
-          "interview_rounds": {
-            "anyOf": [
-              {
-                "type": "integer",
-                "minimum": 1.0
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Interview Rounds"
-          },
-          "current_round": {
-            "anyOf": [
-              {
-                "type": "integer",
-                "minimum": 1.0
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Current Round"
-          },
-          "notes": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Notes"
-          },
-          "fit": {
-            "anyOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Fit"
-          },
-          "resume_used": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Resume Used"
-          },
-          "id": {
-            "type": "integer",
-            "title": "Id"
-          },
-          "job": {
-            "$ref": "#/components/schemas/Job"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "job"
-        ],
-        "title": "Application"
-      },
-      "src__applications__models__Application": {
+      "lib__model__applications__Application": {
         "properties": {
           "id": {
             "anyOf": [
@@ -1612,6 +1534,84 @@
           }
         },
         "type": "object",
+        "title": "Application"
+      },
+      "web__applications__api_schema__Application": {
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ApplicationStatus",
+            "default": "Pending"
+          },
+          "interview_rounds": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interview Rounds"
+          },
+          "current_round": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Round"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "fit": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fit"
+          },
+          "resume_used": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resume Used"
+          },
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "job": {
+            "$ref": "#/components/schemas/Job"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "job"
+        ],
         "title": "Application"
       }
     },

@@ -40,7 +40,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./backend
-          file: ./backend/Dockerfile
+          file: ./backend/web/Dockerfile
+          target: prd
           push: true
           tags: |
             ${{ env.IMAGE_NAME }}:${{ github.sha }}

@@ -3,6 +3,6 @@ repos:
     rev: v0.9.9
     hooks:
       - id: ruff
-        args: [--fix, backend/src]
+        args: [--fix, backend/packages]
       - id: ruff-format
-        args: [backend/src]
+        args: [backend/packages]

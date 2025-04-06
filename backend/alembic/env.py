@@ -5,12 +5,10 @@ from sqlmodel import SQLModel
 
 from alembic import context
 
-from src.users.models import *
-from src.jobs.models import *
-from src.applications.models import *
+from lib.model import *
 
-from src.core.config import settings
-from src.core.db import get_connection_string
+from web.core.config import db_settings
+from lib.db import get_connection_string
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -49,7 +47,7 @@ def run_migrations_offline() -> None:
 
     """
     context.configure(
-        url=get_connection_string(settings),
+        url=get_connection_string(db_settings),
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
@@ -67,7 +65,7 @@ def run_migrations_online() -> None:
 
     """
     configuration = config.get_section(config.config_ini_section, {})
-    configuration["sqlalchemy.url"] = get_connection_string(settings)
+    configuration["sqlalchemy.url"] = get_connection_string(db_settings)
     connectable = engine_from_config(
         configuration,
         prefix="sqlalchemy.",

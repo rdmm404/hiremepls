@@ -1,0 +1,23 @@
+[project]
+name = "tasks"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "beautifulsoup4>=4.13.3",
+    "curl-cffi>=0.10.0",
+    "fastapi[standard]>=0.115.12",
+    "langchain>=0.3.22",
+    "langchain-google-genai>=2.1.2",
+    "lib",
+    "lxml>=5.3.1",
+    "zendriver>=0.5.1"
+]
+
+[tool.uv.sources]
+lib = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
