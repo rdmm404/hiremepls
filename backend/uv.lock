@@ -387,22 +387,6 @@ wheels = [
 ]
 
 [[package]]
-name = "google-cloud-tasks"
-version = "2.19.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "google-api-core", extra = ["grpc"] },
-    { name = "google-auth" },
-    { name = "grpc-google-iam-v1" },
-    { name = "proto-plus" },
-    { name = "protobuf" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/c7/d1/0b2707b424c8c237bf2c213e405e4b319ff70e0fbdb96f80fded2b97604b/google_cloud_tasks-2.19.2.tar.gz", hash = "sha256:276b47e85f4825923a778d543fc0735e4b24be45f73fa7d964ad1655402d07dc", size = 343042 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/52/ac/458475ddd64ffbb983b3811b2c4e4858ff1a5634204cbe7273edc5e33789/google_cloud_tasks-2.19.2-py3-none-any.whl", hash = "sha256:898bf75020ead4dfb836a43d2ad666389ceeec1a4beb3cb65cc25b9accc289bb", size = 288895 },
-]
-
-[[package]]
 name = "googleapis-common-protos"
 version = "1.69.2"
 source = { registry = "https://pypi.org/simple" }
@@ -412,11 +396,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/1b/d7/ee9d56af4e6dbe958562b5020f46263c8a4628e7952070241fc0e9b182ae/googleapis_common_protos-1.69.2.tar.gz", hash = "sha256:3e1b904a27a33c821b4b749fd31d334c0c9c30e6113023d495e48979a3dc9c5f", size = 144496 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f9/53/d35476d547a286506f0a6a634ccf1e5d288fffd53d48f0bd5fef61d68684/googleapis_common_protos-1.69.2-py3-none-any.whl", hash = "sha256:0b30452ff9c7a27d80bfc5718954063e8ab53dd3697093d3bc99581f5fd24212", size = 293215 },
-]
-
-[package.optional-dependencies]
-grpc = [
-    { name = "grpcio" },
 ]
 
 [[package]]
@@ -441,20 +420,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/18/87/470e01a940307796f1d25f8167b551a968540fbe0551c0ebb853cb527dd6/greenlet-3.1.1-cp313-cp313t-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:6510bf84a6b643dabba74d3049ead221257603a253d0a9873f55f6a59a65f822", size = 602753 },
     { url = "https://files.pythonhosted.org/packages/e2/72/576815ba674eddc3c25028238f74d7b8068902b3968cbe456771b166455e/greenlet-3.1.1-cp313-cp313t-musllinux_1_1_aarch64.whl", hash = "sha256:04b013dc07c96f83134b1e99888e7a79979f1a247e2a9f59697fa14b5862ed01", size = 1122731 },
     { url = "https://files.pythonhosted.org/packages/ac/38/08cc303ddddc4b3d7c628c3039a61a3aae36c241ed01393d00c2fd663473/greenlet-3.1.1-cp313-cp313t-musllinux_1_1_x86_64.whl", hash = "sha256:411f015496fec93c1c8cd4e5238da364e1da7a124bcb293f085bf2860c32c6f6", size = 1142112 },
-]
-
-[[package]]
-name = "grpc-google-iam-v1"
-version = "0.14.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "googleapis-common-protos", extra = ["grpc"] },
-    { name = "grpcio" },
-    { name = "protobuf" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/b9/4e/8d0ca3b035e41fe0b3f31ebbb638356af720335e5a11154c330169b40777/grpc_google_iam_v1-0.14.2.tar.gz", hash = "sha256:b3e1fc387a1a329e41672197d0ace9de22c78dd7d215048c4c78712073f7bd20", size = 16259 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/66/6f/dd9b178aee7835b96c2e63715aba6516a9d50f6bebbd1cc1d32c82a2a6c3/grpc_google_iam_v1-0.14.2-py3-none-any.whl", hash = "sha256:a3171468459770907926d56a440b2bb643eec1d7ba215f48f3ecece42b4d8351", size = 19242 },
 ]
 
 [[package]]
@@ -1480,18 +1445,22 @@ source = { editable = "packages/web" }
 dependencies = [
     { name = "alembic" },
     { name = "fastapi", extra = ["standard"] },
-    { name = "google-cloud-tasks" },
+    { name = "google-auth" },
+    { name = "httpx" },
     { name = "lib" },
     { name = "pyjwt" },
+    { name = "requests" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "alembic", specifier = ">=1.14.1" },
     { name = "fastapi", extras = ["standard"], specifier = ">=0.115.10" },
-    { name = "google-cloud-tasks", specifier = ">=2.19.2" },
+    { name = "google-auth", specifier = ">=2.38.0" },
+    { name = "httpx", specifier = ">=0.28.1" },
     { name = "lib", editable = "packages/lib" },
     { name = "pyjwt", specifier = ">=2.10.1" },
+    { name = "requests", specifier = ">=2.32.3" },
 ]
 
 [[package]]

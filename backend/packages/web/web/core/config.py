@@ -9,6 +9,10 @@ class Settings(BaseSettings):
     SECRET_KEY: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
     FRONTEND_URL: str = "http://localhost:8766"
+    GOOGLE_PROJECT_ID: str
+    GOOGLE_TASKS_QUEUE_ID: str
+    GOOGLE_LOCATION: str
+    GOOGLE_TASKS_URL: str = "https://cloudtasks.googleapis.com/v2"
 
 
 settings = Settings()  # type: ignore

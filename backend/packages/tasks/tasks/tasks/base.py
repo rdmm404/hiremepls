@@ -6,12 +6,7 @@ from pydantic import BaseModel, ValidationError
 from loguru import logger
 
 from lib.model import Task as TaskModel, TaskStatus
-
-
-class Result[D](BaseModel):
-    success: bool
-    data: D | str | None = None
-    should_retry: bool | None = None
+from lib.tasks import TaskResult
 
 
 class InvalidParamsError(Exception): ...
@@ -37,7 +32,7 @@ class Task[P: BaseModel | None, R: BaseModel](Protocol):
     @abstractmethod
     def get_param_type(cls) -> type[P] | None: ...
 
-    async def run(self, params: P | None, task_id: str, user_id: int | None) -> Result[R]:
+    async def run(self, params: P | None, task_id: str, user_id: int | None) -> TaskResult[R]:
         params = self._validate_params(params)
 
         task_obj = self._get_task_for_retry(task_id)
@@ -52,7 +47,7 @@ class Task[P: BaseModel | None, R: BaseModel](Protocol):
         try:
             result = await self._run(cast(P, params), task_obj)
         except Exception as e:
-            result = Result(success=False, data=str(e), should_retry=True)
+            result = TaskResult(success=False, data=str(e), should_retry=True)
 
         self._handle_task_result(task_obj, result)
         return result
@@ -100,7 +95,7 @@ class Task[P: BaseModel | None, R: BaseModel](Protocol):
 
         return task
 
-    def _handle_task_result(self, task: TaskModel, result: Result[R]) -> None:
+    def _handle_task_result(self, task: TaskModel, result: TaskResult[R]) -> None:
         if result.success:
             task.status = TaskStatus.DONE
         elif result.should_retry:
@@ -113,7 +108,7 @@ class Task[P: BaseModel | None, R: BaseModel](Protocol):
         self.session.commit()
 
     @abstractmethod
-    async def _run(self, params: P, task: TaskModel) -> Result[R]: ...
+    async def _run(self, params: P, task: TaskModel) -> TaskResult[R]: ...
 
     def init(self, db_session: Session) -> None:
         pass

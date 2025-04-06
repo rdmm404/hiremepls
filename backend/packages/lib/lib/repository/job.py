@@ -5,6 +5,10 @@ from lib.model import Job, Company
 
 
 class JobsRepository(BaseRepository):
+    def get_job(self, id: int) -> Job:
+        query = select(Job).where(Job.id == id)
+        return self.session.exec(query).one()
+
     def get_job_by_url(self, url: str) -> Job | None:
         query = select(Job).where(Job.job_url == url)
         return self.session.exec(query).first()

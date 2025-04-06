@@ -6,7 +6,7 @@ from lib.repository.job import JobsRepository
 from lib.utils import generate_slug
 from lib.tasks import CreateJobFromUrlParams, CreateJobFromUrlResponse
 from lib.model import Company, Compensation, Job, Task as TaskModel
-from tasks.tasks.base import Task, Result
+from tasks.tasks.base import Task, TaskResult
 from tasks.core.fetcher import JobsFetcher
 from tasks.core.llm import JobsLLMFlow
 from tasks.core.parser import HTMLParser
@@ -28,11 +28,11 @@ class CreateJobFromUrlTask(Task[CreateJobFromUrlParams, CreateJobFromUrlResponse
 
     async def _run(
         self, params: CreateJobFromUrlParams, task: TaskModel
-    ) -> Result[CreateJobFromUrlResponse]:
+    ) -> TaskResult[CreateJobFromUrlResponse]:
         url = str(params.url)
         existing_job = self.jobs_repo.get_job_by_url(url)
         if existing_job:
-            return Result(
+            return TaskResult(
                 success=False, data=f"Job with url {url} already exists", should_retry=False
             )
 
@@ -46,7 +46,7 @@ class CreateJobFromUrlTask(Task[CreateJobFromUrlParams, CreateJobFromUrlResponse
 
         logger.debug(f"task_name={task.name} task_id={task.task_id} - LLM schema {result}")
         if not result.parsed:
-            return Result(success=False, data="Job couldn't be parsed", should_retry=False)
+            return TaskResult(success=False, data="Job couldn't be parsed", should_retry=False)
 
         company_slug = generate_slug(result.job_description.company.name)
         company = self.jobs_repo.get_company_by_slug(company_slug)
@@ -72,4 +72,4 @@ class CreateJobFromUrlTask(Task[CreateJobFromUrlParams, CreateJobFromUrlResponse
         job = self.jobs_repo.create_job(job)
         assert job.id
         resp = CreateJobFromUrlResponse(job_id=job.id)
-        return Result(success=True, data=resp)
+        return TaskResult(success=True, data=resp)

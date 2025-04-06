@@ -1,7 +1,7 @@
 from typing import ClassVar, cast
 from sqlmodel import Session
 
-from tasks.tasks.base import Task, Result
+from tasks.tasks.base import Task, TaskResult
 from tasks.tasks.create_job_from_url import CreateJobFromUrlTask
 from lib.tasks import (
     CreateApplicationFromUrlParams,
@@ -28,9 +28,9 @@ class CreateApplicationFromUrlTask(
 
     async def _run(
         self, params: CreateApplicationFromUrlParams, task: TaskModel
-    ) -> Result[CreateApplicationFromUrlResponse]:
+    ) -> TaskResult[CreateApplicationFromUrlResponse]:
         if not task.user_id:
-            return Result(
+            return TaskResult(
                 success=False,
                 data="User id is required for application creation",
                 should_retry=False,
@@ -42,7 +42,7 @@ class CreateApplicationFromUrlTask(
         )
 
         if not job_result.success:
-            return Result(
+            return TaskResult(
                 success=False,
                 data=f"Something went wrong during job creation: {job_result.data}",
                 should_retry=job_result.should_retry,
@@ -55,4 +55,4 @@ class CreateApplicationFromUrlTask(
         application = self.application_repo.create_application(application)
         assert application.id
         resp = CreateApplicationFromUrlResponse(application_id=application.id)
-        return Result(success=True, data=resp)
+        return TaskResult(success=True, data=resp)

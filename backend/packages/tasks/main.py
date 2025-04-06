@@ -5,18 +5,9 @@ from fastapi import FastAPI, status, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, Field
 from loguru import logger
-from typing import Annotated
 
-from lib.tasks import (
-    HelloWorldParams,
-    CreateJobFromUrlParams,
-    CreateJobFromUrlResponse,
-    HelloWorldResponse,
-    CreateApplicationFromUrlParams,
-    CreateApplicationFromUrlResponse,
-)
+from lib.tasks import RunTaskBody, TaskResponse
 from tasks.manager import TaskManager
 from tasks.tasks import hello_world, create_job_from_url, base, create_application_from_url
 from tasks.settings import env_settings
@@ -53,19 +44,6 @@ async def health_check() -> dict[str, str]:
 TaskManager.register_task(hello_world.HelloWorldTask)
 TaskManager.register_task(create_job_from_url.CreateJobFromUrlTask)
 TaskManager.register_task(create_application_from_url.CreateApplicationFromUrlTask)
-
-
-type TaskParams = CreateJobFromUrlParams | HelloWorldParams | CreateApplicationFromUrlParams
-type TaskResponse = (
-    CreateJobFromUrlResponse | HelloWorldResponse | CreateApplicationFromUrlResponse | None
-)
-
-
-class RunTaskBody(BaseModel):
-    name: str
-    task_id: str
-    user_id: Annotated[int, Field(gt=0)] | None = None
-    params: TaskParams
 
 
 @app.post("/")
