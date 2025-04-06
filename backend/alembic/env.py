@@ -5,9 +5,7 @@ from sqlmodel import SQLModel
 
 from alembic import context
 
-from lib.users.models import *
-from lib.jobs.models import *
-from lib.applications.models import *
+from lib.models import *
 
 from web.core.config import db_settings
 from lib.db import get_connection_string

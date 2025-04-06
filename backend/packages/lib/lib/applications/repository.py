@@ -2,7 +2,7 @@ from sqlmodel import select, func, col
 from collections.abc import Sequence
 
 from lib.base_repository import BaseRepository
-from lib.applications.models import Application
+from lib.models import Application
 
 
 class ApplicationRepository(BaseRepository):

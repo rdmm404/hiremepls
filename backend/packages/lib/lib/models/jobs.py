@@ -2,12 +2,12 @@ from typing import Literal, TYPE_CHECKING
 from sqlmodel import SQLModel, Field, Relationship, ARRAY, Column, AutoString
 from pydantic import HttpUrl
 
-from lib.base_model import BaseSQLModel
+from lib.models.base import BaseSQLModel
 from lib.utils import HttpUrlType
 
 
 if TYPE_CHECKING:
-    from lib.applications.models import Application
+    from lib.models import Application
 
 
 Modality = Literal["remote", "in_office", "hybrid"]

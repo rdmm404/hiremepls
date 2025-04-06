@@ -6,9 +6,7 @@ from lib.jobs.repository import JobsRepository
 
 from lib.utils import generate_slug
 from lib.tasks import CreateJobFromUrlParams, CreateJobFromUrlResponse
-from lib.jobs.models import Company, Compensation, Job
-from lib.applications.models import Application
-from lib.users.models import User
+from lib.models import Company, Compensation, Job
 from tasks.tasks.base import Task, Result
 from tasks.core.fetcher import JobsFetcher
 from tasks.core.llm import JobsLLMFlow

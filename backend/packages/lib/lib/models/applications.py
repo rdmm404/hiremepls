@@ -2,11 +2,11 @@ from sqlmodel import SQLModel, Field, Relationship, AutoString, UniqueConstraint
 from typing import TYPE_CHECKING, Annotated
 from enum import StrEnum
 
-from lib.base_model import BaseSQLModel
+from lib.models.base import BaseSQLModel
 
 if TYPE_CHECKING:
-    from lib.users.models import User
-    from lib.jobs.models import Job
+    from lib.models import User
+    from lib.models import Job
 
 
 SCHEMA_NAME = "applications"

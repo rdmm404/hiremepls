@@ -4,7 +4,7 @@ from sqlmodel import select, col, func
 from sqlalchemy import delete
 
 from lib.base_repository import BaseRepository
-from lib.users.models import UserCreate, User
+from lib.models import UserCreate, User
 from lib.crypto import get_password_hash
 
 

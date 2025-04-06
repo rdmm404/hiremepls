@@ -1,7 +1,7 @@
 from typing import Annotated
 from pydantic import BaseModel, HttpUrl, UrlConstraints
 
-from lib.jobs.models import JobBase, CompanyBase, CompensationBase, Modality
+from lib.models import JobBase, CompanyBase, CompensationBase, Modality
 
 
 class CreateJobByUrl(BaseModel):
