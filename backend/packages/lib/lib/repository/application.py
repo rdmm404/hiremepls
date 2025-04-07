@@ -32,7 +32,7 @@ class ApplicationRepository(BaseRepository):
         query = select(func.count(col(Application.id))).where(Application.user_id == user_id)
         return self.session.exec(query).one()
 
-    # TODO: This is the exacte same as create_application. maybe reuse some?
+    # TODO: This is the exacte same as create_application. maybe reuse some??
     def update_application(self, application: Application) -> Application:
         self.session.add(application)
         self.session.commit()
