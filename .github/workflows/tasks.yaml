@@ -37,9 +37,12 @@ jobs:
           password: "${{ steps.auth.outputs.auth_token }}"
           registry: "${{ vars.GCP_REGION }}-docker.pkg.dev"
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Build, tag and push container
         id: build-image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./backend
           file: ./backend/packages/tasks/Dockerfile
@@ -47,6 +50,8 @@ jobs:
           tags: |
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
             ${{ env.IMAGE_NAME }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Deploy to Cloud Run
         id: deploy
