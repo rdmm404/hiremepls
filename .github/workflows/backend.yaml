@@ -5,6 +5,7 @@ on:
       - main
     paths:
       - 'backend/**'
+      - '.github/workflows/backend.yaml'
   workflow_dispatch:
 env:
   IMAGE_NAME: ${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPO }}/${{ vars.SERVICE_NAME }}
@@ -40,7 +41,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./backend
-          file: ./backend/web/Dockerfile
+          file: ./backend/packages/web/Dockerfile
           target: prd
           push: true
           tags: |
