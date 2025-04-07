@@ -23,9 +23,10 @@ class JobsService:
             "create_job_from_url", job_task_params, user_id=None
         )
         result = await self.tasks_client.wait_for_task(
-            task_id, result_type=CreateJobFromUrlResponse
+            task_id, result_model=CreateJobFromUrlResponse
         )
 
+        assert result, f"Result is none for task {task_id}"
         assert result.success, f"Job creation unsuccessful {result.data}"
 
         data = cast(CreateJobFromUrlResponse, result)

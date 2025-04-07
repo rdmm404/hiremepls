@@ -6,7 +6,7 @@ import asyncio
 
 from loguru import logger
 from sqlmodel import Session, select
-from typing import Any
+from pydantic import BaseModel
 
 from web.core.config import settings
 from lib.tasks import TaskParams, RunTaskBody, TaskResult
@@ -40,13 +40,13 @@ class TasksClient:
 
         return task_id
 
-    async def wait_for_task[R](
+    async def wait_for_task[R: BaseModel](
         self,
         task_id: str,
-        result_type: type[R] = type[Any],
+        result_model: type[R] | None = None,
         max_attempts: int = 10,
         timeout_seconds: int = 3,
-    ) -> TaskResult[R]:
+    ) -> TaskResult[R] | None:
         for i in range(max_attempts):
             query = select(Task).where(Task.task_id == task_id)
             task = self.session.exec(query).first()
@@ -56,7 +56,14 @@ class TasksClient:
                 logger.debug(f"task in db: {task}")
 
                 if task.status in (TaskStatus.DONE, TaskStatus.ERROR):
-                    return TaskResult[R].model_validate(task.result)
+                    if not task.result:
+                        return None
+                    task_result = TaskResult.model_validate(task.result)
+
+                    if isinstance(task_result.data, dict) and result_model:
+                        task_result.data = result_model.model_validate(task_result.data)
+
+                    return task_result
 
             await asyncio.sleep(timeout_seconds)
 

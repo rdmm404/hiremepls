@@ -31,8 +31,10 @@ class ApplicationsService:
                 user_id=user.id,
             )
             result = await self.tasks_client.wait_for_task(
-                task_id, result_type=CreateApplicationFromUrlResponse
+                task_id, result_model=CreateApplicationFromUrlResponse
             )
+            assert result, f"Application creation result is null for task {task_id}"
+
             assert result.success, f"Application creation unsuccessful {result.data}"
             data = cast(CreateApplicationFromUrlResponse, result.data)
             application = self.application_repo.get_application_by_id_and_user(
