@@ -51,6 +51,7 @@ class TasksClient:
             query = select(Task).where(Task.task_id == task_id)
             task = self.session.exec(query).first()
 
+            logger.debug(f"task in db: {task}")
             if task and task.status in (TaskStatus.DONE, TaskStatus.ERROR):
                 return TaskResult[R].model_validate(task.result)
 
