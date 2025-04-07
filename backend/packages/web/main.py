@@ -32,10 +32,12 @@ def generate_schema(app: FastAPI) -> None:
 
 if env_settings.ENVIRONMENT == "prd":
     openapi_url: str | None = None
-    logger.remove()
-    logger.add(sys.stderr, level="INFO")
 else:
     openapi_url = "/api/v1/openapi.json"
+
+if env_settings.LOG_LEVEL != "DEBUG":
+    logger.remove()
+    logger.add(sys.stderr, level=env_settings.LOG_LEVEL)
 
 app = FastAPI(openapi_url=openapi_url, generate_unique_id_function=custom_generate_unique_id)
 

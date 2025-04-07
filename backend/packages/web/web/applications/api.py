@@ -1,6 +1,8 @@
-from fastapi import APIRouter, HTTPException, status
+import traceback
 
+from fastapi import APIRouter, HTTPException, status
 from typing import cast
+from loguru import logger
 
 from web.auth.deps import CurrentUserDep, DependsCurrentUser
 from web.applications.deps import ApplicationsServiceDep, ApplicationRepositoryDep
@@ -26,7 +28,9 @@ async def create_from_job_url(
 ) -> ApplicationDB:
     try:
         app = await applications_service.create_from_job_url(str(body.url), user)
-    except Exception:  # TODO: Improve exception handling
+    except Exception as e:  # TODO: Improve exception handling
+        logger.error(f"Error while creating application from url: {str(e)}")
+        logger.debug(traceback.format_exc())
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, "Application couldn't be parsed")
     return app
 
