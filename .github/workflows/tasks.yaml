@@ -1,15 +1,15 @@
-name: Backend - Build image, push to GAR and deploy to GCP
+name: Tasks - Build image, push to GAR and deploy to GCP
 on:
   push:
     branches:
       - main
     paths:
-      - 'backend/packages/lib/**'
-      - 'backend/packages/web/**'
-      - '.github/workflows/backend.yaml'
+      - "backend/packages/lib/**"
+      - "backend/packages/tasks/**"
+      - ".github/workflows/backend.yaml"
   workflow_dispatch:
 env:
-  IMAGE_NAME: ${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPO }}/${{ vars.BACKEND_SERVICE_NAME }}
+  IMAGE_NAME: ${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPO }}/${{ vars.TASKS_SERVICE_NAME }}
 
 jobs:
   build-and-deploy:
@@ -42,8 +42,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./backend
-          file: ./backend/packages/web/Dockerfile
-          target: prd
+          file: ./backend/packages/tasks/Dockerfile
           push: true
           tags: |
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
@@ -53,6 +52,6 @@ jobs:
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v2
         with:
-          service: ${{ vars.BACKEND_SERVICE_NAME }}
+          service: ${{ vars.TASKS_SERVICE_NAME }}
           region: ${{ vars.GCP_REGION }}
           image: ${{ env.IMAGE_NAME }}:${{ github.sha }}

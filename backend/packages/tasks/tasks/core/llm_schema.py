@@ -1,6 +1,6 @@
 import json
 
-from typing import Literal, List, Annotated
+from typing import Literal, Annotated
 from rich import print
 
 from pydantic import BaseModel, Field, HttpUrl
@@ -12,7 +12,8 @@ class Company(BaseModel):
         HttpUrl | None,
         Field(
             description="Url of the homepage of the company, if present. "
-            "Please include the full url, containting the schema."
+            "Please include the full url, containting the schema. Example of "
+            "correct url: https://google.com. Example of wrong url: google.com."
         ),
     ]
     logo_url: Annotated[
@@ -76,8 +77,8 @@ class Job(BaseModel):
             "Location\nRemote\nEmployment Type\nFull time\nLocation Type\nRemote"
         ),
     ]
-    requirements: Annotated[List[str], Field(description="List of job requirements.")]
-    skills: Annotated[List[str], Field(description="List of required skills.")]
+    requirements: Annotated[list[str], Field(description="List of job requirements.")]
+    skills: Annotated[list[str], Field(description="List of required skills.")]
     location: Annotated[
         str,
         Field(
@@ -87,7 +88,7 @@ class Job(BaseModel):
         ),
     ]
     modality: Annotated[
-        List[Modality],
+        list[Modality],
         Field(description="List of work modalities offered (remote, in_office, hybrid)."),
     ]
     other_details: Annotated[
