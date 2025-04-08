@@ -1,5 +1,5 @@
 import type { HTTPValidationError } from './HTTPValidationError.ts'
-import type { SrcApplicationsModelsApplication } from './SrcApplicationsModelsApplication.ts'
+import type { LibModelApplicationsApplication } from './LibModelApplicationsApplication.ts'
 import type { UpdateApplicationPartial } from './UpdateApplicationPartial.ts'
 
 export type ApplicationsApplicationPartialUpdatePathParams = {
@@ -12,7 +12,7 @@ export type ApplicationsApplicationPartialUpdatePathParams = {
 /**
  * @description Successful Response
  */
-export type ApplicationsApplicationPartialUpdate200 = SrcApplicationsModelsApplication
+export type ApplicationsApplicationPartialUpdate200 = LibModelApplicationsApplication
 
 /**
  * @description Validation Error

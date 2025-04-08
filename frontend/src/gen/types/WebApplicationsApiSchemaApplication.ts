@@ -1,7 +1,7 @@
 import type { ApplicationStatus } from './ApplicationStatus.ts'
 import type { Job } from './Job.ts'
 
-export type SrcApplicationsApiSchemaApplication = {
+export type WebApplicationsApiSchemaApplication = {
   /**
    * @type string | undefined
    */

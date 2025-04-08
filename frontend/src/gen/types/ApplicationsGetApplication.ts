@@ -1,5 +1,5 @@
 import type { HTTPValidationError } from './HTTPValidationError.ts'
-import type { SrcApplicationsApiSchemaApplication } from './SrcApplicationsApiSchemaApplication.ts'
+import type { WebApplicationsApiSchemaApplication } from './WebApplicationsApiSchemaApplication.ts'
 
 export type ApplicationsGetApplicationPathParams = {
   /**
@@ -11,7 +11,7 @@ export type ApplicationsGetApplicationPathParams = {
 /**
  * @description Successful Response
  */
-export type ApplicationsGetApplication200 = SrcApplicationsApiSchemaApplication
+export type ApplicationsGetApplication200 = WebApplicationsApiSchemaApplication
 
 /**
  * @description Validation Error

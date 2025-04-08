@@ -80,10 +80,9 @@ export type {
   JobsCreateFromUrlMutation,
 } from './types/JobsCreateFromUrl.ts'
 export type { JobSummary } from './types/JobSummary.ts'
+export type { LibModelApplicationsApplication } from './types/LibModelApplicationsApplication.ts'
 export type { PaginatedResponseApplicationSummary } from './types/PaginatedResponseApplicationSummary.ts'
 export type { PaginatedResponseUser } from './types/PaginatedResponseUser.ts'
-export type { SrcApplicationsApiSchemaApplication } from './types/SrcApplicationsApiSchemaApplication.ts'
-export type { SrcApplicationsModelsApplication } from './types/SrcApplicationsModelsApplication.ts'
 export type { Token } from './types/Token.ts'
 export type { UpdateApplicationPartial } from './types/UpdateApplicationPartial.ts'
 export type { User } from './types/User.ts'
@@ -112,6 +111,7 @@ export type {
   UsersListUsersQuery,
 } from './types/UsersListUsers.ts'
 export type { ValidationError } from './types/ValidationError.ts'
+export type { WebApplicationsApiSchemaApplication } from './types/WebApplicationsApiSchemaApplication.ts'
 export {
   getApplicationsApplicationPartialUpdateUrl,
   applicationsApplicationPartialUpdate,

@@ -1,11 +1,11 @@
 import type { CreateApplicationByJobUrl } from './CreateApplicationByJobUrl.ts'
 import type { HTTPValidationError } from './HTTPValidationError.ts'
-import type { SrcApplicationsApiSchemaApplication } from './SrcApplicationsApiSchemaApplication.ts'
+import type { WebApplicationsApiSchemaApplication } from './WebApplicationsApiSchemaApplication.ts'
 
 /**
  * @description Successful Response
  */
-export type ApplicationsCreateFromJobUrl200 = SrcApplicationsApiSchemaApplication
+export type ApplicationsCreateFromJobUrl200 = WebApplicationsApiSchemaApplication
 
 /**
  * @description Validation Error
