@@ -1,0 +1,25 @@
+---
+description: 
+globs: *.tsx,*.ts,*.html,*.css,*.json,*.js
+alwaysApply: false
+---
+
+# Frontend code guidelines
+The frontend is located at ./frontend, it's a React SPA
+
+## Tech Stack
+- shadcn/ui component library
+- tailwind for CSS
+- tanstack router for routes
+- tankstack query for data fetching
+- Kubb for auto-generating client from the API's openapi spec. this autogenerates Tanstack Query queries
+- deployed in vercel
+
+## Design guidelines
+The design of the app aims to be minimalistic and simple, the idea is to avoid unnecessary clutter.
+
+## Code guidelines
+- Always use the kubb generated client for communicating with the backend.
+- Always use proper typescript types in your components.
+- Always try to use a shadcn/ui component if it can be used instead of creating a component from scratch.
+- Don't try to add components to components/ui. These are only meant to be added by the shadcn cli.

@@ -1,5 +1,6 @@
 export type { ApplicationsApplicationPartialUpdateMutationKey } from './applicationsService/useApplicationsApplicationPartialUpdate.ts'
 export type { ApplicationsCreateFromJobUrlMutationKey } from './applicationsService/useApplicationsCreateFromJobUrl.ts'
+export type { ApplicationsDeleteApplicationMutationKey } from './applicationsService/useApplicationsDeleteApplication.ts'
 export type { ApplicationsGetAllowedStatusesForUpdateQueryKey } from './applicationsService/useApplicationsGetAllowedStatusesForUpdate.ts'
 export type { ApplicationsGetAllowedStatusesForUpdateSuspenseQueryKey } from './applicationsService/useApplicationsGetAllowedStatusesForUpdateSuspense.ts'
 export type { ApplicationsGetApplicationQueryKey } from './applicationsService/useApplicationsGetApplication.ts'
@@ -22,6 +23,7 @@ export {
   useApplicationsApplicationPartialUpdate,
 } from './applicationsService/useApplicationsApplicationPartialUpdate.ts'
 export { applicationsCreateFromJobUrlMutationKey, useApplicationsCreateFromJobUrl } from './applicationsService/useApplicationsCreateFromJobUrl.ts'
+export { applicationsDeleteApplicationMutationKey, useApplicationsDeleteApplication } from './applicationsService/useApplicationsDeleteApplication.ts'
 export {
   applicationsGetAllowedStatusesForUpdateQueryKey,
   applicationsGetAllowedStatusesForUpdateQueryOptions,

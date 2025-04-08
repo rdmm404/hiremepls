@@ -11,6 +11,7 @@ import {
   ApplicationStatusEnum,
   useApplicationsGetAllowedStatusesForUpdate,
   useApplicationsApplicationPartialUpdate,
+  useApplicationsDeleteApplication,
 } from "@/gen";
 import { ApplicationCard } from "@/components/application/ApplicationCard";
 import { Button } from "@/components/ui/button";
@@ -50,6 +51,7 @@ function ListApplications() {
   );
 
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedApplication, setSelectedApplication] =
     useState<ApplicationSummary | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string>("");
@@ -83,6 +85,21 @@ function ListApplications() {
     },
   });
 
+  const deleteApplicationMutation = useApplicationsDeleteApplication({
+    mutation: {
+      onSuccess: () => {
+        toast.success("Application deleted successfully");
+        refetch();
+        setIsDeleteModalOpen(false);
+      },
+      onError: (error) => {
+        toast.error("Failed to delete application", {
+          description: error.response?.data.detail![0].msg,
+        });
+      },
+    },
+  });
+
   useEffect(() => {
     console.log("effect");
     if (
@@ -102,6 +119,12 @@ function ListApplications() {
       setSelectedApplication(null);
     }
   }, [isStatusModalOpen]);
+
+  useEffect(() => {
+    if (!isDeleteModalOpen) {
+      setSelectedApplication(null);
+    }
+  }, [isDeleteModalOpen]);
 
   const handleUpdateStatus = (application: ApplicationSummary) => {
     setSelectedApplication(application);
@@ -127,6 +150,19 @@ function ListApplications() {
     setIsStatusModalOpen(false);
   };
 
+  const handleDeleteApplication = (application: ApplicationSummary) => {
+    setSelectedApplication(application);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (selectedApplication) {
+      deleteApplicationMutation.mutate({
+        application_id: selectedApplication.id,
+      });
+    }
+  };
+
   return (
     <>
       <div className="w-full max-h-full @3xl:w-3/4 p-5 @3xl:p-0 max-w-4xl flex flex-col">
@@ -144,6 +180,7 @@ function ListApplications() {
               application={app}
               key={app.id}
               onUpdateStatus={handleUpdateStatus}
+              onDelete={handleDeleteApplication}
             />
           ))}
         </div>
@@ -203,6 +240,33 @@ function ListApplications() {
                 Save
               </Button>
             )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Delete Application</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this application? This action
+              cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setIsDeleteModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleConfirmDelete}
+              disabled={deleteApplicationMutation.isPending}
+            >
+              Delete
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

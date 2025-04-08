@@ -38,3 +38,7 @@ class ApplicationRepository(BaseRepository):
         self.session.commit()
         self.session.refresh(application)
         return application
+
+    def delete_application(self, application: Application) -> None:
+        self.session.delete(application)
+        self.session.commit()

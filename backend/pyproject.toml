@@ -18,15 +18,6 @@ dev = [
 line-length = 100
 exclude = ["alembic/"]
 
-[tool.mypy]
-strict = true
-exclude = ["alembic/"]
-packages = ["lib"]
-
-[[tool.mypy.overrides]]
-module = "passlib.*"
-ignore_missing_imports = true
-
 
 [tool.pyright]
 include = ["packages/**"]

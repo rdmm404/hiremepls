@@ -1,6 +1,7 @@
 export { getApplicationsApplicationPartialUpdateUrl, applicationsApplicationPartialUpdate } from './applicationsClient/applicationsApplicationPartialUpdate.ts'
 export { applicationsClient } from './applicationsClient/applicationsClient.ts'
 export { getApplicationsCreateFromJobUrlUrl, applicationsCreateFromJobUrl } from './applicationsClient/applicationsCreateFromJobUrl.ts'
+export { getApplicationsDeleteApplicationUrl, applicationsDeleteApplication } from './applicationsClient/applicationsDeleteApplication.ts'
 export {
   getApplicationsGetAllowedStatusesForUpdateUrl,
   applicationsGetAllowedStatusesForUpdate,

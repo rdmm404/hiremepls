@@ -23,15 +23,23 @@ import { ApplicationStatusBadge } from "./ApplicationStatusBadge";
 interface ApplicationCardProps {
   application: ApplicationSummary;
   onUpdateStatus?: (application: ApplicationSummary) => void;
+  onDelete?: (application: ApplicationSummary) => void;
 }
 
 export function ApplicationCard({
   application,
   onUpdateStatus,
+  onDelete,
 }: ApplicationCardProps) {
   const handleUpdateStatus = () => {
     if (onUpdateStatus) {
       onUpdateStatus(application);
+    }
+  };
+
+  const handleDelete = () => {
+    if (onDelete) {
+      onDelete(application);
     }
   };
 
@@ -82,7 +90,10 @@ export function ApplicationCard({
               <RefreshCw />
               Update Status
             </DropdownMenuItem>
-            <DropdownMenuItem className="text-destructive focus:bg-destructive focus:text-destructive-foreground group">
+            <DropdownMenuItem
+              onClick={handleDelete}
+              className="text-destructive focus:bg-destructive focus:text-destructive-foreground group"
+            >
               <Trash2 className="group-focus:text-destructive-foreground" />
               Delete
             </DropdownMenuItem>

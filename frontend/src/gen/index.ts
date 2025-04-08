@@ -1,5 +1,6 @@
 export type { ApplicationsApplicationPartialUpdateMutationKey } from './hooks/applicationsService/useApplicationsApplicationPartialUpdate.ts'
 export type { ApplicationsCreateFromJobUrlMutationKey } from './hooks/applicationsService/useApplicationsCreateFromJobUrl.ts'
+export type { ApplicationsDeleteApplicationMutationKey } from './hooks/applicationsService/useApplicationsDeleteApplication.ts'
 export type { ApplicationsGetAllowedStatusesForUpdateQueryKey } from './hooks/applicationsService/useApplicationsGetAllowedStatusesForUpdate.ts'
 export type { ApplicationsGetAllowedStatusesForUpdateSuspenseQueryKey } from './hooks/applicationsService/useApplicationsGetAllowedStatusesForUpdateSuspense.ts'
 export type { ApplicationsGetApplicationQueryKey } from './hooks/applicationsService/useApplicationsGetApplication.ts'
@@ -32,6 +33,13 @@ export type {
   ApplicationsCreateFromJobUrlMutationResponse,
   ApplicationsCreateFromJobUrlMutation,
 } from './types/ApplicationsCreateFromJobUrl.ts'
+export type {
+  ApplicationsDeleteApplicationPathParams,
+  ApplicationsDeleteApplication204,
+  ApplicationsDeleteApplication422,
+  ApplicationsDeleteApplicationMutationResponse,
+  ApplicationsDeleteApplicationMutation,
+} from './types/ApplicationsDeleteApplication.ts'
 export type {
   ApplicationsGetAllowedStatusesForUpdateQueryParams,
   ApplicationsGetAllowedStatusesForUpdate200,
@@ -118,6 +126,7 @@ export {
 } from './clients/applicationsClient/applicationsApplicationPartialUpdate.ts'
 export { applicationsClient } from './clients/applicationsClient/applicationsClient.ts'
 export { getApplicationsCreateFromJobUrlUrl, applicationsCreateFromJobUrl } from './clients/applicationsClient/applicationsCreateFromJobUrl.ts'
+export { getApplicationsDeleteApplicationUrl, applicationsDeleteApplication } from './clients/applicationsClient/applicationsDeleteApplication.ts'
 export {
   getApplicationsGetAllowedStatusesForUpdateUrl,
   applicationsGetAllowedStatusesForUpdate,
@@ -140,6 +149,7 @@ export {
   useApplicationsApplicationPartialUpdate,
 } from './hooks/applicationsService/useApplicationsApplicationPartialUpdate.ts'
 export { applicationsCreateFromJobUrlMutationKey, useApplicationsCreateFromJobUrl } from './hooks/applicationsService/useApplicationsCreateFromJobUrl.ts'
+export { applicationsDeleteApplicationMutationKey, useApplicationsDeleteApplication } from './hooks/applicationsService/useApplicationsDeleteApplication.ts'
 export {
   applicationsGetAllowedStatusesForUpdateQueryKey,
   applicationsGetAllowedStatusesForUpdateQueryOptions,

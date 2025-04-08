@@ -1,0 +1,149 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project Overview: HireMePls
+
+## Project Architecture
+
+This is a microservices-based job application tracking system with the following core components:
+
+1. Frontend Service (React SPA)
+   - Entry point: frontend/src/main.tsx
+   - Routing: TanStack Router with type-safe routes
+   - State Management: TanStack Query for server state
+   - Component Library: shadcn/ui (based on Radix UI primitives) with Tailwind styling
+   - Build System: Vite + SWC for fast development and production builds
+   - Type System: TypeScript with strict mode enabled
+
+2. Backend API Service (Python)
+   - Entry point: backend/packages/web/main.py
+   - Database: PostgreSQL 17 with SQLAlchemy ORM
+   - Migration System: Alembic for schema versioning
+   - Type Checking: MyPy (strict mode) + Pyright
+   - Code Quality: Ruff linter, pre-commit hooks
+
+3. Task Service (Python)
+   - Entry point: backend/packages/tasks/main.py
+   - Handles background processing and scheduled jobs
+   - Shares core library with main backend
+
+## Dependency Graph
+
+### Frontend Dependencies
+
+```
+react@19.0.0
+├── @tanstack/react-query@5.69.0
+├── @tanstack/react-router@1.114.23
+├── shadcn/ui (Radix UI-based components)
+│   ├── @radix-ui/* (UI primitives)
+│   └── class-variance-authority (component variants)
+└── tailwindcss@4.0.14
+```
+
+### Backend Dependencies
+
+```
+python>=3.13
+├── alembic (latest)
+├── sqlalchemy (latest)
+└── shared library package (./packages/lib)
+```
+
+## Code Organization
+
+### Frontend Structure
+
+```
+frontend/
+├── src/
+│   ├── components/     # Reusable UI components
+│   ├── features/       # Feature-specific components
+│   ├── api/           # API integration layer
+│   ├── types/         # TypeScript type definitions
+│   └── utils/         # Shared utilities
+```
+
+### Backend Structure
+
+```
+backend/
+├── packages/
+│   ├── web/          # Main API service
+│   │   ├── routes/   # API endpoints
+│   │   ├── models/   # Database models
+│   │   └── services/ # Business logic
+│   ├── tasks/        # Background task service
+│   └── lib/          # Shared library code
+└── alembic/          # Database migrations
+```
+
+## Inter-Service Communication
+
+1. Frontend → Backend API
+   - REST API calls via Axios
+   - OpenAPI schema at shared/openapi.json
+   - Type-safe API client generated via Kubb
+
+2. Backend API → Task Service
+   - Internal API communication
+   - Shared types via lib package
+   - PostgreSQL as message broker
+
+3. Database Access
+   - All services connect to PostgreSQL
+   - Connection string format: postgresql://admin:admin@postgres:5432/hiremepls
+   - Migration handling in Backend API service
+
+## Development Environment
+
+Container Configuration:
+
+```yaml
+Services:
+  frontend:    [PORT 8766] React development server
+  backend:     [PORT 8765] Main API service
+  tasks:       [PORT 8764] Background task service
+  postgres:    [PORT 5432] Database
+```
+
+## Type System
+
+1. Frontend
+   - TypeScript with strict mode
+   - Generated API types from OpenAPI
+   - Radix UI component types
+
+2. Backend
+   - Python type hints
+   - MyPy strict mode
+   - SQLAlchemy typed models
+
+## Testing and Quality
+
+1. Linting:
+   - Frontend: ESLint with TypeScript rules
+   - Backend: Ruff with strict configuration
+
+2. Type Checking:
+   - Frontend: TypeScript compiler
+   - Backend: MyPy + Pyright dual checking
+
+3. Pre-commit Hooks:
+   - Code formatting
+   - Type checking
+   - Linting
+
+## Environment Variables
+
+Backend Environment:
+
+- DATABASE_HOST: postgres
+- RUN_MIGRATIONS: true
+- CREATE_ADMIN_USER: true
+
+Frontend Environment:
+
+- VITE_API_URL: <http://localhost:8765>

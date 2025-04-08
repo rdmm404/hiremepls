@@ -93,3 +93,18 @@ def application_partial_update(
     app = existing_app.sqlmodel_update(app_updates.model_dump(exclude_unset=True))
 
     return application_repo.update_application(app)
+
+
+@router.delete("/{application_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_application(
+    application_id: int,
+    application_repo: ApplicationRepositoryDep,
+    user: CurrentUserDep,
+) -> None:
+    existing_app = application_repo.get_application_by_id_and_user(
+        application_id, cast(int, user.id)
+    )
+    if not existing_app:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
+    application_repo.delete_application(existing_app)
