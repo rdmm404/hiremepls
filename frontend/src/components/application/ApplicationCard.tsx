@@ -1,24 +1,10 @@
-import {
-  MapPin,
-  EllipsisVertical,
-  Pencil,
-  Trash2,
-  RefreshCw,
-  ExternalLink,
-  Dot,
-  Building,
-} from "lucide-react";
+import { MapPin, Dot, Building } from "lucide-react";
 
 import { ApplicationSummary } from "@/gen";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { ApplicationStatusBadge } from "./ApplicationStatusBadge";
+import { ApplicationActionsMenu } from "./ApplicationActionsMenu";
 
 interface ApplicationCardProps {
   application: ApplicationSummary;
@@ -71,34 +57,11 @@ export function ApplicationCard({
             </Link>
           </h3>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger className="focus:outline-none">
-            <EllipsisVertical className="size-4 text-muted-foreground hover:text-foreground" />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <Link to={application.job.job_url} target="_blank">
-              <DropdownMenuItem>
-                <ExternalLink />
-                Go to URL
-              </DropdownMenuItem>
-            </Link>
-            <DropdownMenuItem>
-              <Pencil />
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleUpdateStatus}>
-              <RefreshCw />
-              Update Status
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={handleDelete}
-              className="text-destructive focus:bg-destructive focus:text-destructive-foreground group"
-            >
-              <Trash2 className="group-focus:text-destructive-foreground" />
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <ApplicationActionsMenu
+          application={application}
+          onUpdateStatus={handleUpdateStatus}
+          onDelete={handleDelete}
+        />
       </div>
       <hr className="my-2" />
       <div className="flex gap-y-2 grow items-center flex-wrap">

@@ -112,6 +112,8 @@
   --destructive-foreground: oklch(91.4% 0.0137 314.75);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 10%);
+  --tooltip-background: oklch(21% 0.0188 280.49);
+  --tooltip-foreground: oklch(91.4% 0.0137 314.75);
   --ring: oklch(0.556 0 0);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
@@ -173,6 +175,8 @@
   --font-mono: var(--font-mono);
   --color-neon-blue: var(--neon-blue);
   --color-neon-pink: var(--neon-pink);
+  --color-tooltip: var(--tooltip-background);
+  --color-tooltip-foreground: var(--tooltip-foreground);
 }
 
 @layer base {
