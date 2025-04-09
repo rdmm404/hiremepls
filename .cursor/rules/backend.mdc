@@ -1,0 +1,55 @@
+---
+description: 
+globs: *.py,*.toml
+alwaysApply: false
+---
+# Backend guidelines
+
+## Code structure
+The backend is split into different packages located at backend/packages
+
+### Web
+This is a FastAPI web server, which the frontend talks to. It is split by different
+folders depending on the module. Each of these has the following files:
+    - service.py: this is where the business logic lives. it is also called by other modules.
+        modules can only interact with each other using services.
+    - api.py: The api routes. these mostly handle dependencies and call the module's service.
+        please make sure to use proper RESTful HTTP methods and status codes depending on each operation.
+    - deps.py: Fastapi dependencies for this module. other modules use these for example for a service.
+    - api_schema.py: requests and responses for the API. it is VERY important to have every request
+        and response properly typed and documented.
+Other files can be added if needed, for example the applications module has [status_flow.py](mdc:backend/packages/web/web/applications/status_flow.py)
+It is EXTREMELY important that every request is properly type hinted to have a nice openapi schema.
+The frontend uses this openapi schema to generate client code.
+
+### Tasks
+this is a service for the heavy and time consuming operations.
+it is in charge of things like web scraping and llm interaction.
+for each of these operations, we create a "task" under the tasks directory.
+Each of these tasks take parameters which are a pydantic model and return a result object.
+If anything involves heavy processing or takes a long time it should be moved to this service
+instead of the api.
+
+### Lib
+This is not a service, just code that is shared between all services.
+It contains mostly models and repositories.
+- models are SQLModel classes that define the database structure.
+- repositories are a layer of abstraction that takes care of database operations using sqlmodel
+there are also other things like the settings [settings.py](mdc:backend/packages/lib/lib/settings.py) or the tasks params and responses [tasks.py](mdc:backend/packages/lib/lib/tasks.py)](mdc:backend/packages/lib/lib/tasks.py)
+in general anything that needs to be shared between services needs to go here (especially types and models)
+
+## Coding style
+- Don't add docstrings unless it's something really complex
+- ALWAYS add type hints for every function and class
+- Always make sure that there are no Pyright errors
+- When adding type hints for built in types like dicts or lists, DON'T use the
+ones imported from typing. Instead use the builtin directly. Example: Use dict[str, str] instead
+of Dict[str, str]
+
+## Tech stack
+- Python 3.13 - Make sure to use all the latest features.
+- UV for package management
+- Fastapi for web servers and apis
+- SQLModel and sqlalchemy for database interaction
+- Pydantic for schema validation and design
+- Pyright for type validation

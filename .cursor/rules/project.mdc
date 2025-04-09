@@ -29,6 +29,11 @@ This is a microservices-based job application tracking system with the following
    - Handles background processing and scheduled jobs
    - Shares core library with main backend
 
+## General coding guidelines
+- Keep code clean and maintainable
+- Keep things simple
+- Do NOT add unnecessary comments
+
 ## Dependency Graph
 
 ### Frontend Dependencies
