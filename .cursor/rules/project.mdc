@@ -118,8 +118,7 @@ Services:
 
 2. Backend
    - Python type hints
-   - MyPy strict mode
-   - SQLAlchemy typed models
+   - SQLAlchemy typed models using SQLModel
 
 ## Testing and Quality
 
@@ -129,7 +128,7 @@ Services:
 
 2. Type Checking:
    - Frontend: TypeScript compiler
-   - Backend: MyPy + Pyright dual checking
+   - Backend: Pyright for linting errors
 
 3. Pre-commit Hooks:
    - Code formatting

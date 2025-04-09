@@ -8,6 +8,7 @@ alwaysApply: false
 The frontend is located at ./frontend, it's a React SPA
 
 ## Tech Stack
+- PNPM for package management
 - shadcn/ui component library
 - tailwind for CSS
 - tanstack router for routes
