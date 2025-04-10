@@ -92,11 +92,7 @@ export function ApplicationActionsMenu({
                     asChild={isExternalLink}
                   >
                     {isExternalLink ? (
-                      <Link
-                        to={action.url!}
-                        target="_blank"
-                        className="text-muted-foreground hover:text-foreground"
-                      >
+                      <Link to={action.url!} target="_blank">
                         <Icon className="size-4" />
                       </Link>
                     ) : (

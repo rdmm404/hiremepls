@@ -26,3 +26,4 @@ The design of the app aims to be minimalistic and simple, the idea is to avoid u
 - Don't try to add components to components/ui. These are only meant to be added by the shadcn cli.
 - When doing logic with business classes, utilize cn from [utils.ts](mdc:frontend/src/lib/utils.ts). Avoid using string concatenation or templated strings
     unless it's something really simple.
+- With tailwind, prefer using size-<val> instead of h-<val> y-<val>

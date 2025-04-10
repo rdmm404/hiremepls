@@ -135,6 +135,30 @@
   --neon-pink: oklch(75.46% 0.1831 346.81);
 }
 
+@theme {
+  --animate-collapse: collapse 0.1s ease-in-out;
+  --animate-expand: expand 0.1s ease-in-out;
+  --color-foo: red;
+
+  @keyframes expand {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-collapsible-content-height);
+    }
+  }
+
+  @keyframes collapse {
+    from {
+      height: var(--radix-collapsible-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
