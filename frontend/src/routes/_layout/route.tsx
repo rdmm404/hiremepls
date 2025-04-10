@@ -21,7 +21,7 @@ function AuthenticatedRoute() {
   }
   return (
     <SidebarProvider>
-      <div className="hidden sm:block">
+      <div className="hidden md:block">
         <AppSidebar currentUser={currentUser} />
       </div>
       <div className="size-full flex flex-col">

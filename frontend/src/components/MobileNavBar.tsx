@@ -6,7 +6,7 @@ export function MobileNavBar() {
   const navigationItems = useNavigationMenu();
 
   return (
-    <nav className="sm:hidden fixed bottom-0 left-0 right-0 h-16 bg-background border-t flex items-center justify-around px-4">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-sidebar border-t flex items-center justify-around gap-5 px-4">
       {navigationItems.map((item) => {
         return (
           <Link
@@ -18,7 +18,7 @@ export function MobileNavBar() {
               item.isActive && "text-foreground"
             )}
           >
-            <item.icon className="h-5 w-5" />
+            <item.icon className="size-5" />
             <span className="text-xs">{item.title}</span>
           </Link>
         );
