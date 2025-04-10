@@ -1,16 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Building2, MapPin, Clock, Dot } from "lucide-react";
+import { Building2, MapPin, Clock } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { toast } from "sonner";
+import { useRouter } from "@tanstack/react-router";
 
 import {
   useApplicationsGetApplicationSuspense,
   applicationsGetApplicationSuspenseQueryOptions,
   ApplicationStatusEnum,
-  useApplicationsGetAllowedStatusesForUpdate,
-  useApplicationsApplicationPartialUpdate,
-  useApplicationsDeleteApplication,
 } from "@/gen";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,22 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { ApplicationStatusBadge } from "@/components/application/ApplicationStatusBadge";
 import { ApplicationActionsMenu } from "@/components/application/ApplicationActionsMenu";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { useApplicationModals } from "@/contexts/ApplicationModalsContext";
 
 export const Route = createFileRoute("/_layout/applications/$applicationId")({
   component: ApplicationDetail,
@@ -54,79 +35,11 @@ function ApplicationDetail() {
   const {
     data: { applicationId },
   } = Route.useLoaderData();
-  const { data: application } =
+  const { data: application, refetch } =
     useApplicationsGetApplicationSuspense(applicationId);
   const { job } = application;
-
-  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [selectedStatus, setSelectedStatus] = useState<string>("");
-  const {
-    data: availableStatuses,
-    isLoading: isStatusQueryLoading,
-    isError: isStatusQueryError,
-  } = useApplicationsGetAllowedStatusesForUpdate(
-    {
-      status: application.status as ApplicationStatusEnum,
-    },
-    {
-      query: {
-        enabled: isStatusModalOpen,
-      },
-    }
-  );
-
-  const applicationUpdateMutation = useApplicationsApplicationPartialUpdate({
-    mutation: {
-      onSuccess: () => {
-        toast.success("Application status updated successfully");
-        setIsStatusModalOpen(false);
-      },
-      onError: (error) => {
-        toast.error(`Something went wrong`, {
-          description: error.response?.data.detail![0].msg,
-        });
-      },
-    },
-  });
-
-  const deleteApplicationMutation = useApplicationsDeleteApplication({
-    mutation: {
-      onSuccess: () => {
-        toast.success("Application deleted successfully");
-        setIsDeleteModalOpen(false);
-        // TODO: Navigate back to applications list
-      },
-      onError: (error) => {
-        toast.error("Failed to delete application", {
-          description: error.response?.data.detail![0].msg,
-        });
-      },
-    },
-  });
-
-  const handleStatusSubmit = () => {
-    if (application) {
-      applicationUpdateMutation.mutate({
-        application_id: application.id,
-        data: {
-          status:
-            ApplicationStatusEnum[
-              selectedStatus as keyof typeof ApplicationStatusEnum
-            ],
-        },
-      });
-    }
-  };
-
-  const handleConfirmDelete = () => {
-    if (application) {
-      deleteApplicationMutation.mutate({
-        application_id: application.id,
-      });
-    }
-  };
-
+  const { openStatusModal, openDeleteModal } = useApplicationModals();
+  const router = useRouter();
   const formattedDescription = job.job_description
     .split("\n\n")
     .map((paragraph, index) => (
@@ -137,7 +50,7 @@ function ApplicationDetail() {
 
   return (
     <div className="container mx-auto px-6">
-      <div className="space-y-4 my-6">
+      <div className="space-y-2 sm:space-y-4 mt-6">
         <div className="flex gap-4 items-start flex-wrap sm:items-center sm:justify-between">
           <h1 className="text-xl sm:text-3xl font-bold">{job.job_title}</h1>
           <ApplicationStatusBadge
@@ -146,7 +59,7 @@ function ApplicationDetail() {
           />
         </div>
 
-        <div className="flex flex-row justify-center sm:items-center sm:justify-between flex-wrap">
+        <div className="flex flex-col items-center gap-2 sm:flex-row justify-center sm:items-center sm:justify-between flex-wrap">
           <div className="flex flex-row items-center gap-4 text-muted-foreground flex-wrap">
             <ApplicationStatusBadge
               className="sm:hidden"
@@ -181,100 +94,18 @@ function ApplicationDetail() {
           </div>
           <ApplicationActionsMenu
             application={application}
-            onUpdateStatus={() => setIsStatusModalOpen(true)}
-            onDelete={() => setIsDeleteModalOpen(true)}
+            onUpdateStatus={() => openStatusModal(application, () => refetch())}
+            onDelete={() =>
+              openDeleteModal(application, () =>
+                router.navigate({ to: "/applications" })
+              )
+            }
             layout={"buttons"}
           />
         </div>
-
-        <Separator />
-
-        {/* Status Update Dialog */}
-        <Dialog open={isStatusModalOpen} onOpenChange={setIsStatusModalOpen}>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Update Application Status</DialogTitle>
-              <DialogDescription>
-                Update the status of your job application.
-              </DialogDescription>
-            </DialogHeader>
-            {isStatusQueryError ? (
-              <p>Something went deeply wrong :(</p>
-            ) : isStatusQueryLoading ? (
-              <p>Loading...</p>
-            ) : (
-              <div className="py-4">
-                {availableStatuses && availableStatuses.length > 0 && (
-                  <Select
-                    value={selectedStatus}
-                    onValueChange={setSelectedStatus}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select a status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {availableStatuses.map((status) => (
-                        <SelectItem key={status} value={status}>
-                          {status}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-                {!availableStatuses?.length && (
-                  <p>
-                    No further status updates can be done to this application.
-                  </p>
-                )}
-              </div>
-            )}
-            <DialogFooter>
-              <Button
-                variant="outline"
-                onClick={() => setIsStatusModalOpen(false)}
-              >
-                Cancel
-              </Button>
-              {!isStatusQueryError && !!availableStatuses?.length && (
-                <Button
-                  onClick={handleStatusSubmit}
-                  disabled={isStatusQueryLoading}
-                >
-                  Save
-                </Button>
-              )}
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-
-        {/* Delete Confirmation Dialog */}
-        <Dialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Delete Application</DialogTitle>
-              <DialogDescription>
-                Are you sure you want to delete this application? This action
-                cannot be undone.
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <Button
-                variant="outline"
-                onClick={() => setIsDeleteModalOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="destructive"
-                onClick={handleConfirmDelete}
-                disabled={deleteApplicationMutation.isPending}
-              >
-                Delete
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
       </div>
+
+      <Separator className="mt-2 mb-4" />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
@@ -336,28 +167,24 @@ function ApplicationDetail() {
                       <p>{application.interview_rounds}</p>
                     </div>
                   )}
-
                   {application.current_round !== null && (
                     <div>
                       <p className="text-sm font-medium mb-1">Current Round</p>
                       <p>{application.current_round}</p>
                     </div>
                   )}
-
                   {application.notes !== null && (
                     <div>
                       <p className="text-sm font-medium mb-1">Notes</p>
                       <p>{application.notes}</p>
                     </div>
                   )}
-
                   {application.fit !== null && (
                     <div>
                       <p className="text-sm font-medium mb-1">Fit</p>
                       <p>{application.fit}</p>
                     </div>
                   )}
-
                   {application.resume_used !== null && (
                     <div>
                       <p className="text-sm font-medium mb-1">Resume Used</p>

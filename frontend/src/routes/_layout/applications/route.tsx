@@ -1,4 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { ApplicationModalsProvider } from "@/contexts/ApplicationModalsContext";
 
 export const Route = createFileRoute("/_layout/applications")({
   component: RouteComponent,
@@ -8,5 +9,9 @@ export const Route = createFileRoute("/_layout/applications")({
 });
 
 function RouteComponent() {
-  return <Outlet />;
+  return (
+    <ApplicationModalsProvider>
+      <Outlet />
+    </ApplicationModalsProvider>
+  );
 }
