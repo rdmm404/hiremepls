@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 
 import {
-  useApplicationsListApplicationsSuspense,
+  useApplicationsListApplications,
   applicationsListApplicationsQueryOptions,
   type ApplicationsListApplicationsQueryParams,
 } from "@/gen";
@@ -16,16 +16,10 @@ const applicationListQueryParams: ApplicationsListApplicationsQueryParams = {
 
 export const Route = createFileRoute("/_layout/applications/")({
   component: ListApplications,
-  loader: ({ context }) => {
-    context.queryClient.ensureQueryData(
-      applicationsListApplicationsQueryOptions(applicationListQueryParams)
-    );
-  },
-  pendingComponent: () => <p>Loading...</p>,
 });
 
 function ListApplications() {
-  const { data, refetch } = useApplicationsListApplicationsSuspense(
+  const { data, refetch, isLoading } = useApplicationsListApplications(
     applicationListQueryParams
   );
   const { openStatusModal, openDeleteModal } = useApplicationModals();
@@ -41,20 +35,24 @@ function ListApplications() {
             </Link>
           </Button>
         </div>
-        <div className="w-full gap-3 grid grid-cols-1 @2xl:grid-cols-2 grow">
-          {data.data.map((app) => (
-            <ApplicationCard
-              application={app}
-              key={app.id}
-              onUpdateStatus={() => {
-                openStatusModal(app, () => refetch()); // TODO: consider not refetching the whole list on a single application update
-              }}
-              onDelete={() => {
-                openDeleteModal(app, () => refetch());
-              }}
-            />
-          ))}
-        </div>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="w-full gap-3 grid grid-cols-1 @2xl:grid-cols-2 grow">
+            {data?.data.map((app) => (
+              <ApplicationCard
+                application={app}
+                key={app.id}
+                onUpdateStatus={() => {
+                  openStatusModal(app, () => refetch()); // TODO: consider not refetching the whole list on a single application update
+                }}
+                onDelete={() => {
+                  openDeleteModal(app, () => refetch());
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
