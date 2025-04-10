@@ -1,19 +1,5 @@
-import {
-  Home,
-  Briefcase,
-  LucideIcon,
-  User2,
-  ChevronUp,
-  ChevronsRight,
-  ChevronsLeft,
-  Menu,
-} from "lucide-react";
-import {
-  Link,
-  ValidateLinkOptions,
-  useRouter,
-  useLocation,
-} from "@tanstack/react-router";
+import { User2, ChevronUp, ChevronsRight, ChevronsLeft } from "lucide-react";
+import { Link, useRouter } from "@tanstack/react-router";
 
 import {
   Sidebar,
@@ -36,9 +22,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { User, useAuthLogout } from "@/gen";
-import { Button } from "./ui/button";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
+import { useNavigationMenu } from "@/hooks/useNavigationMenu";
 
 interface UserDropdownProps {
   user: User;
@@ -89,53 +73,12 @@ function InlineSidebarTrigger() {
   );
 }
 
-export function MobileSidebarTrigger() {
-  const { toggleSidebar } = useSidebar();
-  const isMobile = useIsMobile();
-  return (
-    <Button
-      className={cn("fixed bottom-4 right-4", !isMobile && "hidden")}
-      variant={"outline"}
-      onClick={(e) => {
-        e.preventDefault();
-        toggleSidebar();
-      }}
-    >
-      <Menu />
-    </Button>
-  );
-}
-
-type SidebarItem = {
-  title: string;
-  icon: LucideIcon;
-  linkOptions: ValidateLinkOptions;
-};
-// Menu items.
-const items: SidebarItem[] = [
-  {
-    title: "Home",
-    icon: Home,
-    linkOptions: {
-      to: "/",
-    },
-  },
-  {
-    title: "Applications",
-    icon: Briefcase,
-    linkOptions: {
-      to: "/applications",
-    },
-  },
-];
-
 interface SidebarProps {
   currentUser?: User;
 }
 
 export function AppSidebar({ currentUser }: SidebarProps) {
-  const location = useLocation();
-  const isMobile = useIsMobile();
+  const navigationItems = useNavigationMenu();
   return (
     <Sidebar collapsible="icon" variant="sidebar">
       <SidebarHeader>
@@ -145,9 +88,7 @@ export function AppSidebar({ currentUser }: SidebarProps) {
               <h1 className="pl-2 py-2 font-bold text-xl group-data-[collapsible=icon]:hidden">
                 HireMePLS
               </h1>
-              <div className={cn(isMobile && "hidden")}>
-                <InlineSidebarTrigger />
-              </div>
+              <InlineSidebarTrigger />
             </div>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -156,11 +97,10 @@ export function AppSidebar({ currentUser }: SidebarProps) {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => {
-                const isActive = location.pathname === item.linkOptions.to;
+              {navigationItems.map((item) => {
                 return (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={isActive}>
+                    <SidebarMenuButton asChild isActive={item.isActive}>
                       <Link {...item.linkOptions}>
                         <item.icon />
                         <span>{item.title}</span>
