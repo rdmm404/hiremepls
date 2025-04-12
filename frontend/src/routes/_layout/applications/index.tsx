@@ -3,7 +3,6 @@ import { Plus } from "lucide-react";
 
 import {
   useApplicationsListApplications,
-  applicationsListApplicationsQueryOptions,
   type ApplicationsListApplicationsQueryParams,
 } from "@/gen";
 import { ApplicationCard } from "@/components/application/ApplicationCard";

@@ -1,4 +1,3 @@
-import type React from "react";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
