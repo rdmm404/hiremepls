@@ -224,6 +224,47 @@
         }
       }
     },
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Register",
+        "operationId": "auth-register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegistration"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/auth/login": {
       "post": {
         "tags": [
@@ -1224,6 +1265,19 @@
         ],
         "title": "PaginatedResponse[User]"
       },
+      "RegistrationResponse": {
+        "properties": {
+          "user_id": {
+            "type": "integer",
+            "title": "User Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "user_id"
+        ],
+        "title": "RegistrationResponse"
+      },
       "Token": {
         "properties": {
           "access_token": {
@@ -1416,6 +1470,44 @@
           "password"
         ],
         "title": "UserCreate"
+      },
+      "UserRegistration": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          },
+          "password_confirm": {
+            "type": "string",
+            "title": "Password Confirm"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Name",
+            "description": "User's first name"
+          },
+          "last_name": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Last Name",
+            "description": "User's last name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "password",
+          "password_confirm",
+          "name",
+          "last_name"
+        ],
+        "title": "UserRegistration"
       },
       "ValidationError": {
         "properties": {
