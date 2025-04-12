@@ -6,7 +6,7 @@ from loguru import logger
 
 
 class JobsFetcher:
-    MAX_ATTEMPTS = 10
+    MAX_ATTEMPTS = 1
 
     def _get_session(self) -> requests.AsyncSession:
         return requests.AsyncSession(impersonate="chrome")
@@ -16,13 +16,14 @@ class JobsFetcher:
 
         content = self._get_text_from_html(html)
 
-        if self._requires_javascript(html) or not success:
+        if self._requires_javascript(html) or not success or not content.strip():
             logger.info(f"JS is required for {url}, using zendriver")
             content = await self.get_html_with_zendriver(url, content)
 
         return content
 
     async def get_html_with_cffi(self, url: str) -> tuple[str, bool]:
+        # TODO: parse ld+json https://autodesk.wd1.myworkdayjobs.com/Ext/job/Toronto-ON-CAN/Software-Engineer--Back-End_25WD84869?src=JB-10065&source=LinkedIn
         async with self._get_session() as s:
             resp = await s.get(url)
 
@@ -48,7 +49,7 @@ class JobsFetcher:
             """,
             await_promise=True,
         )
-
+        await page.sleep(1)
         assert await self._wait_for_cloudflare(page), "Didn't pass cloudflare verification."
 
         attempts = 0
@@ -86,9 +87,19 @@ class JobsFetcher:
         return False
 
     async def _wait_for_cloudflare(self, page: zd.Tab) -> bool:
-        cloudflare_text = "Verifying you are human"
+        cloudflare_texts = [
+            "Verifying you are human",
+            "Additional Verification Required",
+            "Please wait",
+        ]
 
-        cloudflare_check = await page.find_element_by_text(cloudflare_text)
+        cloudflare_check = False
+        cloudflare_text_index = 0
+        for i, cloudflare_text in enumerate(cloudflare_texts):
+            cloudflare_check = await page.find_element_by_text(cloudflare_text)
+            if cloudflare_check:
+                cloudflare_text_index = i
+                break
 
         if cloudflare_check:
             logger.info("Cloudflare verification detected. waiting until done")
@@ -97,7 +108,9 @@ class JobsFetcher:
         while attempts < self.MAX_ATTEMPTS and cloudflare_check:
             attempts += 1
             logger.debug("Cloudflare still verifying")
-            cloudflare_check = await page.find_element_by_text(cloudflare_text)
+            cloudflare_check = await page.find_element_by_text(
+                cloudflare_texts[cloudflare_text_index]
+            )
             await page.sleep(1)
 
         if cloudflare_check:

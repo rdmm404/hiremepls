@@ -49,7 +49,7 @@ function ApplicationDetail() {
     ));
 
   return (
-    <div className="container mx-auto px-6 h-full">
+    <div className="container mx-auto px-10 h-full">
       <div className="space-y-2 sm:space-y-4 mt-6">
         <div className="flex gap-4 items-start flex-wrap sm:items-center sm:justify-between">
           <h1 className="text-xl sm:text-3xl font-bold">{job.job_title}</h1>
