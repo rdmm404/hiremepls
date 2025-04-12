@@ -1,8 +1,9 @@
 import { useTheme } from "next-themes"
 import { Toaster as Sonner, ToasterProps } from "sonner"
+import { CircleAlert } from "lucide-react";
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme()
+  const { theme = "system" } = useTheme();
 
   return (
     <Sonner
@@ -15,9 +16,14 @@ const Toaster = ({ ...props }: ToasterProps) => {
           "--normal-border": "var(--border)",
         } as React.CSSProperties
       }
+      icons={{
+        error: (
+          <CircleAlert strokeWidth={2} className="size-5 text-destructive" />
+        ),
+      }}
       {...props}
     />
-  )
-}
+  );
+};
 
 export { Toaster }
