@@ -1,0 +1,1 @@
+{"properties":{"user_id":{"type":"integer","title":"User Id"}},"type":"object","required":["user_id"],"title":"RegistrationResponse","x-readme-ref-name":"RegistrationResponse"}

@@ -51,6 +51,7 @@ export type {
   AuthLoginAccessTokenMutation,
 } from './AuthLoginAccessToken.ts'
 export type { AuthLogout200, AuthLogoutMutationResponse, AuthLogoutMutation } from './AuthLogout.ts'
+export type { AuthRegister200, AuthRegister422, AuthRegisterMutationRequest, AuthRegisterMutationResponse, AuthRegisterMutation } from './AuthRegister.ts'
 export type { BodyAuthLoginAccessToken } from './BodyAuthLoginAccessToken.ts'
 export type { Company } from './Company.ts'
 export type { Compensation } from './Compensation.ts'
@@ -71,10 +72,12 @@ export type { JobSummary } from './JobSummary.ts'
 export type { LibModelApplicationsApplication } from './LibModelApplicationsApplication.ts'
 export type { PaginatedResponseApplicationSummary } from './PaginatedResponseApplicationSummary.ts'
 export type { PaginatedResponseUser } from './PaginatedResponseUser.ts'
+export type { RegistrationResponse } from './RegistrationResponse.ts'
 export type { Token } from './Token.ts'
 export type { UpdateApplicationPartial } from './UpdateApplicationPartial.ts'
 export type { User } from './User.ts'
 export type { UserCreate } from './UserCreate.ts'
+export type { UserRegistration } from './UserRegistration.ts'
 export type {
   UsersCreateUser200,
   UsersCreateUser422,

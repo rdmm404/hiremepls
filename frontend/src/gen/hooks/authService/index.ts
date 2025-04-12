@@ -1,4 +1,6 @@
 export type { AuthLoginAccessTokenMutationKey } from './useAuthLoginAccessToken.ts'
 export type { AuthLogoutMutationKey } from './useAuthLogout.ts'
+export type { AuthRegisterMutationKey } from './useAuthRegister.ts'
 export { authLoginAccessTokenMutationKey, useAuthLoginAccessToken } from './useAuthLoginAccessToken.ts'
 export { authLogoutMutationKey, useAuthLogout } from './useAuthLogout.ts'
+export { authRegisterMutationKey, useAuthRegister } from './useAuthRegister.ts'

@@ -3,6 +3,7 @@ import {
   useRouter,
   Navigate,
   useLoaderData,
+  Link,
 } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -72,7 +73,7 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="flex items-center justify-center h-full">
+    <div className="flex items-center justify-center h-full p-4">
       <Form {...form}>
         <form
           noValidate
@@ -93,7 +94,12 @@ export default function LoginForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input type="email" placeholder="Email" {...field} />
+                    <Input
+                      type="email"
+                      placeholder="Email"
+                      autoFocus
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -130,6 +136,14 @@ export default function LoginForm() {
               "Login"
             )}
           </Button>
+          <div className="text-center text-sm">
+            <span className="text-muted-foreground">
+              Don't have an account?{" "}
+            </span>
+            <Link to="/signup" className="text-primary hover:underline">
+              Sign up
+            </Link>
+          </div>
         </form>
       </Form>
     </div>

@@ -3,7 +3,8 @@
 
 import { authLoginAccessToken } from './authLoginAccessToken.ts'
 import { authLogout } from './authLogout.ts'
+import { authRegister } from './authRegister.ts'
 
 export function authClient() {
-  return { authLoginAccessToken, authLogout }
+  return { authRegister, authLoginAccessToken, authLogout }
 }
