@@ -28,7 +28,7 @@ function AuthenticatedRoute() {
         <div className="hidden sm:block p-4">
           <Breadcrumbs />
         </div>
-        <div className="w-full grow flex flex-col items-center justify-center pb-16 sm:pb-0 @container">
+        <div className="w-full grow flex flex-col items-center justify-center pb-20 sm:pb-0 @container">
           <Outlet />
         </div>
         <MobileNavBar />
