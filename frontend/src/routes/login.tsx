@@ -80,7 +80,7 @@ export default function LoginForm() {
           onSubmit={form.handleSubmit((data) => {
             loginMutation.mutate({
               data: {
-                username: data.username,
+                username: data.username.trim(),
                 password: data.password,
               },
             });

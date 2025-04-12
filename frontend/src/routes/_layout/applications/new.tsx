@@ -81,25 +81,31 @@ function CreateApplicationWithUrl() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-        <div className="flex flex-col px-4 @lg:flex-row gap-2 @lg:px-0 w-full justify-center items-center">
-          <FormField
-            control={form.control}
-            name="url"
-            render={({ field }) => (
-              <FormItem className="w-full max-w-90">
-                <FormControl>
-                  <Input
-                    type="url"
-                    placeholder="Enter the job description url"
-                    autoFocus
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      <form
+        noValidate
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="w-full"
+      >
+        <div className="flex flex-col px-4 @lg:flex-row gap-2 @lg:px-0 w-full justify-center items-start">
+          <div className="w-full max-w-90">
+            <FormField
+              control={form.control}
+              name="url"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="url"
+                      placeholder="Enter the job description url"
+                      autoFocus
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <Button
             type="submit"
             disabled={mutation.isPending}

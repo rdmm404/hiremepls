@@ -76,7 +76,7 @@ export default function RegisterForm() {
           description:
             "Your account has been created successfully. Let's start tracking those job applications!",
         });
-        router.navigate({ to: "/" });
+        router.navigate({ to: "/applications/new" });
       },
       onError: (error) => {
         const detail = error.response?.data?.detail;
@@ -103,7 +103,12 @@ export default function RegisterForm() {
           noValidate
           onSubmit={form.handleSubmit((data) => {
             registerMutation.mutate({
-              data,
+              data: {
+                ...data,
+                email: data.email.trim(),
+                name: data.name.trim(),
+                last_name: data.last_name.trim(),
+              },
             });
           })}
           className="w-full max-w-sm p-6 space-y-6 rounded-lg border border-foreground/10"
