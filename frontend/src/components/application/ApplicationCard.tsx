@@ -69,13 +69,11 @@ export function ApplicationCard({
         <span className="inline-flex gap-1 items-center justify-end text-sm">
           <MapPin className="size-4" /> {application.job.location}
         </span>
-        {application.job.modality.map((modality) => (
-          <div key={modality} className="inline-flex">
-            <span className="inline-flex gap-1 items-center justify-end text-sm capitalize">
-              <Building className="size-4" /> {modality.replace("_", " ")}
-            </span>
-          </div>
-        ))}
+        {application.job.modality.length > 0 && (
+          <span className="inline-flex gap-1 items-center justify-end text-sm capitalize">
+            <Building className="size-4" /> {application.job.modality.join("/")}
+          </span>
+        )}
       </div>
     </div>
   );

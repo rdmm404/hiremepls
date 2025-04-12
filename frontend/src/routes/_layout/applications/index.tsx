@@ -26,8 +26,8 @@ function ListApplications() {
 
   return (
     <>
-      <div className="w-full max-h-full @3xl:w-3/4 p-5 @3xl:p-0 max-w-4xl flex flex-col">
-        <div className="w-full flex justify-between mb-3 md:mb-6 px-1 items-center">
+      <div className="w-full h-full @3xl:w-3/4 py-10 px-5 @3xl:p-0 max-w-4xl flex flex-col">
+        <div className="w-full flex justify-between py-3 md:py-6 items-center">
           <h1 className="text-xl md:text-3xl">My applications</h1>
           <Button size={"icon"} asChild>
             <Link to={"/applications/new"}>
@@ -35,24 +35,34 @@ function ListApplications() {
             </Link>
           </Button>
         </div>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <div className="w-full gap-3 grid grid-cols-1 @2xl:grid-cols-2 grow">
-            {data?.data.map((app) => (
-              <ApplicationCard
-                application={app}
-                key={app.id}
-                onUpdateStatus={() => {
-                  openStatusModal(app, () => refetch()); // TODO: consider not refetching the whole list on a single application update
-                }}
-                onDelete={() => {
-                  openDeleteModal(app, () => refetch());
-                }}
-              />
-            ))}
-          </div>
-        )}
+        <div className="w-full h-full flex items-center justify-center">
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : data?.data.length === 0 ? (
+            <p className="text-center">
+              No applications found.{" "}
+              <Link to={"/applications/new"} className="underline text-primary">
+                Create one
+              </Link>{" "}
+              to get started.
+            </p>
+          ) : (
+            <div className="gap-3 grid grid-cols-1 @2xl:grid-cols-2 grow">
+              {data?.data.map((app) => (
+                <ApplicationCard
+                  application={app}
+                  key={app.id}
+                  onUpdateStatus={() => {
+                    openStatusModal(app, () => refetch()); // TODO: consider not refetching the whole list on a single application update
+                  }}
+                  onDelete={() => {
+                    openDeleteModal(app, () => refetch());
+                  }}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
