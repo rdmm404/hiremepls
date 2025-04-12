@@ -28,7 +28,7 @@ function ListApplications() {
     <>
       <div className="w-full h-full @3xl:w-3/4 py-10 px-5 @3xl:p-0 max-w-4xl flex flex-col">
         <div className="w-full flex justify-between py-3 md:py-6 items-center">
-          <h1 className="text-xl md:text-3xl">My applications</h1>
+          <h1 className="text-xl md:text-3xl">Your applications</h1>
           <Button size={"icon"} asChild>
             <Link to={"/applications/new"}>
               <Plus className="size-4 md:size-5" />
@@ -40,8 +40,11 @@ function ListApplications() {
             <p>Loading...</p>
           ) : data?.data.length === 0 ? (
             <p className="text-center">
-              No applications found.{" "}
-              <Link to={"/applications/new"} className="underline text-primary">
+              You don't have any applications yet.{" "}
+              <Link
+                to={"/applications/new"}
+                className="hover:underline text-primary"
+              >
                 Create one
               </Link>{" "}
               to get started.

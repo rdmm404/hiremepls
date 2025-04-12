@@ -23,6 +23,7 @@ import {
 
 import { User, useAuthLogout } from "@/gen";
 import { useNavigationMenu } from "@/hooks/useNavigationMenu";
+import { cn } from "@/lib/utils";
 
 interface UserDropdownProps {
   user: User;
@@ -35,19 +36,23 @@ function UserDropdown({ user }: UserDropdownProps) {
       onSuccess: () => router.navigate({ to: "/login" }),
     },
   });
+  const { open } = useSidebar();
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <SidebarMenuButton>
-              <User2 /> {user.email}
+            <SidebarMenuButton className="w-full">
+              <User2 />
+              <span className="ml-2 max-w-5/6 truncate">
+                {user.name} {user.last_name[0].toUpperCase()}.
+              </span>
               <ChevronUp className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            side="top"
-            className="w-[--radix-popper-anchor-width]"
+            side={open ? "top" : "right"}
+            className={cn(open && "w-60")}
           >
             <DropdownMenuItem onClick={() => logoutMutation.mutate(undefined)}>
               <span>Sign out</span>

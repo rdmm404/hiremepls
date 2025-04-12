@@ -1,12 +1,41 @@
 import type React from "react";
-import { useState } from "react";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useApplicationsCreateFromJobUrl } from "@/gen";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+
+const formSchema = z.object({
+  url: z
+    .string()
+    .min(1, "URL is required")
+    .url("Please enter a valid URL")
+    .refine(
+      (url) => {
+        try {
+          const parsedUrl = new URL(url);
+          return parsedUrl.protocol === "https:";
+        } catch {
+          return false;
+        }
+      },
+      {
+        message: "Please enter a valid HTTP or HTTPS URL",
+      }
+    ),
+});
 
 export const Route = createFileRoute("/_layout/applications/new")({
   component: CreateApplicationWithUrl,
@@ -17,6 +46,13 @@ export const Route = createFileRoute("/_layout/applications/new")({
 
 function CreateApplicationWithUrl() {
   const router = useRouter();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      url: "",
+    },
+  });
+
   const mutation = useApplicationsCreateFromJobUrl({
     mutation: {
       onSuccess: (data) => {
@@ -30,7 +66,7 @@ function CreateApplicationWithUrl() {
               }),
           },
         });
-
+        form.reset();
       },
       onError: (error) =>
         toast.error(`Something went wrong`, {
@@ -38,31 +74,42 @@ function CreateApplicationWithUrl() {
         }),
     },
   });
-  const [url, setUrl] = useState("");
 
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    mutation.mutate({ data: { url } });
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    mutation.mutate({ data: { url: data.url } });
   };
 
   return (
-    <form onSubmit={handleFormSubmit} className="w-full">
-      <div className="flex flex-col px-4 @lg:flex-row gap-2 @lg:px-0 w-full justify-center items-center">
-        <Input
-          type="text"
-          className="w-full max-w-90"
-          placeholder="Enter the job description url"
-          id="url"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-        />
-        <Button
-          disabled={mutation.isPending}
-          className="max-w-90 @max-lg:w-full"
-        >
-          {mutation.isPending && <Loader2 className="animate-spin" />}Submit
-        </Button>
-      </div>
-    </form>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+        <div className="flex flex-col px-4 @lg:flex-row gap-2 @lg:px-0 w-full justify-center items-center">
+          <FormField
+            control={form.control}
+            name="url"
+            render={({ field }) => (
+              <FormItem className="w-full max-w-90">
+                <FormControl>
+                  <Input
+                    type="url"
+                    placeholder="Enter the job description url"
+                    autoFocus
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button
+            type="submit"
+            disabled={mutation.isPending}
+            className="max-w-90 @max-lg:w-full"
+          >
+            {mutation.isPending && <Loader2 className="mr-2 animate-spin" />}
+            Submit
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 }
