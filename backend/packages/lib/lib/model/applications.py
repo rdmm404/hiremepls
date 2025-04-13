@@ -25,6 +25,7 @@ class ApplicationStatus(StrEnum):
     HIRED = "Hired"
     REJECTED = "Rejected"
     GHOSTED = "Ghosted"
+    POSITION_CLOSED = "Position Closed"
 
 
 class ApplicationBase(SQLModel):

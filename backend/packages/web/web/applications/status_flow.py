@@ -1,22 +1,25 @@
 from lib.model import ApplicationStatus
 
 APPLICATION_STATUS_FLOW: dict[ApplicationStatus, tuple[ApplicationStatus, ...]] = {
-    ApplicationStatus.PENDING: (ApplicationStatus.APPLIED,),
+    ApplicationStatus.PENDING: (ApplicationStatus.APPLIED, ApplicationStatus.POSITION_CLOSED),
     ApplicationStatus.OFFER_RECEIVED: (
         ApplicationStatus.HIRED,
         ApplicationStatus.OFFER_DECLINED,
         ApplicationStatus.NEGOTIATING,
         ApplicationStatus.REJECTED,
         ApplicationStatus.GHOSTED,
+        ApplicationStatus.POSITION_CLOSED,
     ),
     ApplicationStatus.NEGOTIATING: (
         ApplicationStatus.HIRED,
         ApplicationStatus.OFFER_DECLINED,
         ApplicationStatus.GHOSTED,
+        ApplicationStatus.POSITION_CLOSED,
     ),
     ApplicationStatus.HIRED: (),
     ApplicationStatus.OFFER_DECLINED: (),
     ApplicationStatus.REJECTED: (),
+    ApplicationStatus.POSITION_CLOSED: (),
 }
 
 

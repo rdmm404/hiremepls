@@ -467,6 +467,33 @@
         }
       }
     },
+    "/applications/stats": {
+      "get": {
+        "tags": [
+          "applications"
+        ],
+        "summary": "Get Application Stats",
+        "description": "Get overview statistics of user's applications for the dashboard.\nIncludes total count, status breakdowns, and other relevant metrics.",
+        "operationId": "applications-get_application_stats",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStats"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Oauth2PasswordBearerFromCookies": []
+          }
+        ]
+      }
+    },
     "/applications/{application_id}": {
       "get": {
         "tags": [
@@ -690,6 +717,68 @@
   },
   "components": {
     "schemas": {
+      "ApplicationAverages": {
+        "properties": {
+          "daily": {
+            "type": "number",
+            "title": "Daily"
+          },
+          "weekly": {
+            "type": "number",
+            "title": "Weekly"
+          },
+          "monthly": {
+            "type": "number",
+            "title": "Monthly"
+          }
+        },
+        "type": "object",
+        "required": [
+          "daily",
+          "weekly",
+          "monthly"
+        ],
+        "title": "ApplicationAverages"
+      },
+      "ApplicationStats": {
+        "properties": {
+          "total_applications": {
+            "type": "integer",
+            "title": "Total Applications"
+          },
+          "status_counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "$ref": "#/components/schemas/ApplicationStatus"
+            },
+            "type": "object",
+            "title": "Status Counts"
+          },
+          "recent_applications_count": {
+            "type": "integer",
+            "title": "Recent Applications Count"
+          },
+          "active_applications_count": {
+            "type": "integer",
+            "title": "Active Applications Count"
+          },
+          "averages": {
+            "$ref": "#/components/schemas/ApplicationAverages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "total_applications",
+          "status_counts",
+          "recent_applications_count",
+          "active_applications_count",
+          "averages"
+        ],
+        "title": "ApplicationStats",
+        "description": "Statistics about a user's applications."
+      },
       "ApplicationStatus": {
         "type": "string",
         "enum": [
@@ -704,7 +793,8 @@
           "Offer Declined",
           "Hired",
           "Rejected",
-          "Ghosted"
+          "Ghosted",
+          "Position Closed"
         ],
         "title": "ApplicationStatus"
       },

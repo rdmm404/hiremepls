@@ -11,6 +11,7 @@ from web.applications.api_schema import (
     CreateApplicationByJobUrl,
     ApplicationSummary,
     UpdateApplicationPartial,
+    ApplicationStats,
 )
 from lib.model import Application as ApplicationDB, ApplicationStatus
 from web.common.pagination import PaginatedResponse
@@ -38,6 +39,30 @@ async def create_from_job_url(
 @router.get("/status_flow")
 def get_allowed_statuses_for_update(status: ApplicationStatus) -> list[ApplicationStatus]:
     return get_available_statuses(status)
+
+
+@router.get("/stats", response_model=ApplicationStats)
+async def get_application_stats(
+    application_repo: ApplicationRepositoryDep,
+    user: CurrentUserDep,
+) -> ApplicationStats:
+    """
+    Get overview statistics of user's applications for the dashboard.
+    Includes total count, status breakdowns, and other relevant metrics.
+    """
+    user_id = cast(int, user.id)
+    total = application_repo.count_all_user_applications(user_id, include_pending=False)
+    averages = application_repo.get_application_averages(user_id, total)
+
+    return ApplicationStats(
+        total_applications=total,
+        status_counts=application_repo.get_application_count_per_status(
+            user_id, include_pending=False
+        ),
+        recent_applications_count=application_repo.get_application_count_in_days(user_id, days=7),
+        active_applications_count=application_repo.get_active_applications_count(user_id),
+        averages=averages,
+    )
 
 
 @router.get("/{application_id}", response_model=Application)

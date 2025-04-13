@@ -39,7 +39,7 @@ there are also other things like the settings [settings.py](mdc:backend/packages
 in general anything that needs to be shared between services needs to go here (especially types and models)
 
 ## Coding style
-- Don't add docstrings unless it's something really complex
+- Don't add docstrings unless it's something really complex. THIS IS VERY IMPORTANT. DON'T ADD DOCSTRINGS UNLESS REALLY NECESSARY.
 - ALWAYS add type hints for every function and class
 - Always make sure that there are no Pyright errors
 - When adding type hints for built in types like dicts or lists, DON'T use the
