@@ -7,6 +7,7 @@ export {
   applicationsGetAllowedStatusesForUpdate,
 } from './applicationsClient/applicationsGetAllowedStatusesForUpdate.ts'
 export { getApplicationsGetApplicationUrl, applicationsGetApplication } from './applicationsClient/applicationsGetApplication.ts'
+export { getApplicationsGetApplicationStatsUrl, applicationsGetApplicationStats } from './applicationsClient/applicationsGetApplicationStats.ts'
 export { getApplicationsListApplicationsUrl, applicationsListApplications } from './applicationsClient/applicationsListApplications.ts'
 export { authClient } from './authClient/authClient.ts'
 export { getAuthLoginAccessTokenUrl, authLoginAccessToken } from './authClient/authLoginAccessToken.ts'

@@ -4,6 +4,8 @@ export type { ApplicationsDeleteApplicationMutationKey } from './hooks/applicati
 export type { ApplicationsGetAllowedStatusesForUpdateQueryKey } from './hooks/applicationsService/useApplicationsGetAllowedStatusesForUpdate.ts'
 export type { ApplicationsGetAllowedStatusesForUpdateSuspenseQueryKey } from './hooks/applicationsService/useApplicationsGetAllowedStatusesForUpdateSuspense.ts'
 export type { ApplicationsGetApplicationQueryKey } from './hooks/applicationsService/useApplicationsGetApplication.ts'
+export type { ApplicationsGetApplicationStatsQueryKey } from './hooks/applicationsService/useApplicationsGetApplicationStats.ts'
+export type { ApplicationsGetApplicationStatsSuspenseQueryKey } from './hooks/applicationsService/useApplicationsGetApplicationStatsSuspense.ts'
 export type { ApplicationsGetApplicationSuspenseQueryKey } from './hooks/applicationsService/useApplicationsGetApplicationSuspense.ts'
 export type { ApplicationsListApplicationsQueryKey } from './hooks/applicationsService/useApplicationsListApplications.ts'
 export type { ApplicationsListApplicationsSuspenseQueryKey } from './hooks/applicationsService/useApplicationsListApplicationsSuspense.ts'
@@ -19,6 +21,7 @@ export type { UsersGetUserQueryKey } from './hooks/usersService/useUsersGetUser.
 export type { UsersGetUserSuspenseQueryKey } from './hooks/usersService/useUsersGetUserSuspense.ts'
 export type { UsersListUsersQueryKey } from './hooks/usersService/useUsersListUsers.ts'
 export type { UsersListUsersSuspenseQueryKey } from './hooks/usersService/useUsersListUsersSuspense.ts'
+export type { ApplicationAverages } from './types/ApplicationAverages.ts'
 export type {
   ApplicationsApplicationPartialUpdatePathParams,
   ApplicationsApplicationPartialUpdate200,
@@ -56,12 +59,18 @@ export type {
   ApplicationsGetApplicationQuery,
 } from './types/ApplicationsGetApplication.ts'
 export type {
+  ApplicationsGetApplicationStats200,
+  ApplicationsGetApplicationStatsQueryResponse,
+  ApplicationsGetApplicationStatsQuery,
+} from './types/ApplicationsGetApplicationStats.ts'
+export type {
   ApplicationsListApplicationsQueryParams,
   ApplicationsListApplications200,
   ApplicationsListApplications422,
   ApplicationsListApplicationsQueryResponse,
   ApplicationsListApplicationsQuery,
 } from './types/ApplicationsListApplications.ts'
+export type { ApplicationStats } from './types/ApplicationStats.ts'
 export type { ApplicationStatus } from './types/ApplicationStatus.ts'
 export type { ApplicationSummary } from './types/ApplicationSummary.ts'
 export type {
@@ -136,6 +145,7 @@ export {
   applicationsGetAllowedStatusesForUpdate,
 } from './clients/applicationsClient/applicationsGetAllowedStatusesForUpdate.ts'
 export { getApplicationsGetApplicationUrl, applicationsGetApplication } from './clients/applicationsClient/applicationsGetApplication.ts'
+export { getApplicationsGetApplicationStatsUrl, applicationsGetApplicationStats } from './clients/applicationsClient/applicationsGetApplicationStats.ts'
 export { getApplicationsListApplicationsUrl, applicationsListApplications } from './clients/applicationsClient/applicationsListApplications.ts'
 export { authClient } from './clients/authClient/authClient.ts'
 export { getAuthLoginAccessTokenUrl, authLoginAccessToken } from './clients/authClient/authLoginAccessToken.ts'
@@ -170,6 +180,16 @@ export {
   applicationsGetApplicationQueryOptions,
   useApplicationsGetApplication,
 } from './hooks/applicationsService/useApplicationsGetApplication.ts'
+export {
+  applicationsGetApplicationStatsQueryKey,
+  applicationsGetApplicationStatsQueryOptions,
+  useApplicationsGetApplicationStats,
+} from './hooks/applicationsService/useApplicationsGetApplicationStats.ts'
+export {
+  applicationsGetApplicationStatsSuspenseQueryKey,
+  applicationsGetApplicationStatsSuspenseQueryOptions,
+  useApplicationsGetApplicationStatsSuspense,
+} from './hooks/applicationsService/useApplicationsGetApplicationStatsSuspense.ts'
 export {
   applicationsGetApplicationSuspenseQueryKey,
   applicationsGetApplicationSuspenseQueryOptions,

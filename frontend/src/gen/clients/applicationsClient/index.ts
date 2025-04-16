@@ -4,4 +4,5 @@ export { getApplicationsCreateFromJobUrlUrl, applicationsCreateFromJobUrl } from
 export { getApplicationsDeleteApplicationUrl, applicationsDeleteApplication } from './applicationsDeleteApplication.ts'
 export { getApplicationsGetAllowedStatusesForUpdateUrl, applicationsGetAllowedStatusesForUpdate } from './applicationsGetAllowedStatusesForUpdate.ts'
 export { getApplicationsGetApplicationUrl, applicationsGetApplication } from './applicationsGetApplication.ts'
+export { getApplicationsGetApplicationStatsUrl, applicationsGetApplicationStats } from './applicationsGetApplicationStats.ts'
 export { getApplicationsListApplicationsUrl, applicationsListApplications } from './applicationsListApplications.ts'

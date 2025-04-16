@@ -1,0 +1,1 @@
+{"properties":{"daily":{"type":"number","title":"Daily"},"weekly":{"type":"number","title":"Weekly"},"monthly":{"type":"number","title":"Monthly"}},"type":"object","required":["daily","weekly","monthly"],"title":"ApplicationAverages","x-readme-ref-name":"ApplicationAverages"}

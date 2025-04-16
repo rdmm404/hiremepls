@@ -11,6 +11,7 @@ export enum ApplicationStatusEnum {
   'Hired' = 'Hired',
   'Rejected' = 'Rejected',
   'Ghosted' = 'Ghosted',
+  'Position Closed' = 'Position Closed',
 }
 
 export type ApplicationStatus = ApplicationStatusEnum

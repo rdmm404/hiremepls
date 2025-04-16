@@ -1,3 +1,4 @@
+export type { ApplicationAverages } from './ApplicationAverages.ts'
 export type {
   ApplicationsApplicationPartialUpdatePathParams,
   ApplicationsApplicationPartialUpdate200,
@@ -35,12 +36,18 @@ export type {
   ApplicationsGetApplicationQuery,
 } from './ApplicationsGetApplication.ts'
 export type {
+  ApplicationsGetApplicationStats200,
+  ApplicationsGetApplicationStatsQueryResponse,
+  ApplicationsGetApplicationStatsQuery,
+} from './ApplicationsGetApplicationStats.ts'
+export type {
   ApplicationsListApplicationsQueryParams,
   ApplicationsListApplications200,
   ApplicationsListApplications422,
   ApplicationsListApplicationsQueryResponse,
   ApplicationsListApplicationsQuery,
 } from './ApplicationsListApplications.ts'
+export type { ApplicationStats } from './ApplicationStats.ts'
 export type { ApplicationStatus } from './ApplicationStatus.ts'
 export type { ApplicationSummary } from './ApplicationSummary.ts'
 export type {

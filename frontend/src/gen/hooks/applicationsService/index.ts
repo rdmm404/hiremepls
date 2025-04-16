@@ -4,6 +4,8 @@ export type { ApplicationsDeleteApplicationMutationKey } from './useApplications
 export type { ApplicationsGetAllowedStatusesForUpdateQueryKey } from './useApplicationsGetAllowedStatusesForUpdate.ts'
 export type { ApplicationsGetAllowedStatusesForUpdateSuspenseQueryKey } from './useApplicationsGetAllowedStatusesForUpdateSuspense.ts'
 export type { ApplicationsGetApplicationQueryKey } from './useApplicationsGetApplication.ts'
+export type { ApplicationsGetApplicationStatsQueryKey } from './useApplicationsGetApplicationStats.ts'
+export type { ApplicationsGetApplicationStatsSuspenseQueryKey } from './useApplicationsGetApplicationStatsSuspense.ts'
 export type { ApplicationsGetApplicationSuspenseQueryKey } from './useApplicationsGetApplicationSuspense.ts'
 export type { ApplicationsListApplicationsQueryKey } from './useApplicationsListApplications.ts'
 export type { ApplicationsListApplicationsSuspenseQueryKey } from './useApplicationsListApplicationsSuspense.ts'
@@ -21,6 +23,16 @@ export {
   useApplicationsGetAllowedStatusesForUpdateSuspense,
 } from './useApplicationsGetAllowedStatusesForUpdateSuspense.ts'
 export { applicationsGetApplicationQueryKey, applicationsGetApplicationQueryOptions, useApplicationsGetApplication } from './useApplicationsGetApplication.ts'
+export {
+  applicationsGetApplicationStatsQueryKey,
+  applicationsGetApplicationStatsQueryOptions,
+  useApplicationsGetApplicationStats,
+} from './useApplicationsGetApplicationStats.ts'
+export {
+  applicationsGetApplicationStatsSuspenseQueryKey,
+  applicationsGetApplicationStatsSuspenseQueryOptions,
+  useApplicationsGetApplicationStatsSuspense,
+} from './useApplicationsGetApplicationStatsSuspense.ts'
 export {
   applicationsGetApplicationSuspenseQueryKey,
   applicationsGetApplicationSuspenseQueryOptions,
