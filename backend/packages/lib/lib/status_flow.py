@@ -1,4 +1,21 @@
-from lib.model import ApplicationStatus
+from lib.model.applications import ApplicationStatus
+
+# Order from most to least relevant/active
+STATUS_ORDER = (
+    ApplicationStatus.HIRED,
+    ApplicationStatus.OFFER_RECEIVED,
+    ApplicationStatus.NEGOTIATING,
+    ApplicationStatus.INTERVIEWING,
+    ApplicationStatus.ASSESSMENT,
+    ApplicationStatus.SCREENING,
+    ApplicationStatus.RECEIVED,
+    ApplicationStatus.APPLIED,
+    ApplicationStatus.PENDING,
+    ApplicationStatus.OFFER_DECLINED,
+    ApplicationStatus.REJECTED,
+    ApplicationStatus.GHOSTED,
+    ApplicationStatus.POSITION_CLOSED,
+)
 
 APPLICATION_STATUS_FLOW: dict[ApplicationStatus, tuple[ApplicationStatus, ...]] = {
     ApplicationStatus.PENDING: (ApplicationStatus.APPLIED, ApplicationStatus.POSITION_CLOSED),

@@ -1,10 +1,12 @@
-from sqlmodel import select, func, col
+from sqlmodel import select, func, col, case, inspect, Session
+from sqlalchemy.orm import joinedload
 from collections.abc import Sequence
 from datetime import datetime, timedelta, UTC
 from typing import TypedDict
 
-from lib.repository.base import BaseRepository
-from lib.model import Application, ApplicationStatus
+from lib.repository.base import BaseRepository, OrderBy
+from lib.model.applications import Application, ApplicationStatus
+from lib.status_flow import STATUS_ORDER
 
 
 class ApplicationAverages(TypedDict):
@@ -14,6 +16,10 @@ class ApplicationAverages(TypedDict):
 
 
 class ApplicationRepository(BaseRepository):
+    def __init__(self, session: Session) -> None:
+        super().__init__(session)
+        self.sortable_columns = inspect(Application).columns.keys()
+
     def create_application(self, application: Application) -> Application:
         self.session.add(application)
         self.session.commit()
@@ -29,11 +35,41 @@ class ApplicationRepository(BaseRepository):
         return self.session.exec(query).first()
 
     def get_all_user_applications(
-        self, user_id: int, limit: int, offset: int
+        self,
+        user_id: int,
+        limit: int,
+        offset: int,
+        order_by: OrderBy | None = None,
     ) -> Sequence[Application]:
         query = (
-            select(Application).where(Application.user_id == user_id).limit(limit).offset(offset)
+            select(Application)
+            .options(
+                joinedload(Application.job, innerjoin=True),  # type: ignore
+            )
+            .where(Application.user_id == user_id)
         )
+        order_by = order_by or []
+        for column, order in order_by:
+            if column not in self.sortable_columns:
+                raise ValueError(f"Invalid column: {column}")
+
+            if column == "status":
+                # Create a CASE statement for status ordering based on STATUS_ORDER
+                status_order_case = case(
+                    *[(Application.status == status, i) for i, status in enumerate(STATUS_ORDER)],
+                    else_=len(STATUS_ORDER),
+                )
+                query = query.order_by(
+                    status_order_case.desc() if order == "desc" else status_order_case.asc()
+                )
+            else:
+                # For other fields, use direct column ordering
+                order_column = getattr(Application, column)
+                query = query.order_by(
+                    order_column.desc() if order == "desc" else order_column.asc()
+                )
+
+        query = query.limit(limit).offset(offset)
         return self.session.exec(query).all()
 
     def count_all_user_applications(self, user_id: int, include_pending: bool = True) -> int:

@@ -16,7 +16,10 @@ from web.applications.api_schema import (
 from lib.model import Application as ApplicationDB, ApplicationStatus
 from web.common.pagination import PaginatedResponse
 from web.common.deps import PaginationDep
-from web.applications.status_flow import validate_status_change, get_available_statuses
+from lib.status_flow import (
+    validate_status_change,
+    get_available_statuses,
+)
 
 router = APIRouter(prefix="/applications", tags=["applications"], dependencies=[DependsCurrentUser])
 
@@ -80,16 +83,17 @@ async def get_application(
 
 @router.get("/", response_model=PaginatedResponse[ApplicationSummary])
 async def list_applications(
-    pagination: PaginationDep,
-    application_repo: ApplicationRepositoryDep,
-    user: CurrentUserDep,
+    pagination: PaginationDep, application_repo: ApplicationRepositoryDep, user: CurrentUserDep
 ) -> PaginatedResponse[ApplicationDB]:
     count = application_repo.count_all_user_applications(cast(int, user.id))
 
     return pagination.handle_pagination(
         count,
         lambda limit, offset: application_repo.get_all_user_applications(
-            cast(int, user.id), limit, offset
+            cast(int, user.id),
+            limit,
+            offset,
+            order_by=[("status", "asc"), ("updated_at", "desc")],
         ),
     )
 
