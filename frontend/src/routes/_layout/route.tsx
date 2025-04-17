@@ -31,7 +31,7 @@ function AuthenticatedRoute() {
         <div className="w-full grow flex flex-col items-center justify-center pb-20 sm:pb-0 @container">
           <Outlet />
         </div>
-        <MobileNavBar />
+        <MobileNavBar currentUser={currentUser} />
       </div>
     </SidebarProvider>
   );

@@ -1,5 +1,5 @@
-import { User2, ChevronUp, ChevronsRight, ChevronsLeft } from "lucide-react";
-import { Link, useRouter } from "@tanstack/react-router";
+import { ChevronsRight, ChevronsLeft } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 import {
   Sidebar,
@@ -14,55 +14,9 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuItem,
-  DropdownMenuContent,
-} from "@/components/ui/dropdown-menu";
-
-import { User, useAuthLogout } from "@/gen";
+import { User } from "@/gen";
 import { useNavigationMenu } from "@/hooks/useNavigationMenu";
-import { cn } from "@/lib/utils";
-
-interface UserDropdownProps {
-  user: User;
-}
-
-function UserDropdown({ user }: UserDropdownProps) {
-  const router = useRouter();
-  const logoutMutation = useAuthLogout({
-    mutation: {
-      onSuccess: () => router.navigate({ to: "/login" }),
-    },
-  });
-  const { open } = useSidebar();
-  return (
-    <SidebarMenu>
-      <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuButton className="w-full">
-              <User2 />
-              <span className="ml-2 max-w-5/6 truncate">
-                {user.name} {user.last_name[0].toUpperCase()}.
-              </span>
-              <ChevronUp className="ml-auto" />
-            </SidebarMenuButton>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            side={open ? "top" : "right"}
-            className={cn(open && "w-60")}
-          >
-            <DropdownMenuItem onClick={() => logoutMutation.mutate(undefined)}>
-              <span>Sign out</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </SidebarMenuItem>
-    </SidebarMenu>
-  );
-}
+import { UserDropdown } from "@/components/UserDropdown";
 
 function InlineSidebarTrigger() {
   const { toggleSidebar, open } = useSidebar();

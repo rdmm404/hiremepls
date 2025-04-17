@@ -25,8 +25,8 @@ function ListApplications() {
 
   return (
     <div className="w-full h-full p-6 @3xl:py-2 flex flex-col">
-      <div className="w-full flex justify-between mb-4 items-center">
-        <h1 className="text-xl sm:text-3xl">Your applications</h1>
+      <div className="w-full flex justify-between @3xl:mb-4 items-center">
+        <h1 className="text-2xl sm:text-3xl">Your applications</h1>
         <Button size={"icon"} asChild>
           <Link to={"/applications/new"}>
             <Plus className="size-4 md:size-5" />

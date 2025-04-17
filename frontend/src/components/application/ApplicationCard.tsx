@@ -52,7 +52,9 @@ export function ApplicationCard({
                   "text-muted-foreground text-sm"
                 )}
               >
-                @ {application.job?.company?.name || "Unknown Company"}
+                <span className="text-nowrap">
+                  @ {application.job?.company?.name || "Unknown Company"}
+                </span>
               </span>
             </Link>
           </h3>

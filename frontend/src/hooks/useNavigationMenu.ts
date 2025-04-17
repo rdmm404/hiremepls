@@ -1,4 +1,4 @@
-import { Home, Briefcase, LucideIcon } from "lucide-react";
+import { ChartPie, Briefcase, LucideIcon, SquarePlus } from "lucide-react";
 import { useMatchRoute, ValidateLinkOptions } from "@tanstack/react-router";
 
 type SidebarItem = {
@@ -10,8 +10,8 @@ type SidebarItem = {
 
 export const navigationItems: SidebarItem[] = [
   {
-    title: "Home",
-    icon: Home,
+    title: "Dashboard",
+    icon: ChartPie,
     linkOptions: {
       to: "/",
     },
@@ -23,6 +23,13 @@ export const navigationItems: SidebarItem[] = [
       to: "/applications",
     },
   },
+  {
+    title: "New",
+    icon: SquarePlus,
+    linkOptions: {
+      to: "/applications/new",
+    },
+  },
 ];
 
 export function useNavigationMenu() {
@@ -30,6 +37,6 @@ export function useNavigationMenu() {
 
   return navigationItems.map((item) => ({
     ...item,
-    isActive: Boolean(matchRoute({ to: item.linkOptions.to, fuzzy: true })),
+    isActive: Boolean(matchRoute({ to: item.linkOptions.to })),
   }));
 }
