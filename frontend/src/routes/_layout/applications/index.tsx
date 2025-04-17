@@ -5,9 +5,9 @@ import {
   useApplicationsListApplications,
   type ApplicationsListApplicationsQueryParams,
 } from "@/gen";
-import { ApplicationCard } from "@/components/application/ApplicationCard";
 import { Button } from "@/components/ui/button";
 import { useApplicationModals } from "@/contexts/ApplicationModalsContext";
+import { GroupedApplicationList } from "@/components/application/GroupedApplicationList";
 
 const applicationListQueryParams: ApplicationsListApplicationsQueryParams = {
   page_size: 100,
@@ -24,48 +24,45 @@ function ListApplications() {
   const { openStatusModal, openDeleteModal } = useApplicationModals();
 
   return (
-    <>
-      <div className="w-full h-full @3xl:w-3/4 py-10 px-5 @3xl:p-0 max-w-4xl flex flex-col">
-        <div className="w-full flex justify-between py-3 md:py-6 items-center">
-          <h1 className="text-xl md:text-3xl">Your applications</h1>
-          <Button size={"icon"} asChild>
-            <Link to={"/applications/new"}>
-              <Plus className="size-4 md:size-5" />
-            </Link>
-          </Button>
-        </div>
-        <div className="w-full h-full flex items-center justify-center">
-          {isLoading ? (
+    <div className="w-full h-full p-6 @3xl:py-2 flex flex-col">
+      <div className="w-full flex justify-between mb-4 items-center">
+        <h1 className="text-xl sm:text-3xl">Your applications</h1>
+        <Button size={"icon"} asChild>
+          <Link to={"/applications/new"}>
+            <Plus className="size-4 md:size-5" />
+          </Link>
+        </Button>
+      </div>
+      <div className="w-full h-full">
+        {isLoading ? (
+          <div className="w-full h-full flex items-center justify-center">
             <p>Loading...</p>
-          ) : data?.data.length === 0 ? (
+          </div>
+        ) : !data?.data.length ? (
+          <div className="w-full h-full flex items-center justify-center">
             <p className="text-center">
               You don't have any applications yet.{" "}
               <Link
                 to={"/applications/new"}
                 className="hover:underline text-primary"
               >
-                Create one
+                Add one
               </Link>{" "}
               to get started.
             </p>
-          ) : (
-            <div className="gap-3 grid grid-cols-1 @2xl:grid-cols-2 grow">
-              {data?.data.map((app) => (
-                <ApplicationCard
-                  application={app}
-                  key={app.id}
-                  onUpdateStatus={() => {
-                    openStatusModal(app, () => refetch()); // TODO: consider not refetching the whole list on a single application update
-                  }}
-                  onDelete={() => {
-                    openDeleteModal(app, () => refetch());
-                  }}
-                />
-              ))}
-            </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <GroupedApplicationList
+            applications={data.data}
+            onUpdateStatus={(app) => {
+              openStatusModal(app, () => refetch());
+            }}
+            onDelete={(app) => {
+              openDeleteModal(app, () => refetch());
+            }}
+          />
+        )}
       </div>
-    </>
+    </div>
   );
 }

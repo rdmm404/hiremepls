@@ -34,7 +34,7 @@ class ApplicationBase(SQLModel):
         sa_type=AutoString,
         sa_column_kwargs={"server_default": ApplicationStatus.PENDING.name},
         nullable=False,
-    )
+    )  # TODO: Add index
     interview_rounds: Annotated[int, Field(ge=1)] | None = None
     current_round: Annotated[int, Field(ge=1)] | None = None
     notes: str | None = None
