@@ -9,12 +9,12 @@ import {
   ApplicationStatusEnum,
 } from "@/gen";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { ApplicationStatusBadge } from "@/components/application/ApplicationStatusBadge";
 import { ApplicationActionsMenu } from "@/components/application/ApplicationActionsMenu";
 import { useApplicationModals } from "@/contexts/ApplicationModalsContext";
 import { CollapsibleCard } from "@/components/ui/collapsible-card";
+import { Container } from "@/components/ui/container";
 
 export const Route = createFileRoute("/_layout/applications/$applicationId")({
   component: ApplicationDetail,
@@ -49,8 +49,8 @@ function ApplicationDetail() {
     ));
 
   return (
-    <div className="container mx-auto px-6 md:px-10 h-full">
-      <div className="space-y-2 sm:space-y-4 mt-6">
+    <Container width="full">
+      <div className="space-y-2 sm:space-y-4 border-b pb-2 mb-4">
         <div className="flex gap-4 items-start flex-wrap sm:items-center sm:justify-between">
           <h1 className="text-xl sm:text-3xl font-bold">{job.job_title}</h1>
           <ApplicationStatusBadge
@@ -104,8 +104,6 @@ function ApplicationDetail() {
           />
         </div>
       </div>
-
-      <Separator className="mt-2 mb-4" />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
@@ -233,6 +231,6 @@ function ApplicationDetail() {
           )}
         </div>
       </div>
-    </div>
+    </Container>
   );
 }

@@ -3,7 +3,6 @@ import { MapPin, Building } from "lucide-react";
 import { ApplicationSummary } from "@/gen";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
-import { ApplicationStatusBadge } from "./ApplicationStatusBadge";
 import { ApplicationActionsMenu } from "./ApplicationActionsMenu";
 
 interface ApplicationCardProps {
@@ -67,7 +66,6 @@ export function ApplicationCard({
       </div>
       <hr className="my-2" />
       <div className="flex gap-y-2 grow items-center flex-wrap gap-3">
-        <ApplicationStatusBadge status={application.status} />
         <span className="inline-flex gap-1 items-center justify-end text-sm">
           <MapPin className="size-4" /> {application.job.location}
         </span>

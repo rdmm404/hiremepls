@@ -33,7 +33,7 @@ export function GroupedApplicationList({
     <div className="w-full space-y-8">
       {Object.entries(groupedApplications).map(([status, apps]) => (
         <section key={status} className="space-y-4 my-3">
-          <div className="sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-10 py-2 border-b">
+          <div className="sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 z-10 py-2 border-b">
             <div className="flex items-center gap-3">
               <h2 className="text-lg">{status}</h2>
               <Badge

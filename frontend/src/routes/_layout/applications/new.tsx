@@ -15,7 +15,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-
+import { Container } from "@/components/ui/container";
 const formSchema = z.object({
   url: z
     .string()
@@ -79,14 +79,14 @@ function CreateApplicationWithUrl() {
   };
 
   return (
-    <Form {...form}>
-      <form
-        noValidate
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full"
-      >
-        <div className="flex flex-col px-4 @lg:flex-row gap-2 @lg:px-0 w-full justify-center items-start">
-          <div className="w-full max-w-90">
+    <Container width="full">
+      <Form {...form}>
+        <form
+          noValidate
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="size-full flex flex-col px-4 @lg:flex-row gap-2 @lg:px-0 w-full justify-center items-center"
+        >
+          <div className="w-full max-w-96">
             <FormField
               control={form.control}
               name="url"
@@ -108,13 +108,13 @@ function CreateApplicationWithUrl() {
           <Button
             type="submit"
             disabled={mutation.isPending}
-            className="max-w-90 @max-lg:w-full"
+            className="max-w-96 @max-lg:w-full"
           >
             {mutation.isPending && <Loader2 className="mr-2 animate-spin" />}
             Submit
           </Button>
-        </div>
-      </form>
-    </Form>
+        </form>
+      </Form>
+    </Container>
   );
 }

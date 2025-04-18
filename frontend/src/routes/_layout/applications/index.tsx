@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useApplicationModals } from "@/contexts/ApplicationModalsContext";
 import { GroupedApplicationList } from "@/components/application/GroupedApplicationList";
+import { Container } from "@/components/ui/container";
 
 const applicationListQueryParams: ApplicationsListApplicationsQueryParams = {
   page_size: 100,
@@ -24,9 +25,9 @@ function ListApplications() {
   const { openStatusModal, openDeleteModal } = useApplicationModals();
 
   return (
-    <div className="w-full h-full p-6 @3xl:py-2 flex flex-col">
-      <div className="w-full flex justify-between @3xl:mb-4 items-center">
-        <h1 className="text-2xl sm:text-3xl">Your applications</h1>
+    <Container width="full">
+      <div className="w-full flex justify-between @3xl:mb-6 items-center">
+        <h1 className="text-xl sm:text-3xl font-bold">Your applications</h1>
         <Button size={"icon"} asChild>
           <Link to={"/applications/new"}>
             <Plus className="size-4 md:size-5" />
@@ -63,6 +64,6 @@ function ListApplications() {
           />
         )}
       </div>
-    </div>
+    </Container>
   );
 }
