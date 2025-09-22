@@ -5,6 +5,6 @@ from lib.db import get_connection_string
 
 
 engine = create_engine(
-    get_connection_string(db_settings),
+    get_connection_string(db_settings, env_settings),
     echo=env_settings.ENVIRONMENT == "dev",
 )
